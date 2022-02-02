@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'DHT22'
+CLASS = IC
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "ARROW_PART_NUMBER", "ARROW_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "Aosong Electronics", "DHT22" (!) = "", "DHT22", "Other", "", "", "", "", "Digital-output relative humidity & temperature sensor/module DHT22", "https://datasheet4u.com/datasheet-parts/DHT22-datasheet.php?id=792211", "25.1 mm"
+END_PART
+
+END.

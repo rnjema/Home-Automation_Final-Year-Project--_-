@@ -1,0 +1,158 @@
+;Proteus Design Interchange Format
+(PDIF
+ (vendor "SamacSys Limited")
+ (version 1 0)
+ (library
+  (part "DHT22"
+   (description "Digital-output relative humidity & temperature sensor/module DHT22")
+   (family "ANA")
+   (package "DHT22")
+   (attribute "Datasheet Link" "https://datasheet4u.com/datasheet-parts/DHT22-datasheet.php?id=792211")
+   (attribute "Geometry.Height" "25.1mm")
+   (attribute "Manufacturer_Name" "Aosong Electronics")
+   (attribute "Manufacturer_Part_Number" "DHT22")
+   (attribute "Mouser Part Number" "")
+   (attribute "Mouser Price/Stock" "")
+   (attribute "Arrow Part Number" "")
+   (attribute "Arrow Price/Stock" "")
+   (gate
+    (symbol "DHT22")
+    (pin "VDD" 1 PS)
+    (pin "DATA" 2 PS)
+    (pin "NULL" 3 PS)
+    (pin "GND" 4 PS)
+   )
+  )
+  (symbol "DHT22"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 200 100) (pt 700 100) (pt 700 -400) (pt 200 -400) (pt 200 100) (closed))
+   )
+   (terminal
+    (body (symbol "PIN") (pt 0 0) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -100) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -200) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+   (terminal
+    (body (symbol "PIN") (pt 0 -300) (rot 0) (mir 0) (visible true))
+    (name (pt 230 0) (rot 0) (just MIDDLE LEFT) (visible true))
+    (number (pt 140 20) (rot 0) (just BOTTOM RIGHT) (visible true)))
+  )
+  (symbol "PIN"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 0 0) (pt 200 0))))
+  (symbol "PINSHORT"
+   (units THOU)
+   (origin (pt 0 0))
+   (graphic
+    (stroke 10)
+    (path (pt 0 0) (pt 100 0))))
+  (package "DHT22"
+   (units MM)
+   (layer TASM
+    (graphic
+     (stroke 0.2)
+     (path
+      (closed true)
+      (pt -3.8 -5.7)
+      (pt 11.3 -5.7)
+      (pt 11.3 2)
+      (pt -3.8 2)
+      (pt -3.8 -5.7))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt -1.25 2)
+      (pt -3.8 2)
+      (pt -3.8 2)
+      (pt -1.25 2)
+      (pt -1.25 2))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt -3.8 -5.7)
+      (pt 11.3 -5.7)
+      (pt 11.3 -5.7)
+      (pt -3.8 -5.7)
+      (pt -3.8 -5.7))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt 11.3 2)
+      (pt 8.75 2)
+      (pt 8.75 2)
+      (pt 11.3 2)
+      (pt 11.3 2))))
+   (layer OCCA
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt -4.8 3)
+      (pt 12.3 3)
+      (pt 12.3 -6.7)
+      (pt -4.8 -6.7)
+      (pt -4.8 3))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt -3.8 2)
+      (pt -3.8 2)
+      (pt -3.8 -5.7)
+      (pt -3.8 -5.7)
+      (pt -3.8 2))))
+   (layer TSLK
+    (graphic
+     (stroke 0.1)
+     (path
+      (closed true)
+      (pt 11.3 -5.7)
+      (pt 11.3 -5.7)
+      (pt 11.3 2)
+      (pt 11.3 2)
+      (pt 11.3 -5.7))))
+   (leg 1 (pt 0.000 0.000) (padstack 1))
+   (leg 2 (pt 2.500 0.000) (padstack 0))
+   (leg 3 (pt 5.000 0.000) (padstack 0))
+   (leg 4 (pt 7.500 0.000) (padstack 0))
+   (padstack 0
+    (hole 0.91)
+    (plated true)
+    (pad (layer TCOP) (round 1.416))
+    (pad (layer INNER) (round 1.416))
+    (pad (layer BCOP) (round 1.416))
+   )
+   (padstack 1
+    (hole 0.91)
+    (plated true)
+    (pad (layer TCOP) (square 1.416))
+    (pad (layer INNER) (round 1.416))
+    (pad (layer BCOP) (square 1.416))
+   )
+   (model "DHT22.stp"
+    (euler 90 0 -90)
+    (offset 3.75 2.3399999141693115 12.720000267028809)
+   )
+  )
+ )
+)

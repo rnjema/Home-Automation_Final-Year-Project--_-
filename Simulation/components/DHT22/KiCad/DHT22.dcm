@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP DHT22
+D Digital-output relative humidity & temperature sensor/module DHT22
+K
+F https://datasheet4u.com/datasheet-parts/DHT22-datasheet.php?id=792211
+$ENDCMP
+#
+#End Doc Library

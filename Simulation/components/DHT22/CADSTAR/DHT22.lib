@@ -1,0 +1,18 @@
+.DHT22 :1 ;Digital-output relative humidity & temperature sensor/module DHT22
+DHT22
+*STM IC
+*NGS
+*PLB 1="VDD" 2="DATA" 3="NULL" 4="GND"
+*MXP 4
+*DFN DHT22
+~!Manufacturer_Name (Aosong Electronics)
+~!Manufacturer_Part_Number (DHT22)
+~!Mouser Part Number (-)
+~!Mouser Price/Stock (-)
+~!Arrow Part Number (-)
+~!Arrow Price/Stock (-)
+~!Link Datasheet (https://datasheet4u.com/datasheet-parts/DHT22-datasheet.php?id=792211)
+~!Height (25.1mm)
+~!3D_Model (DHT22)
+DHT22
+1.1!U 2.1!U 3.1!U 4.1!U 
