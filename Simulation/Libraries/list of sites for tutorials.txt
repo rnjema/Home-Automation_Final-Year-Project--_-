@@ -10,3 +10,4 @@ https://www.theengineeringprojects.com/2016/01/pir-sensor-library-proteus.html
 theengineeringprojects.com/2016/07/flame-sensor-library-proteus.html
 https://www.theengineeringprojects.com/2016/08/vibration-sensor-library-proteus.html
 https://www.theengineeringprojects.com/2017/09/l298-motor-driver-library-proteus.html
+https://www.youtube.com/playlist?list=PLa1mQJh1F7R87zL7yU2ceP8hgG0LF1m6l
