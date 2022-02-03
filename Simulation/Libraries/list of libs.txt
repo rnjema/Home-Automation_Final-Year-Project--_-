@@ -1,3 +1,4 @@
+
 1. PIR sensor
 2. LCD module
 3. Ultrasonic sensor
@@ -5,3 +6,7 @@
 5. Infrared sensor
 6. Flame sensor
 7. Vibration sensor
+8. xbee wireless module
+9. arduino uno
+10. arduino mega
+11. rain sensor
