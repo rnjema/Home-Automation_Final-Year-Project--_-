@@ -22,10 +22,10 @@ class BackgroundImage extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: image,
-                /*colorFilter: ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                   Colors.blue.withOpacity(0.2),
                   BlendMode.darken,
-                ),*/
+                ),
                 fit: BoxFit.cover)),
         child: child);
   }

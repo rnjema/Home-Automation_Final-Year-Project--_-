@@ -22,13 +22,17 @@ class HomeScreen extends StatelessWidget {
                             width: size.height * 0.3,
                             child: Image.asset("assets/images/logo.png"))),
                     SizedBox(),
-                    TextFieldContainer(
-                        child: TextField(
-                      decoration: InputDecoration(
-                          //fillColor: Colors.transparent,
-                          hintText: 'Username',
-                          icon: Icon(Icons.person)),
-                    ))
+                    Positioned(
+                      top: size.height * 0.3,
+                      child: TextFieldContainer(
+                          child: TextField(
+                        decoration: InputDecoration(
+                            //fillColor: Colors.transparent,
+                            border: InputBorder.none,
+                            hintText: 'Username',
+                            icon: Icon(Icons.person)),
+                      )),
+                    )
                   ],
                 ))));
   }
@@ -45,12 +49,13 @@ class TextFieldContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 8),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
           color: Colors.transparent,
           shape: BoxShape.rectangle,
+          border: Border.all(color: Colors.black, width: 2),
           borderRadius: BorderRadius.circular(10)),
       child: child,
     );
