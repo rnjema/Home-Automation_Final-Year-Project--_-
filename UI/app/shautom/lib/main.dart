@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                         image: DecorationImage(
                             image: AssetImage('assets/images/logo.png'))),
                   ),
-                  SizedBox(height: 60),
+                  SizedBox(height: size.height * 0.075),
                   Column(
                     children: <Widget>[
                       MaterialButton(
@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
                             )),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: size.height * 0.05,
                       ),
                       MaterialButton(
                         color: Color(0xBD3F51B5),
