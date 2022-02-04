@@ -59,24 +59,35 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    "SHAUTOM is an IoT-based smart home automation system that provides a platform for intelligent and efficient consumption of domestic utilities",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
+                  RichText(
+                      text: TextSpan(
+                          children: <InlineSpan>[
+                            TextSpan(
+                                text: "miHome",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    " is an IoT-based smart home automation system that provides a platform for intelligent and efficient consumption of domestic utilities",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal))
+                          ],
+                          style: TextStyle(
+                            color: Colors.grey,
+                          )),
+                      textAlign: TextAlign.center),
                   SizedBox(
-                    height: 10,
+                    height: 8,
                   ),
                   Container(
-                    height: size.height / 3,
+                    height: size.height / 3.5,
                     width: size.width * 0.6,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/images/logo.png'))),
                   ),
-                  SizedBox(height: size.height * 0.075),
+                  SizedBox(height: size.height * 0.065),
                   Column(
                     children: <Widget>[
                       MaterialButton(
