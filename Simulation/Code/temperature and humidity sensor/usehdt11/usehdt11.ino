@@ -1,5 +1,5 @@
 // Example testing sketch for various DHT humidity/temperature sensors
-// Written by  , public domain
+// Written by lady , public domain
 
 // REQUIRES the following Arduino libraries:
 // - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
@@ -31,9 +31,21 @@ const int rs = 13, en = 12, d4 = 6, d5 = 5, d6 = 4, d7 = 3;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 void setup() {
   Serial.begin(9600);
-  Serial.println(F("DHTxx test!"));
-
+  Serial.println(F("================="));
+  Serial.println(F("================="));
   dht.begin();
+
+
+  //apliance control relay module
+  pinMode(22, OUTPUT);
+  pinMode(23, OUTPUT);
+  pinMode(24, OUTPUT);
+  pinMode(25, OUTPUT);
+  pinMode(26, OUTPUT);
+  pinMode(27, OUTPUT);
+  pinMode(28, OUTPUT);
+  pinMode(29, OUTPUT);
+
 }
 
 void loop() {
@@ -83,4 +95,46 @@ void loop() {
   lcd.print("Tempereture:");
   lcd.print(t);
   lcd.print("°C ");
+
+  //appliance control relay module
+
+  Serial.println(F("switch 1 on"));
+  digitalWrite(22, HIGH);
+  delay(1000);
+  digitalWrite(22, LOW);
+
+  Serial.println(F("switch 2 on"));
+  digitalWrite(23, HIGH);
+  delay(1000);
+  digitalWrite(23, LOW);
+
+  Serial.println(F("switch 3 on"));
+  digitalWrite(24, HIGH);
+  delay(1000);
+  digitalWrite(24, LOW);
+  
+  Serial.println(F("switch 4 on"));
+  digitalWrite(25, HIGH);
+  delay(1000);
+  digitalWrite(25, LOW);
+  
+  Serial.println(F("switch 5 on"));
+  digitalWrite(26, HIGH);
+  delay(1000);
+  digitalWrite(26, LOW);
+  
+  Serial.println(F("switch 6 on"));
+  digitalWrite(27, HIGH);
+  delay(1000);
+  digitalWrite(27, LOW);
+
+  Serial.println(F("switch 7 on"));
+  digitalWrite(28, HIGH);
+  delay(1000);
+  digitalWrite(29, LOW);
+
+  Serial.println(F("switch 8 on"));
+  digitalWrite(29, HIGH);
+  delay(1000);
+  digitalWrite(29, LOW);
 }
