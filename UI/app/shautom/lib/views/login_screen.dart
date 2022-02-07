@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shautom/constants.dart';
 import 'package:shautom/views/components/bg-image.dart';
-
+/*
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,29 +39,5 @@ class HomeScreen extends StatelessWidget {
                         ))
                   ],
                 ))));
-  }
-}
-
-class TextFieldContainer extends StatelessWidget {
-  final Widget child;
-  const TextFieldContainer({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
-          color: Colors.transparent,
-          shape: BoxShape.rectangle,
-          border: Border.all(color: Colors.black, width: 2),
-          borderRadius: BorderRadius.circular(10)),
-      child: child,
-    );
   }
 }
