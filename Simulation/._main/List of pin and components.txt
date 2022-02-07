@@ -1,0 +1,35 @@
+On Arduino Mega.
+
+virtual terminal
+1. pin 0 mega txd-vt rxd
+2. pin 1 mega rxd-vt txd
+
+Temperature control and Humidity
+3. pin 2 DATA
+
+Display
+4. pin 3 D7
+5. pin 4 D6
+6. pin 5 D5
+7. pin 6 D4
+
+8. pin 12 E
+9. pin 13 RS
+
+appliance control RELAY MODULE
+10. pin 22 relay 1 bulb OUTPUT
+11. pin 23 relay 2 SERVO OUTPUT
+12. pin 24 relay 3 BULB OUTPUT
+13. pin 25 relay 4 BULB OUTPUT
+14. pin 26 relay 5 OUTPUT
+15. pin 27 relay 6 OUTPUT
+16. pin 28 relay 7 OUTPUT
+17. pin 29 relay 8 OUTPUT
+
+Flame and gas sensor.
+18. pin 30 flame sensor INPUT
+19. pin 31 gas sensor INPUT
+20. pin 32 green_LED FOR SAFE OUTPUT
+21. pin 33 red_LED FOR DANGER OUTPUT
+22. pin 34 buzzer FOR ALERT OUTPUT
+23. pin 35 servor FOR ? OUTPUT
