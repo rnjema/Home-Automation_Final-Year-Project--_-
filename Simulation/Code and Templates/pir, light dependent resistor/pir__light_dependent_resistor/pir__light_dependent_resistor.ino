@@ -1,6 +1,6 @@
-#define pir 22
-#define relay1 23
-#define relay2 24
+#define pir 36
+#define relay1 37
+#define relay2 38
 #include <LiquidCrystal.h>
 
 // initializing the library with the numbers of the interface pins
