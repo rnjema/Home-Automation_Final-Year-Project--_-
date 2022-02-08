@@ -1,35 +1,35 @@
-// Example testing sketch for various DHT humidity/temperature sensors
-// Written by lady , public domain
-
-// REQUIRES the following Arduino libraries:
-// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
-// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
-
 #include "DHT.h"
 #include <LiquidCrystal.h>
+#define DHTPIN 2  
+#define DHTTYPE DHT11 
+#include <Servo.h>
 
-#define DHTPIN 2     // Digital pin connected to the DHT sensor
-// Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
-// Pin 15 can work but DHT must be disconnected during program upload.
-
-// Uncomment whatever type you're using!
-#define DHTTYPE DHT11   // DHT 11
-//define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
-
-// Connect pin 1 (on the left) of the sensor to +5V
-// NOTE: If using a board with 3.3V logic like an Arduino Due connect pin 1
-// to 3.3V instead of 5V!
-// Connect pin 2 of the sensor to whatever your DHTPIN is
-// Connect pin 3 (on the right) of the sensor to GROUND (if your sensor has 3 pins)
-// Connect pin 4 (on the right) of the sensor to GROUND and leave the pin 3 EMPTY (if your sensor has 4 pins)
-// Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
+//intializing gas and flame sensors
+Servo myservo;
+int flame = 30;
+int smoke = 31;
+int green_LED = 32;
+int red_LED = 33;
+int servo = 34;
+int buzzer = 35 ;
 
 // Initialize DHT sensor.
 DHT dht(DHTPIN, DHTTYPE);
 const int rs = 13, en = 12, d4 = 6, d5 = 5, d6 = 4, d7 = 3;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
 void setup() {
+
+  //for flame and gas sensor
+  pinMode (flame, INPUT);
+  pinMode (smoke, INPUT);
+  pinMode (buzzer, OUTPUT);
+  pinMode(green_LED, OUTPUT);
+  pinMode(red_LED, OUTPUT);
+  myservo.attach(servo);
+  myservo.write(0);
+  //for flame and gas sensor ends here
+  
   Serial.begin(9600);
   Serial.println(F("================="));
   Serial.println(F("================="));
@@ -99,42 +99,65 @@ void loop() {
   //appliance control relay module
 
   Serial.println(F("switch 1 on"));
-  digitalWrite(22, HIGH);
-  delay(1000);
-  digitalWrite(22, LOW);
-
   Serial.println(F("switch 2 on"));
-  digitalWrite(23, HIGH);
-  delay(1000);
-  digitalWrite(23, LOW);
-
   Serial.println(F("switch 3 on"));
-  digitalWrite(24, HIGH);
-  delay(1000);
-  digitalWrite(24, LOW);
-  
   Serial.println(F("switch 4 on"));
-  digitalWrite(25, HIGH);
-  delay(1000);
-  digitalWrite(25, LOW);
-  
   Serial.println(F("switch 5 on"));
-  digitalWrite(26, HIGH);
-  delay(1000);
-  digitalWrite(26, LOW);
-  
   Serial.println(F("switch 6 on"));
-  digitalWrite(27, HIGH);
-  delay(1000);
-  digitalWrite(27, LOW);
-
   Serial.println(F("switch 7 on"));
-  digitalWrite(28, HIGH);
-  delay(1000);
-  digitalWrite(29, LOW);
-
   Serial.println(F("switch 8 on"));
+
+  digitalWrite(22, HIGH);
+  digitalWrite(23, HIGH);
+  digitalWrite(24, HIGH);
+  digitalWrite(25, HIGH);
+  digitalWrite(26, HIGH);
+  digitalWrite(27, HIGH);
+  digitalWrite(28, HIGH);
   digitalWrite(29, HIGH);
   delay(1000);
+   Serial.println(F("switch 1 off"));
+  Serial.println(F("switch 2 off"));
+  Serial.println(F("switch 3 off"));
+  Serial.println(F("switch 4 off"));
+  Serial.println(F("switch 5 off"));
+  Serial.println(F("switch 6 off"));
+  Serial.println(F("switch 7 off"));
+  Serial.println(F("switch 8 off"));
+  digitalWrite(22, LOW);
+  digitalWrite(23, LOW);
+  digitalWrite(24, LOW);
+  digitalWrite(25, LOW);
+  digitalWrite(26, LOW);
+  digitalWrite(27, LOW);
+  digitalWrite(28, LOW);
   digitalWrite(29, LOW);
+  delay(1000);
+
+//for flame and gas sensor
+  int fval = digitalRead(flame);
+  int sval = digitalRead(smoke);
+  Serial.print("flame = ");
+  Serial.println(fval);
+  Serial.print("smoke = ");
+  Serial.println(sval);
+
+  if ( sval == HIGH or fval == HIGH)
+  {
+    Serial.println(" WARNING! ");
+    digitalWrite(red_LED, HIGH);
+    digitalWrite(green_LED,LOW);
+    digitalWrite(buzzer, HIGH);
+    myservo.write(180);
+  }
+  else
+  {
+    Serial.println(" SAFE ");
+    digitalWrite(buzzer, LOW);
+    digitalWrite(red_LED, LOW);
+    digitalWrite(green_LED,HIGH);
+    myservo.write(0);
+  }
+  delay(100);
+
 }
