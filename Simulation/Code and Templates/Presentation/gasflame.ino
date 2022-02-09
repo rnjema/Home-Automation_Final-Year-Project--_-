@@ -1,8 +1,11 @@
+#include <Servo.h>
+Servo myservo;
 int flame = 30;
 int smoke = 31;
 int green_LED = 32;
 int red_LED = 33;
-int buzzer = 34 ;
+int servo = 34;
+int buzzer = 35 ;
 
 void setup ()
 {
@@ -12,6 +15,8 @@ void setup ()
   pinMode(green_LED, OUTPUT);
   pinMode(red_LED, OUTPUT);
   Serial.begin(9600);
+  myservo.attach(servo);
+  myservo.write(0);
 }
 
 void loop ()
@@ -29,6 +34,7 @@ void loop ()
     digitalWrite(red_LED, HIGH);
     digitalWrite(green_LED,LOW);
     digitalWrite(buzzer, HIGH);
+    myservo.write(180);
   }
   else
   {
@@ -36,6 +42,7 @@ void loop ()
     digitalWrite(buzzer, LOW);
     digitalWrite(red_LED, LOW);
     digitalWrite(green_LED,HIGH);
+    myservo.write(0);
   }
   delay(100);
 }

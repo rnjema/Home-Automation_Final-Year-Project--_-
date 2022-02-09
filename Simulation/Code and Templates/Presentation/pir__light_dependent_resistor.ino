@@ -11,21 +11,29 @@ void setup(){
   pinMode(pir, OUTPUT);
   pinMode(relay1, OUTPUT);
   pinMode(relay2, OUTPUT);
+  lcd.begin(20, 4);
+// Print a message to the LCD.
+  lcd.setCursor(1,0);
+  lcd.print("Ldr out= ");
+  lcd.setCursor(1,1);
+  lcd.print("SHAUTOM!");
 }
 
 void loop(){
   //get value of ldr and print
+ 
   int ldr = analogRead(A0);
-  Serial.print("LIGHT INTESITY IS: ");
-  Serial.println(ldr);
+  lcd.setCursor(10,0);
+  lcd.print(ldr);
+  
   //control night light based on light intesity.
   //keep relay of if light is low
-  if (ldr <= 100){
+  if (ldr >= 100){
     digitalWrite(relay1, LOW);
     Serial.println("DAY LIGHT!!");
     delay(500);
   }
-  else if (ldr > 100){
+  else if (ldr < 100){
     Serial.println("");
     digitalWrite(relay1, HIGH);
     Serial.println("ITS DARK, NIGHT LIGHT ON!");
