@@ -12,4 +12,8 @@ class TextFieldItem {
 List<TextFieldItem> formItems = <TextFieldItem>[
   TextFieldItem("First name", ImageIcon(Svg('assets/images/icons/user.svg'))),
   TextFieldItem("Last name", ImageIcon(Svg('assets/images/icons/user.svg'))),
+  TextFieldItem("Last name", ImageIcon(Svg('assets/images/icons/user.svg'))),
+  TextFieldItem("Last name", ImageIcon(Svg('assets/images/icons/user.svg'))),
+  TextFieldItem("Last name", ImageIcon(Svg('assets/images/icons/user.svg'))),
+  TextFieldItem("Last name", ImageIcon(Svg('assets/images/icons/user.svg'))),
 ];
