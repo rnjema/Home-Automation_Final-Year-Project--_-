@@ -10,13 +10,21 @@ class LoginPage extends StatelessWidget {
         child: Container(
       child: Column(
         children: <Widget>[
-          Positioned(
-            top: 5,
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.01, vertical: size.height * 0.01),
             child: LogoWidget(
               heightFactor: 0.3,
               widthFactor: 0.4,
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          )
         ],
       ),
     ));
