@@ -6,7 +6,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return NavBarContainer(
+    return ScreenwithNavBar(
         child: Container(
       child: Column(
         children: <Widget>[

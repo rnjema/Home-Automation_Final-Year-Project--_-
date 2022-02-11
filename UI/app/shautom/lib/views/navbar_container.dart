@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-class NavBarContainer extends StatelessWidget {
+class ScreenwithNavBar extends StatelessWidget {
   final Widget child;
-  const NavBarContainer({
+  const ScreenwithNavBar({
     Key? key,
     required this.child,
   }) : super(key: key);
