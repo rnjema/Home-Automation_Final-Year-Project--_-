@@ -15,24 +15,29 @@ class RegistrationPage extends StatelessWidget {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Flexible(child: LogoWidget()),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: formItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return TextFieldContainer(
-                      child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: formItems[index].hintText,
-                      hintText: formItems[index].hintText,
-                      icon: formItems[index].icon,
-                    ),
-                  ));
-                }),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: ClampingScrollPhysics(),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: formItems.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TextFieldContainer(
+                        child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: formItems[index].hintText,
+                        hintText: formItems[index].hintText,
+                        icon: formItems[index].icon,
+                      ),
+                    ));
+                  }),
+            ),
           ]),
     ));
   }
