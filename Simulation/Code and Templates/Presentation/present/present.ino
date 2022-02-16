@@ -27,8 +27,11 @@ void setup() {
   //for flame and gas sensor ends here
   
   Serial.begin(9600);
-  Serial.println(F("================="));
-  Serial.println(F("================="));
+  Serial.println("");
+  Serial.println(F("=========================================="));
+  Serial.println(F("** EAST OR WEST, SMART HOME IS THE BEST **"));
+  Serial.println(F("=========================================="));
+  Serial.println("");
   dht.begin();
 
   //setup for object detector and night light
@@ -48,7 +51,7 @@ void loop() {
   float t = dht.readTemperature();
 
   //aircon control
-  if(h > 50 && t >= 20){
+  if(h >= 50 && t >= 20){
     Serial.println("TURNING ROOM FAN ON");
     digitalWrite(roomaircon, HIGH);
   }
@@ -64,6 +67,7 @@ void loop() {
   // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
 
+  Serial.println("");
   Serial.print(F("Humidity: "));
   Serial.print(h);  
   Serial.print(F("%  Temperature: "));
@@ -72,10 +76,12 @@ void loop() {
   Serial.print(F("°F  Heat index: "));
   Serial.print(hic);
   Serial.println(F("°C "));
+  Serial.println("");
   
 //for flame and gas sensor
   int fval = digitalRead(flame);
   int sval = digitalRead(smoke);
+  Serial.println("");
   Serial.println("flame = ");
   Serial.println(fval);
   Serial.println("smoke = ");
@@ -83,14 +89,16 @@ void loop() {
 
   if ( sval == HIGH or fval == HIGH)
   {
-    Serial.println(" WARNING! ");
+    Serial.println("");
+    Serial.println(F("WARNING! "));
     digitalWrite(red_LED, HIGH);
     digitalWrite(green_LED,LOW);
     digitalWrite(buzzer, HIGH);
   }
   else
   {
-    Serial.println(" SAFE ");
+    Serial.println("");
+    Serial.println(F("SAFE "));
     digitalWrite(buzzer, LOW);
     digitalWrite(red_LED, LOW);
     digitalWrite(green_LED,HIGH);
