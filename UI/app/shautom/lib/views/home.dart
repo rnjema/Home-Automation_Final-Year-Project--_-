@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
+                  LogoWidget(),
                   Text(
                     "Welcome",
                     style: TextStyle(
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   RichText(
                       text: TextSpan(
                           children: <InlineSpan>[
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
                                     color: Color(0xBD3F51B5))),
                             TextSpan(
                                 text:
-                                    " is an IoT-based smart home automation system that provides a platform for intelligent and efficient consumption of domestic utilities",
+                                    " is a companion app for SHAUTOM - an IoT-based smart home automation system that provides a platform for intelligent and efficient consumption of domestic utilities",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
@@ -51,10 +52,6 @@ class HomePage extends StatelessWidget {
                             color: Colors.grey,
                           )),
                       textAlign: TextAlign.center),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  LogoWidget(),
                   SizedBox(height: size.height * 0.065),
                   Column(
                     children: <Widget>[
