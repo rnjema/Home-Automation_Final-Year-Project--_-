@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-class ScreenwithNavBar extends StatelessWidget {
-  final Widget child;
-  const ScreenwithNavBar({
+class BottomNavBar extends StatefulWidget {
+  //final Widget child;
+  const BottomNavBar({
     Key? key,
-    required this.child,
   }) : super(key: key);
 
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,7 +21,7 @@ class ScreenwithNavBar extends StatelessWidget {
         width: double.infinity,
         height: size.height,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-        child: child,
+        //child: child,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF3F51B5),
