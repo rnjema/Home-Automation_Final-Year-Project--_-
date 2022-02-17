@@ -52,22 +52,22 @@ class _LoginPageState extends State<LoginPage> {
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              itemCount: LoginFields.length,
+                              itemCount: loginFields.length,
                               separatorBuilder:
                                   (BuildContext context, int index) =>
                                       SizedBox(height: size.height * 0.05),
                               itemBuilder: (BuildContext context, int index) {
                                 return TextFieldContainer(
                                     child: TextFormField(
-                                  obscureText: LoginFields[index].hidden,
+                                  obscureText: loginFields[index].hidden,
                                   decoration: new InputDecoration(
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     //labelText: LoginFields[index].hintText,
-                                    hintText: LoginFields[index].hintText,
-                                    icon: LoginFields[index].icon,
+                                    hintText: loginFields[index].hintText,
+                                    icon: loginFields[index].icon,
                                   ),
                                 ));
                               }),
