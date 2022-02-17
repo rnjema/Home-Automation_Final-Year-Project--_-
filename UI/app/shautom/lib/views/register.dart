@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/containers.dart';
-import 'package:shautom/views/navbar_container.dart';
 import 'package:shautom/views/form_fields.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -48,25 +47,29 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          ListView.builder(
+                          ListView.separated(
                               //reverse: true,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              itemCount: registrationFields.length,
+                              itemCount: RegistrationFields.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) => SizedBox(
+                                        height: size.height * 0.02,
+                                      ),
                               itemBuilder: (BuildContext context, int index) {
                                 return TextFieldContainer(
                                     child: TextFormField(
-                                  obscureText: registrationFields[index].hidden,
+                                  obscureText: RegistrationFields[index].hidden,
                                   decoration: new InputDecoration(
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     errorBorder: InputBorder.none,
-                                    //labelText: registrationFields[index].hintText,
+                                    //labelText: RegistrationFields[index].hintText,
                                     hintText:
-                                        registrationFields[index].hintText,
-                                    icon: registrationFields[index].icon,
+                                        RegistrationFields[index].hintText,
+                                    icon: RegistrationFields[index].icon,
                                   ),
                                 ));
                               }),
