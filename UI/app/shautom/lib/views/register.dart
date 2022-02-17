@@ -52,7 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              itemCount: RegistrationFields.length,
+                              itemCount: registrationFields.length,
                               separatorBuilder:
                                   (BuildContext context, int index) => SizedBox(
                                         height: size.height * 0.02,
@@ -60,7 +60,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return TextFieldContainer(
                                     child: TextFormField(
-                                  obscureText: RegistrationFields[index].hidden,
+                                  obscureText: registrationFields[index].hidden,
                                   decoration: new InputDecoration(
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -68,8 +68,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     errorBorder: InputBorder.none,
                                     //labelText: RegistrationFields[index].hintText,
                                     hintText:
-                                        RegistrationFields[index].hintText,
-                                    icon: RegistrationFields[index].icon,
+                                        registrationFields[index].hintText,
+                                    icon: registrationFields[index].icon,
                                   ),
                                 ));
                               }),
