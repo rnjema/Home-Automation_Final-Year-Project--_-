@@ -106,30 +106,30 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 15, right: 2),
-                            child: Divider(
-                              thickness: 1.5,
-                              color: Colors.black,
-                            ),
+                          child: Divider(
+                            thickness: 1.5,
+                            indent: size.width * 0.05,
+                            endIndent: (size.width * 0.05) / 2,
+                            color: Colors.black,
                           ),
                         ),
                         Container(
                           child: Text(
                             "OR",
-                            style:
-                                TextStyle(fontSize: 18, fontFamily: "Poppins"),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: "Poppins",
+                            ),
                           ),
                           decoration: BoxDecoration(
                               color: Colors.grey, shape: BoxShape.circle),
                         ),
                         Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 2, right: 15),
-                            child: Divider(
-                              thickness: 1.5,
-                              color: Colors.black,
-                            ),
+                          child: Divider(
+                            thickness: 1.5,
+                            indent: (size.width * 0.05) / 2,
+                            endIndent: size.width * 0.05,
+                            color: Colors.black,
                           ),
                         )
                       ],
