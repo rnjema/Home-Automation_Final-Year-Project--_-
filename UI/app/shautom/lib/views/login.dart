@@ -3,6 +3,7 @@ import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:shautom/views/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -155,7 +156,10 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.only(bottom: size.height * 0.05),
                         width: size.width * 0.6,
                         child: ElevatedButton(
-                          onPressed: () => print("Button pressed"),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegistrationPage())),
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xFFFFFFFF),
                             shape: new RoundedRectangleBorder(
