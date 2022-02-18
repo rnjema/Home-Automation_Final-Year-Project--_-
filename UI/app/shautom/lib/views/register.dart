@@ -31,6 +31,27 @@ class _RegistrationPageState extends State<RegistrationPage> {
               //alignment: Alignment.center,
               children: <Widget>[
                 Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(top: 10, left: 10),
+                    child: GestureDetector(
+                      child: Row(children: [
+                        Container(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          height: 16,
+                          child: Image(
+                              image:
+                                  AssetImage('assets/images/icons/back.png')),
+                        ),
+                        Text(
+                          "Back",
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xFFC0B01D)),
+                        )
+                      ]),
+                      onTap: () => Navigator.pop(context),
+                    )),
+                SizedBox(height: size.height * 0.01),
+                Container(
                     height: size.height * 0.2,
                     padding: EdgeInsets.symmetric(vertical: 0),
                     child: LogoWidget()),
