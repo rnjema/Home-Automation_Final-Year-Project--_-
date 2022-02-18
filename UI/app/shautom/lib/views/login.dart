@@ -29,7 +29,23 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Container(
                   alignment: Alignment.topLeft,
-                  child: BackButton(color: Colors.black)),
+                  margin: EdgeInsets.only(top: 10, left: 10),
+                  child: GestureDetector(
+                    child: Row(children: [
+                      Container(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        height: 16,
+                        child: Image(
+                            image: AssetImage('assets/images/icons/back.png')),
+                      ),
+                      Text(
+                        "Back",
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xFFC0B01D)),
+                      )
+                    ]),
+                    onTap: () => Navigator.pop(context),
+                  )),
               SizedBox(height: size.height * 0.01),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
