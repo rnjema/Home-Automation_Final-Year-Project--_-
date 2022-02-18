@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -25,122 +26,135 @@ class _LoginPageState extends State<LoginPage> {
           height: size.height,
           width: double.infinity,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              //alignment: Alignment.center,
-              children: <Widget>[
-                Container(
-                    height: size.height * 0.2,
-                    padding: EdgeInsets.symmetric(vertical: 0),
-                    child: LogoWidget()),
-                //SizedBox(height: size.height * 0.005),
-                /*Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                  ),*/
-                Container(
-                  width: size.width * 0.8,
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ListView.separated(
-                              //reverse: true,
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemCount: loginFields.length,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      SizedBox(height: size.height * 0.05),
-                              itemBuilder: (BuildContext context, int index) {
-                                return TextFieldContainer(
-                                    child: TextFormField(
-                                  obscureText: loginFields[index].hidden,
-                                  decoration: new InputDecoration(
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    //labelText: LoginFields[index].hintText,
-                                    hintText: loginFields[index].hintText,
-                                    icon: loginFields[index].icon,
-                                  ),
-                                ));
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                    padding: EdgeInsets.only(bottom: size.height * 0.01),
-                    width: size.width * 0.6,
-                    child: ElevatedButton(
-                      onPressed: () => print("Button pressed"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF3F51B5),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      ),
-                      child: Text("Log In",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontSize: 16,
-                          )),
-                    )),
-                Row(
+            children: <Widget>[
+              Container(
+                  alignment: Alignment.topLeft,
+                  child: BackButton(color: Colors.black)),
+              SizedBox(height: size.height * 0.01),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  //alignment: Alignment.center,
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 15, right: 2),
-                        child: Divider(
-                          thickness: 1.5,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
                     Container(
-                      child: Text(
-                        "OR",
-                        style: TextStyle(fontSize: 18, fontFamily: "Poppins"),
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.grey, shape: BoxShape.circle),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 2, right: 15),
-                        child: Divider(
-                          thickness: 1.5,
-                          color: Colors.black,
+                        height: size.height * 0.2,
+                        padding: EdgeInsets.symmetric(vertical: 0),
+                        child: LogoWidget()),
+                    SizedBox(height: size.height * 0.01),
+                    /*Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                    ),*/
+                    Container(
+                      width: size.width * 0.8,
+                      child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ListView.separated(
+                                  //reverse: true,
+                                  shrinkWrap: true,
+                                  physics: ScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: loginFields.length,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          SizedBox(height: size.height * 0.05),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return TextFieldContainer(
+                                        child: TextFormField(
+                                      obscureText: loginFields[index].hidden,
+                                      decoration: new InputDecoration(
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        //labelText: LoginFields[index].hintText,
+                                        hintText: loginFields[index].hintText,
+                                        icon: loginFields[index].icon,
+                                      ),
+                                    ));
+                                  }),
+                            ],
+                          ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-                Container(
-                    padding: EdgeInsets.only(bottom: size.height * 0.05),
-                    width: size.width * 0.6,
-                    child: ElevatedButton(
-                      onPressed: () => print("Button pressed"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFFFFFFF),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      ),
-                      child: Text("Register New User",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            fontSize: 16,
-                          )),
-                    )),
-              ]),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Container(
+                        padding: EdgeInsets.only(bottom: size.height * 0.01),
+                        width: size.width * 0.6,
+                        child: ElevatedButton(
+                          onPressed: () => print("Button pressed"),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF3F51B5),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                          ),
+                          child: Text("Log In",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                fontSize: 16,
+                              )),
+                        )),
+                    SizedBox(height: size.height * 0.01),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 15, right: 2),
+                            child: Divider(
+                              thickness: 1.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            "OR",
+                            style:
+                                TextStyle(fontSize: 18, fontFamily: "Poppins"),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.grey, shape: BoxShape.circle),
+                        ),
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 2, right: 15),
+                            child: Divider(
+                              thickness: 1.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Container(
+                        padding: EdgeInsets.only(bottom: size.height * 0.05),
+                        width: size.width * 0.6,
+                        child: ElevatedButton(
+                          onPressed: () => print("Button pressed"),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFFFFFFF),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                          ),
+                          child: Text("Register New User",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 16,
+                              )),
+                        )),
+                  ]),
+            ],
+          ),
         ),
       ),
     );
