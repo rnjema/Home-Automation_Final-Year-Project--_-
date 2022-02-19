@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shautom/constants.dart';
 import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
 import 'package:shautom/views/components/logo.dart';
 
 class RegistrationStepper extends StatelessWidget {
-  RegistrationStepper(Key? key, this.index, this.stepTapped, this.stepCancelled,
-      this.stepContinued)
+  RegistrationStepper(
+      {Key? key,
+      required this.index,
+      required this.stepTapped,
+      required this.stepCancelled,
+      required this.stepContinued})
       : super(key: key);
 
   final int index;
@@ -52,26 +57,37 @@ class RegistrationStepper extends StatelessWidget {
                           currentStep: index,
                           type: StepperType.vertical,
                           onStepTapped: (val) => stepTapped(val),
+                          onStepCancel: stepCancelled,
+                          onStepContinue: stepContinued,
                           controlsBuilder: (BuildContext context,
-                                  {VoidCallback? onStepCancel,
-                                  VoidCallback? onStepContinue}) =>
+                                  {VoidCallback? onStepContinue,
+                                  VoidCallback? onStepCancel}) =>
                               Row(
                                 children: <Widget>[
                                   TextButton(
                                       onPressed: onStepContinue,
-                                      child: Text('Next')),
+                                      child: Text('Next', style: kStepperNext)),
                                   TextButton(
                                       onPressed: onStepCancel,
-                                      child: Text('Back'))
+                                      child: Text(
+                                        'Back',
+                                        style: kStepperBack,
+                                      ))
                                 ],
                               ),
                           steps: <Step>[
                             Step(
+                                isActive: index == 0,
                                 content: Text("This is it"),
-                                title: Text('Personal Details')),
+                                title: Text('Personal Details',
+                                    style: kStepperTitle)),
                             Step(
+                                isActive: index == 1,
                                 content: Text("This is it again!"),
-                                title: Text('Contact Details'))
+                                title: Text(
+                                  'Contact Details',
+                                  style: kStepperTitle,
+                                ))
                           ])
                     ]))));
   }
