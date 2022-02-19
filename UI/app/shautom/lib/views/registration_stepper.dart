@@ -4,7 +4,7 @@ import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
 import 'package:shautom/views/components/logo.dart';
 
-class RegistrationStepper extends StatelessWidget {
+class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(
       {Key? key,
       required this.index,
@@ -18,6 +18,11 @@ class RegistrationStepper extends StatelessWidget {
   final VoidCallback stepCancelled;
   final VoidCallback stepContinued;
 
+  @override
+  State<RegistrationStepper> createState() => _RegistrationStepperState();
+}
+
+class _RegistrationStepperState extends State<RegistrationStepper> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -54,11 +59,11 @@ class RegistrationStepper extends StatelessWidget {
                             onTap: () => Navigator.pop(context),
                           )),
                       Stepper(
-                          currentStep: index,
+                          currentStep: widget.index,
                           type: StepperType.vertical,
-                          onStepTapped: (val) => stepTapped(val),
-                          onStepCancel: stepCancelled,
-                          onStepContinue: stepContinued,
+                          onStepTapped: (val) => widget.stepTapped(val),
+                          onStepCancel: widget.stepCancelled,
+                          onStepContinue: widget.stepContinued,
                           controlsBuilder: (BuildContext context,
                                   {VoidCallback? onStepContinue,
                                   VoidCallback? onStepCancel}) =>
@@ -77,12 +82,43 @@ class RegistrationStepper extends StatelessWidget {
                               ),
                           steps: <Step>[
                             Step(
-                                isActive: index == 0,
-                                content: Text("This is it"),
+                                isActive: widget.index == 0,
+                                content: Column(children: [
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        obscureText:
+                                            registrationFields[0].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[0].hintText,
+                                          icon: registrationFields[0].icon,
+                                        )),
+                                  ),
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        obscureText:
+                                            registrationFields[1].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[1].hintText,
+                                          icon: registrationFields[1].icon,
+                                        )),
+                                  )
+                                ]),
                                 title: Text('Personal Details',
                                     style: kStepperTitle)),
                             Step(
-                                isActive: index == 1,
+                                isActive: widget.index == 1,
                                 content: Text("This is it again!"),
                                 title: Text(
                                   'Contact Details',
