@@ -23,6 +23,14 @@ class RegistrationStepper extends StatefulWidget {
 }
 
 class _RegistrationStepperState extends State<RegistrationStepper> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -86,6 +94,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 content: Column(children: [
                                   TextFieldContainer(
                                     child: TextFormField(
+                                        controller: firstName,
                                         obscureText:
                                             registrationFields[0].hidden,
                                         decoration: new InputDecoration(
@@ -101,6 +110,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                   ),
                                   TextFieldContainer(
                                     child: TextFormField(
+                                        controller: lastName,
                                         obscureText:
                                             registrationFields[1].hidden,
                                         decoration: new InputDecoration(
