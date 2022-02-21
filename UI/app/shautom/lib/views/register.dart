@@ -14,7 +14,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   int _index = 0;
 
   void manageStepContinued() {
-    if (_index != 1) {
+    if (_index != 2) {
       setState(() {
         _index++;
       });

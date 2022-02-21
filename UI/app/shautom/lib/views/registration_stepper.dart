@@ -95,6 +95,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                   TextFieldContainer(
                                     child: TextFormField(
                                         controller: firstName,
+                                        textCapitalization:
+                                            TextCapitalization.words,
                                         obscureText:
                                             registrationFields[0].hidden,
                                         decoration: new InputDecoration(
@@ -105,12 +107,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                           //labelText: RegistrationFields[index].hintText,
                                           hintText:
                                               registrationFields[0].hintText,
-                                          icon: registrationFields[0].icon,
+                                          //icon: registrationFields[0].icon,
                                         )),
                                   ),
                                   TextFieldContainer(
                                     child: TextFormField(
                                         controller: lastName,
+                                        textCapitalization:
+                                            TextCapitalization.words,
                                         obscureText:
                                             registrationFields[1].hidden,
                                         decoration: new InputDecoration(
@@ -121,7 +125,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                           //labelText: RegistrationFields[index].hintText,
                                           hintText:
                                               registrationFields[1].hintText,
-                                          icon: registrationFields[1].icon,
+                                          //icon: registrationFields[1].icon,
                                         )),
                                   )
                                 ]),
@@ -129,11 +133,84 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                     style: kStepperTitle)),
                             Step(
                                 isActive: widget.index == 1,
-                                content: Text("This is it again!"),
+                                content: Column(children: [
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        controller: email,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        obscureText:
+                                            registrationFields[0].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[2].hintText,
+                                          //icon: registrationFields[2].icon,
+                                        )),
+                                  ),
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        keyboardType: TextInputType.phone,
+                                        controller: phoneNumber,
+                                        obscureText:
+                                            registrationFields[1].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[3].hintText,
+                                          //icon: registrationFields[3].icon,
+                                        )),
+                                  )
+                                ]),
                                 title: Text(
                                   'Contact Details',
                                   style: kStepperTitle,
-                                ))
+                                )),
+                            Step(
+                                isActive: widget.index == 2,
+                                title: Text('Password Settings'),
+                                content: Column(children: [
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        controller: password,
+                                        obscureText:
+                                            registrationFields[4].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[4].hintText,
+                                          //icon: registrationFields[4].icon,
+                                        )),
+                                  ),
+                                  TextFieldContainer(
+                                    child: TextFormField(
+                                        controller: confirmPassword,
+                                        obscureText:
+                                            registrationFields[5].hidden,
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          //labelText: RegistrationFields[index].hintText,
+                                          hintText:
+                                              registrationFields[5].hintText,
+                                          //icon: registrationFields[5].icon,
+                                        )),
+                                  )
+                                ]))
                           ])
                     ]))));
   }
