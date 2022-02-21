@@ -210,7 +210,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                           //icon: registrationFields[5].icon,
                                         )),
                                   )
-                                ]))
+                                ])),
+                            Step(
+                                content: Container(
+                                  child: Text('Registration complete'),
+                                ),
+                                title: Text('Register'))
                           ])
                     ]))));
   }
