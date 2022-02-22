@@ -21,7 +21,10 @@ class _LoginPageState extends State<LoginPage> {
     1: TextEditingController()
   };
 
-  //final List<Function> _validators = [validateUser, validatePassword];
+  final List<String? Function(String?)> _validators = [
+    validateUser,
+    validatePassword
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,61 +74,86 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),*/
                     Container(
-                      width: size.width * 0.8,
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ListView.separated(
-                                  //reverse: true,
-                                  shrinkWrap: true,
-                                  physics: ScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: loginFields.length,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          SizedBox(height: size.height * 0.05),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return TextFieldContainer(
-                                        child: TextFormField(
-                                      controller: _controllers[index],
-                                      obscureText: loginFields[index].hidden,
-                                      validator: _validators[index],
-                                      decoration: new InputDecoration(
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        //labelText: LoginFields[index].hintText,
-                                        hintText: loginFields[index].hintText,
-                                        icon: loginFields[index].icon,
-                                      ),
-                                    ));
-                                  }),
-                            ],
+                        width: size.width * 0.8,
+                        child: Form(
+                          key: _formKey,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                ListView.separated(
+                                    //reverse: true,
+                                    shrinkWrap: true,
+                                    physics: ScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: loginFields.length,
+                                    separatorBuilder: (BuildContext context,
+                                            int index) =>
+                                        SizedBox(height: size.height * 0.05),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return TextFormField(
+                                        controller: _controllers[index],
+                                        obscureText: loginFields[index].hidden,
+                                        //autovalidateMode: ,
+                                        validator: _validators[index],
+                                        decoration: new InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color:
+                                                      Colors.lightBlueAccent),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderSide:
+                                                  BorderSide(color: Colors.red),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          //labelText: LoginFields[index].hintText,
+                                          labelText:
+                                              loginFields[index].hintText,
+                                          icon: loginFields[index].icon,
+                                        ),
+                                      );
+                                    }),
+                                SizedBox(height: size.height * 0.05),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.01),
+                                    width: size.width * 0.6,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          // Show dummy snackbar
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Processing login request')),
+                                          );
+                                          print("User processing");
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Color(0xFF3F51B5),
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40))),
+                                      child: Text("Log In",
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          )),
+                                    )),
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    Container(
-                        padding: EdgeInsets.only(bottom: size.height * 0.01),
-                        width: size.width * 0.6,
-                        child: ElevatedButton(
-                          onPressed: () => print("Button pressed"),
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF3F51B5),
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40)),
-                          ),
-                          child: Text("Log In",
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                                fontSize: 16,
-                              )),
                         )),
                     SizedBox(height: size.height * 0.01),
                     Row(

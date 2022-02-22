@@ -9,7 +9,7 @@ const Map<String, TextInputType?> _inputTypes = {
 };
 
 String? validateUser(String? value) {
-  if (value == null) {
+  if (value == null || value.isEmpty) {
     return "Username can not be empty!";
   } else {
     return null;
@@ -17,12 +17,16 @@ String? validateUser(String? value) {
 }
 
 String? validatePassword(String? val) {
-  if (val == null) {
+  if (val == null || val.isEmpty) {
     return "Password must not be empty!";
+  } else if (val.length < 6) {
+    return "Password must be 6+ characters long!";
   } else {
     return null;
   }
 }
+
+//final List<Function> _validators = [validateUser, validatePassword];
 
 class TextFieldItem {
   final String hintText;
@@ -57,7 +61,7 @@ List<TextFieldItem> registrationFields = <TextFieldItem>[
 ];
 
 List<TextFieldItem> loginFields = <TextFieldItem>[
-  TextFieldItem("Username/Email",
+  TextFieldItem("Email",
       ImageIcon(Svg('assets/images/icons/user.svg', color: Color(0xFF3F51B5))),
       kType: _inputTypes['email']),
   TextFieldItem("Password",
