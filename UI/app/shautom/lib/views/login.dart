@@ -16,6 +16,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final Map<int, TextEditingController> _controllers = {
+    0: TextEditingController(),
+    1: TextEditingController()
+  };
 
   //final List<Function> _validators = [validateUser, validatePassword];
 
@@ -86,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                                       (BuildContext context, int index) {
                                     return TextFieldContainer(
                                         child: TextFormField(
+                                      controller: _controllers[index],
                                       obscureText: loginFields[index].hidden,
                                       validator: _validators[index],
                                       decoration: new InputDecoration(
