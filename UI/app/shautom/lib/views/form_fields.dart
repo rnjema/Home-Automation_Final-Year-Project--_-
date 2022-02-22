@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:shautom/views/containers.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-const Map<String, TextInputType?> _inputTypes = {
+const Map<String, TextInputType> _inputTypes = {
   'email': TextInputType.emailAddress,
   'phone': TextInputType.phone,
   'default': TextInputType.text
@@ -14,6 +14,18 @@ String? validateUser(String? value) {
   } else {
     return null;
   }
+}
+
+String? validateEmail(String? value) {
+  String pattern =
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+      r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+      r"{0,253}[a-zA-Z0-9])?)*$";
+  RegExp regex = RegExp(pattern);
+  if (value == null || value.isEmpty || !regex.hasMatch(value)) {
+    return 'Enter a valid email address';
+  } else
+    return null;
 }
 
 String? validatePassword(String? val) {
@@ -32,7 +44,7 @@ class TextFieldItem {
   final String hintText;
   final ImageIcon icon;
   final bool hidden;
-  final TextInputType? kType;
+  final TextInputType kType;
 
   // With default hidden value
   const TextFieldItem(this.hintText, this.icon,
@@ -46,12 +58,12 @@ List<TextFieldItem> registrationFields = <TextFieldItem>[
       ImageIcon(Svg('assets/images/icons/user.svg', color: Color(0xFF3F51B5)))),
   TextFieldItem("Email",
       ImageIcon(Svg('assets/images/icons/email.svg', color: Color(0xFF3F51B5))),
-      kType: _inputTypes['email']),
+      kType: _inputTypes['email'] as TextInputType),
   TextFieldItem(
       "Phone",
       ImageIcon(
           Svg('assets/images/icons/telephone.svg', color: Color(0xFF3F51B5))),
-      kType: _inputTypes['phone']),
+      kType: _inputTypes['phone'] as TextInputType),
   TextFieldItem("Password",
       ImageIcon(Svg('assets/images/icons/key.svg', color: Color(0xFF3F51B5))),
       hidden: true),
@@ -63,7 +75,7 @@ List<TextFieldItem> registrationFields = <TextFieldItem>[
 List<TextFieldItem> loginFields = <TextFieldItem>[
   TextFieldItem("Email",
       ImageIcon(Svg('assets/images/icons/user.svg', color: Color(0xFF3F51B5))),
-      kType: _inputTypes['email']),
+      kType: _inputTypes['email'] as TextInputType),
   TextFieldItem("Password",
       ImageIcon(Svg('assets/images/icons/key.svg', color: Color(0xFF3F51B5))),
       hidden: true),
