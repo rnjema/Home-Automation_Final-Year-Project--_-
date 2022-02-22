@@ -24,12 +24,12 @@ class RegistrationStepper extends StatefulWidget {
 
 class _RegistrationStepperState extends State<RegistrationStepper> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
-  final email = TextEditingController();
-  final phoneNumber = TextEditingController();
-  final password = TextEditingController();
-  final confirmPassword = TextEditingController();
+  final _firstName = TextEditingController();
+  final _lastName = TextEditingController();
+  final _email = TextEditingController();
+  final _phoneNumber = TextEditingController();
+  final _password = TextEditingController();
+  final _confirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 content: Column(children: [
                                   TextFieldContainer(
                                     child: TextFormField(
-                                        controller: firstName,
+                                        controller: _firstName,
                                         textCapitalization:
                                             TextCapitalization.words,
                                         obscureText:
@@ -111,7 +111,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                   ),
                                   TextFieldContainer(
                                     child: TextFormField(
-                                        controller: lastName,
+                                        controller: _lastName,
                                         textCapitalization:
                                             TextCapitalization.words,
                                         obscureText:
@@ -135,7 +135,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 content: Column(children: [
                                   TextFieldContainer(
                                     child: TextFormField(
-                                        controller: email,
+                                        controller: _email,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         obscureText:
@@ -154,7 +154,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                   TextFieldContainer(
                                     child: TextFormField(
                                         keyboardType: TextInputType.phone,
-                                        controller: phoneNumber,
+                                        controller: _phoneNumber,
                                         obscureText:
                                             registrationFields[1].hidden,
                                         decoration: new InputDecoration(
@@ -175,11 +175,11 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 )),
                             Step(
                                 isActive: widget.index == 2,
-                                title: Text('Password Settings'),
+                                title: Text('_Password Settings'),
                                 content: Column(children: [
                                   TextFieldContainer(
                                     child: TextFormField(
-                                        controller: password,
+                                        controller: _password,
                                         obscureText:
                                             registrationFields[4].hidden,
                                         decoration: new InputDecoration(
@@ -195,7 +195,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                   ),
                                   TextFieldContainer(
                                     child: TextFormField(
-                                        controller: confirmPassword,
+                                        controller: _confirmPassword,
                                         obscureText:
                                             registrationFields[5].hidden,
                                         decoration: new InputDecoration(
