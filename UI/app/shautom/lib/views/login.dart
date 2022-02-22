@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   };
 
   final List<String? Function(String?)> _validators = [
-    validateUser,
+    validateEmail,
     validatePassword
   ];
 
@@ -92,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return TextFormField(
+                                        keyboardType: loginFields[index].kType,
                                         controller: _controllers[index],
                                         obscureText: loginFields[index].hidden,
                                         //autovalidateMode: ,
