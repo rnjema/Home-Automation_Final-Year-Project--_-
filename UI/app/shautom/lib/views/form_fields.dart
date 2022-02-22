@@ -8,6 +8,22 @@ const Map<String, TextInputType?> _inputTypes = {
   'default': TextInputType.text
 };
 
+String? validateUser(String? value) {
+  if (value == null) {
+    return "Username can not be empty!";
+  } else {
+    return null;
+  }
+}
+
+String? validatePassword(String? val) {
+  if (val == null) {
+    return "Password must not be empty!";
+  } else {
+    return null;
+  }
+}
+
 class TextFieldItem {
   final String hintText;
   final ImageIcon icon;

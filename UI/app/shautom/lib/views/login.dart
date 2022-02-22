@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
     1: TextEditingController()
   };
 
+  //final List<Function> _validators = [validateUser, validatePassword];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -90,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                         child: TextFormField(
                                       controller: _controllers[index],
                                       obscureText: loginFields[index].hidden,
+                                      validator: _validators[index],
                                       decoration: new InputDecoration(
                                         border: InputBorder.none,
                                         enabledBorder: InputBorder.none,
