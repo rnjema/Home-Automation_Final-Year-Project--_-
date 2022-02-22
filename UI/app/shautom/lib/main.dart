@@ -7,7 +7,7 @@ void main() {
     theme: ThemeData(
         fontFamily: 'Poppins',
         primaryColor: Colors.white,
-        accentColor: Colors.blue),
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.blue)),
     home: HomePage(),
   ));
 }
