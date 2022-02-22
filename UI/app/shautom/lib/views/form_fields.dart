@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 //import 'package:shautom/views/containers.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
+String? validateUser(String? value) {
+  if (value == null) {
+    return "Username can not be empty!";
+  } else {
+    return null;
+  }
+}
+
+String? validatePassword(String? val) {
+  if (val == null) {
+    return "Password must not be empty!";
+  } else {
+    return null;
+  }
+}
+
 class TextFieldItem {
   final String hintText;
   final ImageIcon icon;

@@ -17,6 +17,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //final List<Function> _validators = [validateUser, validatePassword];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -85,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                     return TextFieldContainer(
                                         child: TextFormField(
                                       obscureText: loginFields[index].hidden,
+                                      validator: _validators[index],
                                       decoration: new InputDecoration(
                                         border: InputBorder.none,
                                         enabledBorder: InputBorder.none,
