@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:shautom/views/home.dart';
 import 'package:shautom/views/welcome.dart';
@@ -11,14 +13,28 @@ void main() async {
   await Firebase.initializeApp(
       //options : DefaultFirebaseOptions.currentPlatform,
       );
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-        fontFamily: 'Poppins',
-        primaryColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.blue)),
-    home: MainPage(),
-  ));
+  runApp(MiHome());
+}
+
+class MiHome extends StatelessWidget {
+  static final String title = "MiHome - SHAUTOM";
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<
+      NavigatorState>(); // Navigator key for handling routes and app navigation
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      navigatorKey: _navigatorKey,
+      theme: ThemeData(
+          fontFamily: 'Poppins',
+          primaryColor: Colors.white,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.blue)),
+      home: MainPage(),
+    );
+  }
 }
 
 class MainPage extends StatelessWidget {
@@ -28,7 +44,12 @@ class MainPage extends StatelessWidget {
         body: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Something went wrong!')));
+              } else if (snapshot.hasData) {
                 return HomePage();
               } else {
                 return WelcomePage();
