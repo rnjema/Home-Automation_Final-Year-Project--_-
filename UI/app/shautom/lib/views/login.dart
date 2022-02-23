@@ -29,15 +29,27 @@ class _LoginPageState extends State<LoginPage> {
   ];
 
   Future loginUser() async {
+    // show dialog on fetching and verifying user credentials
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
+
     if (_formKey.currentState!.validate()) {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        //handling nulls and castin
-        email: _controllers[0]?.text.trim() as String,
-        password: _controllers[1]?.text.trim() as String,
-      );
-      print('User loggen in!');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          //handling nulls and castin
+          email: _controllers[0]?.text.trim() as String,
+          password: _controllers[1]?.text.trim() as String,
+        );
+        print('User loggen in!');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } on FirebaseAuthException catch (e) {
+        print(e);
+      }
+
+      _navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
   }
 
