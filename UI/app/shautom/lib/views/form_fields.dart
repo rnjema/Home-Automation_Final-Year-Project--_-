@@ -67,16 +67,20 @@ List<TextFieldItem> registrationFields = <TextFieldItem>[
   TextFieldItem("Password",
       ImageIcon(Svg('assets/images/icons/key.svg', color: Color(0xFF3F51B5))),
       hidden: true),
-  TextFieldItem("Confirm Password",
-      ImageIcon(Svg('assets/images/icons/key.svg', color: Color(0xFF3F51B5))),
+  TextFieldItem(
+      "Confirm Password",
+      ImageIcon(
+          Svg('assets/images/icons/key_str.svg', color: Color(0xFF3F51B5))),
       hidden: true),
 ];
 
 List<TextFieldItem> loginFields = <TextFieldItem>[
   TextFieldItem("Email",
-      ImageIcon(Svg('assets/images/icons/user.svg', color: Color(0xFF3F51B5))),
+      ImageIcon(Svg('assets/images/icons/email.svg', color: Color(0xFF3F51B5))),
       kType: _inputTypes['email'] as TextInputType),
-  TextFieldItem("Password",
-      ImageIcon(Svg('assets/images/icons/key.svg', color: Color(0xFF3F51B5))),
+  TextFieldItem(
+      "Password",
+      ImageIcon(
+          Svg('assets/images/icons/key_str.svg', color: Color(0xFF3F51B5))),
       hidden: true),
 ];
