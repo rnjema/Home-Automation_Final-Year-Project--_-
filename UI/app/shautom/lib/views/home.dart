@@ -16,12 +16,39 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: size.height,
                 padding: EdgeInsets.symmetric(
-                    horizontal: 20, vertical: size.height * 0.01),
+                    horizontal: 5, vertical: size.height * 0.005),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Center(child: Text("Hello ${user.uid}"))
+                      Row(
+                        children: [
+                          Flexible(
+                              child: RichText(
+                            text: TextSpan(children: <InlineSpan>[
+                              TextSpan(
+                                  text: "Signed in as user with email:",
+                                  style: TextStyle(color: Colors.black)),
+                              TextSpan(
+                                  text: "${user.email}",
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontStyle: FontStyle.italic))
+                            ]),
+                          )),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: new IconButton(
+                              icon: ImageIcon(
+                                  Svg('assets/images/icons/logout (1).svg')),
+                              onPressed: () => {
+                                FirebaseAuth.instance.signOut(),
+                              },
+                              padding: EdgeInsets.only(top: 0),
+                            ),
+                          ),
+                        ],
+                      )
                     ]))),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Color(0xFF3F51B5),
