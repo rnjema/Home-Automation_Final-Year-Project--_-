@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: size.height,
                 padding: EdgeInsets.symmetric(
-                    horizontal: 5, vertical: size.height * 0.005),
+                    horizontal: 2, vertical: size.height * 0.005),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                               onPressed: () => {
                                 FirebaseAuth.instance.signOut(),
                               },
-                              padding: EdgeInsets.only(top: 0),
+                              padding: EdgeInsets.only(top: 0, right: 0),
                             ),
                           ),
                         ],
