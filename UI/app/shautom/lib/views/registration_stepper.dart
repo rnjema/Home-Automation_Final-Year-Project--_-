@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+
 import 'package:shautom/constants.dart';
-import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
-import 'package:shautom/views/components/logo.dart';
 
 class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(
@@ -167,8 +167,10 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                         //icon: registrationFields[2].icon,
                                       )),
                                   SizedBox(height: size.height * 0.01),
-                                  TextFormField(
+                                  IntlPhoneField(
                                       keyboardType: TextInputType.phone,
+                                      initialCountryCode: 'MW',
+                                      readOnly: false,
                                       controller: _phoneNumber,
                                       obscureText: registrationFields[1].hidden,
                                       decoration: new InputDecoration(
