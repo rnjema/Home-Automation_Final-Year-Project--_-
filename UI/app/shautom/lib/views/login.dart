@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shautom/views/components/logo.dart';
-import 'package:shautom/views/containers.dart';
 import 'package:shautom/views/form_fields.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:shautom/views/register.dart';
+
+import 'package:shautom/views/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -25,6 +27,19 @@ class _LoginPageState extends State<LoginPage> {
     validateEmail,
     validatePassword
   ];
+
+  Future loginUser() async {
+    if (_formKey.currentState!.validate()) {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        //handling nulls and castin
+        email: _controllers[0]?.text.trim() as String,
+        password: _controllers[1]?.text.trim() as String,
+      );
+      print('User loggen in!');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,18 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                                         bottom: size.height * 0.01),
                                     width: size.width * 0.6,
                                     child: ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          // Show dummy snackbar
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content: Text(
-                                                    'Processing login request')),
-                                          );
-                                          print("User processing");
-                                        }
-                                      },
+                                      onPressed: loginUser,
                                       style: ElevatedButton.styleFrom(
                                           primary: Color(0xFF3F51B5),
                                           shape: new RoundedRectangleBorder(
@@ -217,3 +221,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+/**
+ () {
+                                        
+                                      } 
+*/
