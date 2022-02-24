@@ -9,14 +9,12 @@ class MonitorPage extends StatelessWidget {
         appBar: AppBar(
           //shape: ShapeBorder.lerp(a, b, t),
           title: Text(
-            'miHome : Monitoring Dashboard',
+            'Monitoring Dashboard',
             style: TextStyle(),
           ),
           backgroundColor: Color(0xFF3F51B5),
         ),
-        body: Column(
-          children: <Widget>[LogoWidget()],
-        ),
+        body: Container(),
       ),
     );
   }
