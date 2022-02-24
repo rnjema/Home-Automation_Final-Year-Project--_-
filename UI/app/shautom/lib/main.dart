@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:shautom/views/home.dart';
 import 'package:shautom/views/welcome.dart';
@@ -18,7 +16,7 @@ void main() async {
 
 class MiHome extends StatelessWidget {
   static final String title = "MiHome - SHAUTOM";
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<
       NavigatorState>(); // Navigator key for handling routes and app navigation
 
   @override
@@ -26,7 +24,7 @@ class MiHome extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
-      navigatorKey: _navigatorKey,
+      navigatorKey: navigatorKey,
       theme: ThemeData(
           fontFamily: 'Poppins',
           primaryColor: Colors.white,
@@ -47,8 +45,8 @@ class MainPage extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Something went wrong!')));
+                return ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Something went wrong!'))) as Widget;
               } else if (snapshot.hasData) {
                 return HomePage();
               } else {

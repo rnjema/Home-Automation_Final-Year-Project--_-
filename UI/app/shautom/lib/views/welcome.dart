@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shautom/views/components/logo.dart';
-import 'package:shautom/views/register.dart';
-import 'package:shautom/views/login.dart';
+import 'package:shautom/views/auth/register.dart';
+import 'package:shautom/views/auth/login.dart';
 
 class WelcomePage extends StatelessWidget {
   @override

@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shautom/views/components/logo.dart';
-import 'package:shautom/views/form_fields.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:shautom/views/register.dart';
+import 'package:shautom/views/auth/form_fields.dart';
+import 'package:shautom/views/auth/register.dart';
 
 import 'package:shautom/views/home.dart';
+
+import 'package:shautom/main.dart' show MiHome;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         print(e);
       }
 
-      _navigatorKey.currentState!.popUntil((route) => route.isFirst);
+      MiHome().navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
   }
 
