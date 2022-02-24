@@ -98,6 +98,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                       content: Column(children: [
                                         TextFormField(
                                             controller: _firstName,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Please provide first name!";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             textCapitalization:
                                                 TextCapitalization.words,
                                             obscureText:
@@ -127,6 +134,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                         SizedBox(height: size.height * 0.01),
                                         TextFormField(
                                             controller: _lastName,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Please provide last name!";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             textCapitalization:
                                                 TextCapitalization.words,
                                             obscureText:
@@ -161,10 +175,10 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                       content: Column(children: [
                                         TextFormField(
                                             controller: _email,
+                                            validator: validateEmail,
                                             keyboardType:
                                                 TextInputType.emailAddress,
-                                            obscureText:
-                                                registrationFields[0].hidden,
+                                            obscureText: false,
                                             decoration: new InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -193,8 +207,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                             initialCountryCode: 'MW',
                                             readOnly: false,
                                             controller: _phoneNumber,
-                                            obscureText:
-                                                registrationFields[1].hidden,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Please specify mobile number!";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            obscureText: false,
                                             decoration: new InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -292,7 +312,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                       title: Text('Register'))
                                 ]),
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final firstName = _firstName.text.trim();
+                                    final lastName = _lastName.text.trim();
+
+                                    print("Welcome $firstName $lastName");
+                                  }
+                                },
                                 child: Text('Register New User')),
                           ],
                         ),
