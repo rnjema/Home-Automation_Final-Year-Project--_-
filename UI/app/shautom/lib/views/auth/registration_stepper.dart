@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 import 'package:shautom/constants.dart';
-import 'package:shautom/views/form_fields.dart';
+import 'package:shautom/views/auth/form_fields.dart';
 
 class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(
@@ -66,194 +66,237 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                             ]),
                             onTap: () => Navigator.pop(context),
                           )),
-                      Stepper(
-                          currentStep: widget.index,
-                          type: StepperType.vertical,
-                          onStepTapped: (val) => widget.stepTapped(val),
-                          onStepCancel: widget.stepCancelled,
-                          onStepContinue: widget.stepContinued,
-                          controlsBuilder: (BuildContext context,
-                                  ControlsDetails details) =>
-                              Row(
-                                children: <Widget>[
-                                  TextButton(
-                                      onPressed: details.onStepContinue,
-                                      child: Text('Next', style: kStepperNext)),
-                                  TextButton(
-                                      onPressed: details.onStepCancel,
-                                      child: Text(
-                                        'Back',
-                                        style: kStepperBack,
-                                      ))
-                                ],
-                              ),
-                          steps: <Step>[
-                            Step(
-                                isActive: widget.index == 0,
-                                content: Column(children: [
-                                  TextFormField(
-                                      controller: _firstName,
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      obscureText: registrationFields[0].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[0].hintText,
-                                        //icon: registrationFields[0].icon,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Stepper(
+                                currentStep: widget.index,
+                                type: StepperType.vertical,
+                                onStepTapped: (val) => widget.stepTapped(val),
+                                onStepCancel: widget.stepCancelled,
+                                onStepContinue: widget.stepContinued,
+                                controlsBuilder: (BuildContext context,
+                                        ControlsDetails details) =>
+                                    Row(
+                                      children: <Widget>[
+                                        TextButton(
+                                            onPressed: details.onStepContinue,
+                                            child: Text('Next',
+                                                style: kStepperNext)),
+                                        TextButton(
+                                            onPressed: details.onStepCancel,
+                                            child: Text(
+                                              'Back',
+                                              style: kStepperBack,
+                                            ))
+                                      ],
+                                    ),
+                                steps: <Step>[
+                                  Step(
+                                      isActive: widget.index == 0,
+                                      content: Column(children: [
+                                        TextFormField(
+                                            controller: _firstName,
+                                            textCapitalization:
+                                                TextCapitalization.words,
+                                            obscureText:
+                                                registrationFields[0].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[0]
+                                                  .hintText,
+                                              //icon: registrationFields[0].icon,
+                                            )),
+                                        SizedBox(height: size.height * 0.01),
+                                        TextFormField(
+                                            controller: _lastName,
+                                            textCapitalization:
+                                                TextCapitalization.words,
+                                            obscureText:
+                                                registrationFields[1].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[1]
+                                                  .hintText,
+                                              //icon: registrationFields[1].icon,
+                                            ))
+                                      ]),
+                                      title: Text('Personal Details',
+                                          style: kStepperTitle)),
+                                  Step(
+                                      isActive: widget.index == 1,
+                                      content: Column(children: [
+                                        TextFormField(
+                                            controller: _email,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            obscureText:
+                                                registrationFields[0].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[2]
+                                                  .hintText,
+                                              //icon: registrationFields[2].icon,
+                                            )),
+                                        SizedBox(height: size.height * 0.01),
+                                        IntlPhoneField(
+                                            keyboardType: TextInputType.phone,
+                                            initialCountryCode: 'MW',
+                                            readOnly: false,
+                                            controller: _phoneNumber,
+                                            obscureText:
+                                                registrationFields[1].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[3]
+                                                  .hintText,
+                                              //icon: registrationFields[3].icon,
+                                            ))
+                                      ]),
+                                      title: Text(
+                                        'Contact Details',
+                                        style: kStepperTitle,
                                       )),
-                                  SizedBox(height: size.height * 0.01),
-                                  TextFormField(
-                                      controller: _lastName,
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      obscureText: registrationFields[1].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[1].hintText,
-                                        //icon: registrationFields[1].icon,
-                                      ))
+                                  Step(
+                                      isActive: widget.index == 2,
+                                      title: Text(
+                                        'Password Settings',
+                                        style: TextStyle(
+                                            textBaseline:
+                                                TextBaseline.alphabetic),
+                                      ),
+                                      content: Column(children: [
+                                        TextFormField(
+                                            controller: _password,
+                                            obscureText:
+                                                registrationFields[4].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[4]
+                                                  .hintText,
+                                              //icon: registrationFields[4].icon,
+                                            )),
+                                        SizedBox(height: size.height * 0.01),
+                                        TextFormField(
+                                            controller: _confirmPassword,
+                                            obscureText:
+                                                registrationFields[5].hidden,
+                                            decoration: new InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              //labelText: RegistrationFields[index].hintText,
+                                              labelText: registrationFields[5]
+                                                  .hintText,
+                                              //icon: registrationFields[5].icon,
+                                            ))
+                                      ])),
+                                  Step(
+                                      content: Container(
+                                        child: Text('Registration complete'),
+                                      ),
+                                      title: Text('Register'))
                                 ]),
-                                title: Text('Personal Details',
-                                    style: kStepperTitle)),
-                            Step(
-                                isActive: widget.index == 1,
-                                content: Column(children: [
-                                  TextFormField(
-                                      controller: _email,
-                                      keyboardType: TextInputType.emailAddress,
-                                      obscureText: registrationFields[0].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[2].hintText,
-                                        //icon: registrationFields[2].icon,
-                                      )),
-                                  SizedBox(height: size.height * 0.01),
-                                  IntlPhoneField(
-                                      keyboardType: TextInputType.phone,
-                                      initialCountryCode: 'MW',
-                                      readOnly: false,
-                                      controller: _phoneNumber,
-                                      obscureText: registrationFields[1].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[3].hintText,
-                                        //icon: registrationFields[3].icon,
-                                      ))
-                                ]),
-                                title: Text(
-                                  'Contact Details',
-                                  style: kStepperTitle,
-                                )),
-                            Step(
-                                isActive: widget.index == 2,
-                                title: Text(
-                                  'Password Settings',
-                                  style: TextStyle(
-                                      textBaseline: TextBaseline.alphabetic),
-                                ),
-                                content: Column(children: [
-                                  TextFormField(
-                                      controller: _password,
-                                      obscureText: registrationFields[4].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[4].hintText,
-                                        //icon: registrationFields[4].icon,
-                                      )),
-                                  SizedBox(height: size.height * 0.01),
-                                  TextFormField(
-                                      controller: _confirmPassword,
-                                      obscureText: registrationFields[5].hidden,
-                                      decoration: new InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        //labelText: RegistrationFields[index].hintText,
-                                        labelText:
-                                            registrationFields[5].hintText,
-                                        //icon: registrationFields[5].icon,
-                                      ))
-                                ])),
-                            Step(
-                                content: Container(
-                                  child: Text('Registration complete'),
-                                ),
-                                title: Text('Register'))
-                          ])
+                            ElevatedButton(
+                                onPressed: () {},
+                                child: Text('Register New User')),
+                          ],
+                        ),
+                      )
                     ]))));
   }
 }
