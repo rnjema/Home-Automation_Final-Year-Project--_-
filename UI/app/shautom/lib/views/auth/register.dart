@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shautom/views/registration_stepper.dart';
+import 'package:shautom/views/auth/registration_stepper.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({
