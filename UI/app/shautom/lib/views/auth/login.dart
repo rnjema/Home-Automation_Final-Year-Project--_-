@@ -24,6 +24,14 @@ class _LoginPageState extends State<LoginPage> {
     1: TextEditingController()
   };
 
+  bool _isVisible = false;
+
+  void _setVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
   final List<String? Function(String?)> _validators = [
     validateEmail,
     validatePassword
@@ -50,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
         print(e);
       }
 
-      MiHome().navigatorKey.currentState!.popUntil((route) => route.isFirst);
+      MiHome().navigatorKey.currentState?.popUntil((route) => route.isFirst);
     }
   }
 
@@ -126,28 +134,35 @@ class _LoginPageState extends State<LoginPage> {
                                         //autovalidateMode: ,
                                         validator: _validators[index],
                                         decoration: new InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.lightBlueAccent),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          errorBorder: OutlineInputBorder(
-                                              borderSide:
-                                                  BorderSide(color: Colors.red),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          //labelText: LoginFields[index].hintText,
-                                          labelText:
-                                              loginFields[index].hintText,
-                                          icon: loginFields[index].icon,
-                                        ),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.lightBlueAccent),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            //labelText: LoginFields[index].hintText,
+                                            labelText:
+                                                loginFields[index].hintText,
+                                            icon: loginFields[index].icon,
+                                            suffixIcon: index == 0
+                                                ? null
+                                                : IconButton(
+                                                    icon: Icon(_isVisible
+                                                        ? Icons.visibility
+                                                        : Icons.visibility_off),
+                                                    onPressed: _setVisibility,
+                                                  )),
                                       );
                                     }),
                                 SizedBox(height: size.height * 0.05),
@@ -234,7 +249,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 /**
  () {
