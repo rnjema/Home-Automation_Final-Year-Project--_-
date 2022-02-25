@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
 import 'package:shautom/constants.dart';
 import 'package:shautom/views/auth/form_fields.dart';
+import 'package:shautom/views/home.dart';
+
+import '../../models/user.dart';
 
 class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(
@@ -30,6 +34,40 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   final _phoneNumber = TextEditingController();
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  postUserDetails() async {
+    FirebaseFirestore firestore =
+        FirebaseFirestore.instance; //Initializes firestore
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel(); //Inititializes user model
+
+    userModel.uid = user!.uid;
+    userModel.emailAddress = user!.email;
+    userModel.firstName = _firstName.text;
+    userModel.lastName = _lastName.text;
+    userModel.phoneNumber = _phoneNumber.text;
+
+    await firestore.collection("users").doc(user.uid).set(userModel.toMap());
+
+    print("Account Created");
+
+    Navigator.pushAndRemoveUntil((context),
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+  }
+
+  void _registerUser(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {postUserDetails()})
+          .catchError((e) {
+        print(e!.message);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +291,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                       content: Column(children: [
                                         TextFormField(
                                             controller: _password,
+                                            validator: validatePassword,
                                             obscureText:
                                                 registrationFields[4].hidden,
                                             decoration: new InputDecoration(
@@ -280,6 +319,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                         SizedBox(height: size.height * 0.01),
                                         TextFormField(
                                             controller: _confirmPassword,
+                                            validator: (value) {
+                                              if (value != _password.text) {
+                                                return "Passwords do not match!";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             obscureText:
                                                 registrationFields[5].hidden,
                                             decoration: new InputDecoration(
@@ -313,12 +359,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 ]),
                             ElevatedButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    final firstName = _firstName.text.trim();
-                                    final lastName = _lastName.text.trim();
-
-                                    print("Welcome $firstName $lastName");
-                                  }
+                                  _registerUser(_email.text, _password.text);
                                 },
                                 child: Text('Register New User')),
                           ],
