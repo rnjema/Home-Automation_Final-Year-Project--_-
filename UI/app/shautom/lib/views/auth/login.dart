@@ -130,7 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                                       return TextFormField(
                                         keyboardType: loginFields[index].kType,
                                         controller: _controllers[index],
-                                        obscureText: !_isVisible,
+                                        obscureText:
+                                            index == 0 ? false : !_isVisible,
                                         //autovalidateMode: ,
                                         validator: _validators[index],
                                         decoration: new InputDecoration(
