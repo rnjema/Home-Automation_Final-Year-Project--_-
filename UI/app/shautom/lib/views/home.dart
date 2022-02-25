@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:shautom/control.dart';
+import 'package:shautom/models/user.dart';
 import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
 
@@ -14,17 +16,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
+  User? _user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(_user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Media Device data config
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    final user = _auth.currentUser!;
-
-    void _signOut() async {
-      await _auth.signOut();
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => WelcomePage()));
-    }
 
     List<Widget> _pages = [
       Column(
@@ -37,10 +54,9 @@ class _HomePageState extends State<HomePage> {
                     child: RichText(
                   text: TextSpan(children: <InlineSpan>[
                     TextSpan(
-                        text: "Signed in as user with email:",
-                        style: TextStyle(color: Colors.black)),
+                        text: "Hello, ", style: TextStyle(color: Colors.black)),
                     TextSpan(
-                        text: "${user.email}",
+                        text: "${loggedInUser.firstName}",
                         style: TextStyle(
                             color: Colors.blueGrey,
                             fontStyle: FontStyle.italic))
