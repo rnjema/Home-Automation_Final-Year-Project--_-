@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                                       return TextFormField(
                                         keyboardType: loginFields[index].kType,
                                         controller: _controllers[index],
-                                        obscureText: loginFields[index].hidden,
+                                        obscureText: !_isVisible,
                                         //autovalidateMode: ,
                                         validator: _validators[index],
                                         decoration: new InputDecoration(
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                                             suffixIcon: index == 0
                                                 ? null
                                                 : IconButton(
-                                                    icon: Icon(_isVisible
+                                                    icon: Icon(!_isVisible
                                                         ? Icons.visibility
                                                         : Icons.visibility_off),
                                                     onPressed: _setVisibility,
