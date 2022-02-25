@@ -73,15 +73,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           onStepCancel: widget.stepCancelled,
                           onStepContinue: widget.stepContinued,
                           controlsBuilder: (BuildContext context,
-                                  {VoidCallback? onStepContinue,
-                                  VoidCallback? onStepCancel}) =>
+                                  ControlsDetails details) =>
                               Row(
                                 children: <Widget>[
                                   TextButton(
-                                      onPressed: onStepContinue,
+                                      onPressed: details.onStepContinue,
                                       child: Text('Next', style: kStepperNext)),
                                   TextButton(
-                                      onPressed: onStepCancel,
+                                      onPressed: details.onStepCancel,
                                       child: Text(
                                         'Back',
                                         style: kStepperBack,
