@@ -35,6 +35,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
 
+  String _fullContactNumber = "";
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   postUserDetails() async {
@@ -48,7 +50,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     userModel.emailAddress = user!.email;
     userModel.firstName = _firstName.text;
     userModel.lastName = _lastName.text;
-    userModel.phoneNumber = _phoneNumber.text;
+    userModel.phoneNumber = _fullContactNumber;
 
     await firestore.collection("users").doc(user.uid).set(userModel.toMap());
 
@@ -243,6 +245,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                         IntlPhoneField(
                                             keyboardType: TextInputType.phone,
                                             initialCountryCode: 'MW',
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _fullContactNumber =
+                                                    value.completeNumber;
+                                              });
+                                            },
                                             readOnly: false,
                                             controller: _phoneNumber,
                                             validator: (value) {
