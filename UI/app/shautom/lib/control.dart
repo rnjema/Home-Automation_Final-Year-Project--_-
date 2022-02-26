@@ -9,7 +9,7 @@ class ControlPage extends StatelessWidget {
           appBar: AppBar(
             //shape: ShapeBorder.lerp(a, b, t),
             title: Text(
-              'Control',
+              'Control Dashboard',
               style: TextStyle(),
             ),
             backgroundColor: Color(0xFF3F51B5),
