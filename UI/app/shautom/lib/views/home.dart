@@ -96,7 +96,8 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           onTap: _onItemTapped,
           currentIndex: _selectedIndex,
-          backgroundColor: Color(0xFF3F51B5),
+          backgroundColor: Colors.grey.withAlpha(50),
+          elevation: 0, //Color(0xFF3F51B5)
           iconSize: 30,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
