@@ -24,6 +24,14 @@ class _LoginPageState extends State<LoginPage> {
     1: TextEditingController()
   };
 
+  bool _isVisible = false;
+
+  void _setVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
   final List<String? Function(String?)> _validators = [
     validateEmail,
     validatePassword
@@ -122,32 +130,40 @@ class _LoginPageState extends State<LoginPage> {
                                       return TextFormField(
                                         keyboardType: loginFields[index].kType,
                                         controller: _controllers[index],
-                                        obscureText: loginFields[index].hidden,
+                                        obscureText:
+                                            index == 0 ? false : !_isVisible,
                                         //autovalidateMode: ,
                                         validator: _validators[index],
                                         decoration: new InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.lightBlueAccent),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          errorBorder: OutlineInputBorder(
-                                              borderSide:
-                                                  BorderSide(color: Colors.red),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          //labelText: LoginFields[index].hintText,
-                                          labelText:
-                                              loginFields[index].hintText,
-                                          icon: loginFields[index].icon,
-                                        ),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.lightBlueAccent),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            //labelText: LoginFields[index].hintText,
+                                            labelText:
+                                                loginFields[index].hintText,
+                                            icon: loginFields[index].icon,
+                                            suffixIcon: index == 0
+                                                ? null
+                                                : IconButton(
+                                                    icon: Icon(!_isVisible
+                                                        ? Icons.visibility
+                                                        : Icons.visibility_off),
+                                                    onPressed: _setVisibility,
+                                                  )),
                                       );
                                     }),
                                 SizedBox(height: size.height * 0.05),
@@ -234,7 +250,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 /**
  () {

@@ -12,7 +12,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
+  //int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
