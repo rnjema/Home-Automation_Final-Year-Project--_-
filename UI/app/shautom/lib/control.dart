@@ -16,13 +16,8 @@ class _ControlPageState extends State<ControlPage> {
           appBar: AppBar(
             //shape: ShapeBorder.lerp(a, b, t),
             title: Text(
-<<<<<<< HEAD
-              'Control',
-              style: TextStyle(color: Colors.blue),
-=======
               'Control Dashboard',
               style: TextStyle(),
->>>>>>> 1ff294cb9383136466a74e2f36564a5b85c16def
             ),
             backgroundColor: Colors.grey.withAlpha(50),
             elevation: 0, //Color(0xFF3F51B5)
