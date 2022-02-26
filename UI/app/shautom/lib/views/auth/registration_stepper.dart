@@ -92,16 +92,19 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           child: GestureDetector(
                             child: Row(children: [
                               Container(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                height: 16,
-                                child: Image(
-                                    image: AssetImage(
-                                        'assets/images/icons/back.png')),
-                              ),
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  height: 16,
+                                  child: Icon(
+                                    Icons.arrow_back_ios_new,
+                                    color: Color(0xFFC0B01D),
+                                  )),
                               Text(
                                 "Back",
                                 style: TextStyle(
-                                    fontSize: 18, color: Color(0xFFC0B01D)),
+                                    fontSize: 18,
+                                    color: Color(0xFFC0B01D),
+                                    textBaseline: TextBaseline.alphabetic,
+                                    height: 2),
                               )
                             ]),
                             onTap: () => Navigator.pop(context),
