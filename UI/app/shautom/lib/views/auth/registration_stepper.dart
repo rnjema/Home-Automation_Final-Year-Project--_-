@@ -47,7 +47,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     UserModel userModel = UserModel(); //Inititializes user model
 
     userModel.uid = user!.uid;
-    userModel.emailAddress = user!.email;
+    userModel.emailAddress = user.email;
     userModel.firstName = _firstName.text;
     userModel.lastName = _lastName.text;
     userModel.phoneNumber = _fullContactNumber;

@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     // show dialog on fetching and verifying user credentials
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) => Center(child: CircularProgressIndicator()));
 
     if (_formKey.currentState!.validate()) {
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           email: _controllers[0]?.text.trim() as String,
           password: _controllers[1]?.text.trim() as String,
         );
-        print('User loggen in!');
+        print('User logged in!');
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } on FirebaseAuthException catch (e) {
