@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shautom/constants.dart';
 import 'package:shautom/views/auth/form_fields.dart';
 import 'package:shautom/views/containers.dart';
-import 'package:shautom/views/form_fields.dart';
-import 'package:shautom/views/components/logo.dart';
+
 
 class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(

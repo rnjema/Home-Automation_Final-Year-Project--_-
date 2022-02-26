@@ -3,15 +3,15 @@ import 'package:shautom/views/components/logo.dart';
 import 'package:flutter/cupertino.dart';
 
 // ignore: camel_case_types
-class monitor extends StatefulWidget {
-  const monitor({ Key? key }) : super(key: key);
+class MonitorPage extends StatefulWidget {
+  const MonitorPage({Key? key}) : super(key: key);
 
   @override
-  _monitorState createState() => _monitorState();
+  _MonitorPageState createState() => _MonitorPageState();
 }
 
 // ignore: camel_case_types
-class _monitorState extends State<monitor> {
+class _MonitorPageState extends State<MonitorPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,7 +19,7 @@ class _monitorState extends State<monitor> {
         appBar: AppBar(
           //shape: ShapeBorder.lerp(a, b, t),
           title: Text(
-            'Monitoring Dashboard',
+            'Monitorng Dashboard',
             style: TextStyle(),
           ),
           backgroundColor: Color(0xFF3F51B5),
