@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  bool _isLoaded = false;
 
   User? _user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -35,7 +36,9 @@ class _HomePageState extends State<HomePage> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        _isLoaded = true;
+      });
     });
   }
 
@@ -52,17 +55,20 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    child: RichText(
-                  text: TextSpan(children: <InlineSpan>[
-                    TextSpan(
-                        text: "Hello, ", style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                        text: "${loggedInUser.firstName}",
-                        style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontStyle: FontStyle.italic))
-                  ]),
-                )),
+                  child: _isLoaded
+                      ? RichText(
+                          text: TextSpan(children: <InlineSpan>[
+                          TextSpan(
+                              text: "Hello, ",
+                              style: TextStyle(color: Colors.black)),
+                          TextSpan(
+                              text: "${loggedInUser.firstName}",
+                              style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontStyle: FontStyle.italic))
+                        ]))
+                      : Text('Loading...'),
+                ),
                 Align(
                   alignment: Alignment.topRight,
                   child: new IconButton(
