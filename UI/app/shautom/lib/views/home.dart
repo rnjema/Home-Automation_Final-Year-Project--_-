@@ -9,7 +9,61 @@ import 'package:shautom/profile.dart';
 
 import 'package:shautom/views/welcome.dart';
 
+class LandingPage extends StatelessWidget {
+  UserModel? user;
+  bool loaded;
+  VoidCallback logOut;
+
+  LandingPage({
+    Key? key,
+    required this.user,
+    required this.loaded,
+    required this.logOut,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: loaded
+                    ? RichText(
+                        text: TextSpan(children: <InlineSpan>[
+                        TextSpan(
+                            text: "Hello, ",
+                            style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                            text: "${user!.firstName}",
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontStyle: FontStyle.italic))
+                      ]))
+                    : Text('Loading...'),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: new IconButton(
+                  icon: ImageIcon(Svg('assets/images/icons/logout (1).svg')),
+                  onPressed: logOut,
+                  padding: EdgeInsets.only(top: 0, right: 0),
+                ),
+              ),
+            ],
+          )
+        ]);
+  }
+}
+
 class HomePage extends StatefulWidget {
+  HomePage({
+    Key? key,
+  }) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -42,45 +96,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  UserModel getUser() {
+    return this.loggedInUser;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Media Device data config
 
     List<Widget> _pages = [
-      Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: _isLoaded
-                      ? RichText(
-                          text: TextSpan(children: <InlineSpan>[
-                          TextSpan(
-                              text: "Hello, ",
-                              style: TextStyle(color: Colors.black)),
-                          TextSpan(
-                              text: "${loggedInUser.firstName}",
-                              style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontStyle: FontStyle.italic))
-                        ]))
-                      : Text('Loading...'),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: new IconButton(
-                    icon: ImageIcon(Svg('assets/images/icons/logout (1).svg')),
-                    onPressed: _signOut,
-                    padding: EdgeInsets.only(top: 0, right: 0),
-                  ),
-                ),
-              ],
-            )
-          ]),
-      ProfilePage(),
+      LandingPage(
+        loaded: _isLoaded,
+        logOut: _signOut,
+        user: loggedInUser,
+      ),
+      ProfilePage(
+        user: loggedInUser,
+      ),
       ControlPage(),
       MonitorPage()
     ];
