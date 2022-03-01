@@ -45,14 +45,6 @@ class LandingPage extends StatelessWidget {
                       ]))
                     : Text('Loading...'),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: new IconButton(
-                  icon: ImageIcon(Svg('assets/images/icons/logout (1).svg')),
-                  onPressed: logOut,
-                  padding: EdgeInsets.only(top: 0, right: 0),
-                ),
-              ),
             ],
           )
         ]);
@@ -126,12 +118,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         body: SafeArea(
-            child: Container(
-                width: double.infinity,
-                height: size.height,
-                padding: EdgeInsets.symmetric(
-                    horizontal: 2, vertical: size.height * 0.005),
-                child: _pages.elementAt(_selectedIndex))),
+            child: Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              new IconButton(
+                icon: Icon(Icons
+                    .logout_rounded), //ImageIcon(Svg('assets/images/icons/logout (1).svg')),
+                onPressed: _signOut,
+                padding: EdgeInsets.only(top: 0, right: 0),
+              ),
+            ]),
+            Center(child: _pages.elementAt(_selectedIndex)),
+          ],
+        )),
         bottomNavigationBar: BottomNavigationBar(
           onTap: _onItemTapped,
           currentIndex: _selectedIndex,

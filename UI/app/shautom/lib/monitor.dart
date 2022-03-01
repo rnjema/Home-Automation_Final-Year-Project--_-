@@ -5,17 +5,7 @@ class MonitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          //shape: ShapeBorder.lerp(a, b, t),
-          title: Text(
-            'Monitoring Dashboard',
-            style: TextStyle(),
-          ),
-          backgroundColor: Color(0xFF3F51B5),
-        ),
-        body: Container(),
-      ),
+      child: Container(),
     );
   }
 }
