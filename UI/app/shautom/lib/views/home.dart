@@ -33,16 +33,19 @@ class LandingPage extends StatelessWidget {
               Flexible(
                 child: loaded
                     ? RichText(
-                        text: TextSpan(children: <InlineSpan>[
-                        TextSpan(
-                            text: "Hello, ",
-                            style: TextStyle(color: Colors.black)),
-                        TextSpan(
-                            text: "${user!.firstName}",
+                        text: TextSpan(
                             style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontStyle: FontStyle.italic))
-                      ]))
+                                fontSize: 30, fontStyle: FontStyle.italic),
+                            children: <InlineSpan>[
+                            TextSpan(
+                                text: "Welcome, ",
+                                style: TextStyle(color: Colors.black)),
+                            TextSpan(
+                                text: "${user!.firstName}",
+                                style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontStyle: FontStyle.italic))
+                          ]))
                     : Text('Loading...'),
               ),
             ],
@@ -143,12 +146,11 @@ class _HomePageState extends State<HomePage> {
                 icon: ImageIcon(Svg('assets/images/icons/home.svg')),
                 label: 'Home'),
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                    Svg(
-                      'assets/images/icons/person.svg',
-                    ),
-                    size: 30),
-                label: 'Profile'),
+                icon: Icon(
+                  Icons.settings,
+                  size: 30,
+                ), //ImageIcon(Svg('assets/images/icons/person.svg',),ize: 30),
+                label: 'Settings'),
             BottomNavigationBarItem(
                 icon: ImageIcon(Svg('assets/images/icons/control.svg')),
                 label: "Control"),
