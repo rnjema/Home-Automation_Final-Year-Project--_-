@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:shautom/views/components/readings.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -14,20 +15,81 @@ class _MonitorPageState extends State<MonitorPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-        child: Container(
+        child: Column(
+      children: [
+        Row(children: [
+          Text("Temperature & Humidity"),
+        ]),
+        Divider(
+          thickness: 2,
+          color: Colors.black,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+            height: size.height * 0.6,
             child: GridView(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 40, right: 40),
+                padding: EdgeInsets.only(left: 10, right: 10),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 20),
                 physics: BouncingScrollPhysics(),
                 children: [
-          Container(child: TemperatureWidget(temperature: 25)),
-          Container(child: HumidityWidget(humidity: 25)),
-          Container(child: TemperatureWidget(temperature: 25)),
-          Container(child: HumidityWidget(humidity: 25)),
-        ])));
+                  GridTile(
+                    child: TemperatureWidget(temperature: 25),
+                    footer: Container(
+                      padding: EdgeInsets.all(0),
+                      child: GridTileBar(
+                        title: Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Text(
+                            "Temperature",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ),
+                        leading: CircleAvatar(
+                            backgroundColor: Colors.red,
+                            maxRadius: size.width * 0.02),
+                        subtitle: Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Text(
+                            "Okay",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GridTile(
+                      child: HumidityWidget(humidity: 25),
+                      footer: Container(
+                        padding: EdgeInsets.all(0),
+                        child: GridTileBar(
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Text(
+                              "Humidity",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
+                            ),
+                          ),
+                          leading: CircleAvatar(
+                              backgroundColor: Colors.red,
+                              maxRadius: size.width * 0.02),
+                          subtitle: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Okay",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      )),
+                ])),
+      ],
+    ));
   }
 }
