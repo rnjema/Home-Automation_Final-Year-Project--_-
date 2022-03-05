@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     // show dialog on fetching and verifying user credentials
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) => Center(child: CircularProgressIndicator()));
 
     if (_formKey.currentState!.validate()) {
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           email: _controllers[0]?.text.trim() as String,
           password: _controllers[1]?.text.trim() as String,
         );
-        print('User loggen in!');
+        print('User logged in!');
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } on FirebaseAuthException catch (e) {
@@ -79,15 +79,19 @@ class _LoginPageState extends State<LoginPage> {
                   child: GestureDetector(
                     child: Row(children: [
                       Container(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        height: 16,
-                        child: Image(
-                            image: AssetImage('assets/images/icons/back.png')),
-                      ),
+                          padding: const EdgeInsets.only(right: 8.0),
+                          height: 16,
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Color(0xFFC0B01D),
+                          )),
                       Text(
                         "Back",
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xFFC0B01D)),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFFC0B01D),
+                            textBaseline: TextBaseline.alphabetic,
+                            height: 2),
                       )
                     ]),
                     onTap: () => Navigator.pop(context),
@@ -130,7 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                                       return TextFormField(
                                         keyboardType: loginFields[index].kType,
                                         controller: _controllers[index],
-                                        obscureText: !_isVisible,
+                                        obscureText:
+                                            index == 0 ? false : !_isVisible,
                                         //autovalidateMode: ,
                                         validator: _validators[index],
                                         decoration: new InputDecoration(
