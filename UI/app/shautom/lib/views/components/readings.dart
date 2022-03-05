@@ -23,16 +23,31 @@ class ReadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return CircleAvatar(
-      backgroundColor: Colors.red.withAlpha(80),
-      minRadius: size.width * 0.15,
+    return Container(
+      padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 45),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.blue,
+            width: 4,
+          ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          )),
       child: CircleAvatar(
-        backgroundColor: Colors.white,
-        minRadius: size.width * 0.13,
-        child: Center(
-          child: Text(
-            "$reading $unit",
-            style: TextStyle(fontSize: size.height * 0.04),
+        backgroundColor: Colors.red.withAlpha(80),
+        minRadius: size.width * 0.15,
+        child: CircleAvatar(
+          backgroundColor: Colors.blue.withAlpha(100),
+          minRadius: size.width * 0.12,
+          child: Center(
+            child: Text(
+              "$reading $unit",
+              style: TextStyle(fontSize: size.height * 0.04),
+            ),
           ),
         ),
       ),
