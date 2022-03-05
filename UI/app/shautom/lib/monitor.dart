@@ -1,15 +1,50 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:shautom/views/components/readings.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class MonitorPage extends StatefulWidget {
+  MonitorPage({
+    Key? key,
+  }) : super(key: key);
+
   @override
   State<MonitorPage> createState() => _MonitorPageState();
 }
 
 class _MonitorPageState extends State<MonitorPage> {
-  final datasbaseRef = FirebaseDatabase.instance.ref();
+  int temperature = 25;
+  int humidity = 25;
+
+  late DatabaseReference _dhtRef;
+  late StreamSubscription<DatabaseEvent> _dhtSubscription;
+
+  Future<void> init() async {
+    _dhtRef = FirebaseDatabase.instance
+        .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/DHT22");
+    _dhtSubscription = _dhtRef.onValue.listen((DatabaseEvent evt) {
+      final data = evt.snapshot.value;
+      if (data != null) {
+        setState(() {
+          temperature = data['temperature'];
+          humidity = data['humidity'];
+        });
+      }
+    }, onError: () {});
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _dhtSubscription.cancel();
+    _dhtSubscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
