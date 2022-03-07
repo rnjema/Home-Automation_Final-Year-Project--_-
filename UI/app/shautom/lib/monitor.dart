@@ -13,8 +13,8 @@ class MonitorPage extends StatefulWidget {
 }
 
 class _MonitorPageState extends State<MonitorPage> {
-  double temperature = 25;
-  double humidity = 27;
+  int temperature = 25;
+  int humidity = 27;
 
   late DatabaseReference _dhtRef;
   late Stream<DatabaseEvent> _dhtStream;
@@ -36,8 +36,8 @@ class _MonitorPageState extends State<MonitorPage> {
         print(data);
 
         setState(() {
-          temperature = double.parse(data['temperature']);
-          humidity = double.parse(data['humidity']);
+          temperature = double.parse(data['temperature']).truncate();
+          humidity = double.parse(data['humidity']).truncate();
         });
       },
     );
