@@ -14,7 +14,9 @@ class MonitorPage extends StatefulWidget {
 
 class _MonitorPageState extends State<MonitorPage> {
   int temperature = 25;
-  int humidity = 27;
+  bool tempOkay = true;
+  bool humidityOkay = false;
+  int humidity = 30;
 
   late DatabaseReference _dhtRef;
   late Stream<DatabaseEvent> _dhtStream;
@@ -37,7 +39,9 @@ class _MonitorPageState extends State<MonitorPage> {
 
         setState(() {
           temperature = double.parse(data['temperature']).truncate();
+          tempOkay = temperature <= 25;
           humidity = double.parse(data['humidity']).truncate();
+          humidityOkay = humidity >= 30 && humidity <= 50;
         });
       },
     );
@@ -99,14 +103,18 @@ class _MonitorPageState extends State<MonitorPage> {
                           ),
                         ),
                         leading: CircleAvatar(
-                            backgroundColor: Colors.red,
+                            backgroundColor:
+                                tempOkay ? Colors.green : Colors.red,
                             maxRadius: size.width * 0.02),
                         subtitle: Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text(
-                            "Okay",
-                            style: TextStyle(color: Colors.black),
-                          ),
+                          child: tempOkay
+                              ? Text(
+                                  "Okay",
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              : Text("Critical",
+                                  style: TextStyle(color: Colors.black)),
                         ),
                       ),
                     ),
@@ -125,14 +133,18 @@ class _MonitorPageState extends State<MonitorPage> {
                             ),
                           ),
                           leading: CircleAvatar(
-                              backgroundColor: Colors.red,
+                              backgroundColor:
+                                  !humidityOkay ? Colors.red : Colors.green,
                               maxRadius: size.width * 0.02),
                           subtitle: Container(
                             margin: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Okay",
-                              style: TextStyle(color: Colors.black),
-                            ),
+                            child: humidityOkay
+                                ? Text(
+                                    "Okay",
+                                    style: TextStyle(color: Colors.black),
+                                  )
+                                : Text("Critical",
+                                    style: TextStyle(color: Colors.black)),
                           ),
                         ),
                       )),
@@ -155,13 +167,20 @@ class _MonitorPageState extends State<MonitorPage> {
         ),
         Divider(color: Colors.black),
         SizedBox(
-            height: size.height * 0.25,
-            child: Row(
-              children: [
-                ElevatedButton(
-                    onPressed: getData, child: Text("Get data once!"))
-              ],
-            )),
+          height: size.height * 0.25,
+          child: Container(
+            child: CircleAvatar(
+              minRadius: size.width * 0.25,
+              backgroundColor: Colors.blue.withOpacity(0.8),
+              child: CircleAvatar(
+                minRadius: size.width * 0.1,
+                maxRadius: size.width * 0.2,
+                backgroundColor: Colors.black.withOpacity(0.6),
+                child: Text("3,520 KWh"),
+              ),
+            ),
+          ),
+        ),
       ],
     ));
   }
