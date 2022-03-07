@@ -39,10 +39,11 @@ class ReadingWidget extends StatelessWidget {
           )),
       child: CircleAvatar(
         backgroundColor: Colors.blue.withOpacity(0.8),
-        minRadius: size.width * 0.15,
+        minRadius: size.width * 0.14,
+        maxRadius: size.width * 0.15,
         child: CircleAvatar(
           backgroundColor: Colors.black.withOpacity(0.6),
-          minRadius: size.width * 0.1,
+          minRadius: size.width * 0.12,
           maxRadius: size.width * 0.13,
           child: Center(
             child: Text(
