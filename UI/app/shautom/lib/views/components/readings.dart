@@ -43,7 +43,7 @@ class ReadingWidget extends StatelessWidget {
         child: CircleAvatar(
           backgroundColor: Colors.black.withOpacity(0.6),
           minRadius: size.width * 0.1,
-          maxRadius: size.width * 0.14,
+          maxRadius: size.width * 0.13,
           child: Center(
             child: Text(
               "$reading $unit",
