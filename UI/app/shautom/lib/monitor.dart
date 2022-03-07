@@ -13,37 +13,47 @@ class MonitorPage extends StatefulWidget {
 }
 
 class _MonitorPageState extends State<MonitorPage> {
-  int temperature = 25;
-  int humidity = 25;
+  double temperature = 25;
+  double humidity = 27;
 
   late DatabaseReference _dhtRef;
-  late StreamSubscription<DatabaseEvent> _dhtSubscription;
+  late Stream<DatabaseEvent> _dhtStream;
+
+  void getData() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("readings");
+    DatabaseEvent event = await ref.once();
+
+    print(event.snapshot.value);
+  }
 
   Future<void> init() async {
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/DHT22");
-    _dhtSubscription = _dhtRef.onValue.listen((DatabaseEvent evt) {
-      final data = evt.snapshot.value;
-      if (data != null) {
+    _dhtStream = _dhtRef.onValue;
+    _dhtStream.listen(
+      (DatabaseEvent evt) {
+        final data = evt.snapshot.value as Map;
+        print(data);
+
         setState(() {
-          temperature = data['temperature'];
-          humidity = data['humidity'];
+          temperature = double.parse(data['temperature']);
+          humidity = double.parse(data['humidity']);
         });
-      }
-    }, onError: () {});
+      },
+    );
   }
 
   @override
   void initState() {
-    init();
     super.initState();
+    init();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _dhtSubscription.cancel();
-    _dhtSubscription.cancel();
+    _dhtStream.drain();
+    //_dhtRef.onDisconnect();
   }
 
   @override
@@ -53,7 +63,10 @@ class _MonitorPageState extends State<MonitorPage> {
         child: Column(
       children: [
         Row(children: [
-          Text("Temperature & Humidity"),
+          Text(
+            "Temperature & Humidity",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ]),
         Divider(
           thickness: 2,
@@ -63,7 +76,7 @@ class _MonitorPageState extends State<MonitorPage> {
           height: 10,
         ),
         SizedBox(
-            height: size.height * 0.6,
+            height: size.height * 0.25,
             child: GridView(
                 shrinkWrap: true,
                 padding: EdgeInsets.only(left: 10, right: 10),
@@ -74,7 +87,7 @@ class _MonitorPageState extends State<MonitorPage> {
                 physics: BouncingScrollPhysics(),
                 children: [
                   GridTile(
-                    child: TemperatureWidget(temperature: 25),
+                    child: TemperatureWidget(temperature: temperature),
                     footer: Container(
                       padding: EdgeInsets.all(0),
                       child: GridTileBar(
@@ -99,7 +112,7 @@ class _MonitorPageState extends State<MonitorPage> {
                     ),
                   ),
                   GridTile(
-                      child: HumidityWidget(humidity: 25),
+                      child: HumidityWidget(humidity: humidity),
                       footer: Container(
                         padding: EdgeInsets.all(0),
                         child: GridTileBar(
@@ -124,6 +137,31 @@ class _MonitorPageState extends State<MonitorPage> {
                         ),
                       )),
                 ])),
+        Row(children: [
+          Text(
+            "Power Consumption",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ]),
+        Divider(
+          thickness: 2,
+          color: Colors.black,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [Text("General")],
+        ),
+        Divider(color: Colors.black),
+        SizedBox(
+            height: size.height * 0.25,
+            child: Row(
+              children: [
+                ElevatedButton(
+                    onPressed: getData, child: Text("Get data once!"))
+              ],
+            )),
       ],
     ));
   }
