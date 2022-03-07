@@ -26,7 +26,14 @@ class ProfilePage extends StatelessWidget {
                     ? "AZ"
                     : "${user?.firstName![0].toUpperCase()}${user?.lastName![0].toUpperCase()}",
                 style: TextStyle(fontSize: 60),
-              ))
+              )),
+          Center(
+              child: Column(
+            children: [
+              Text("${user!.firstName} ${user!.lastName}"),
+              Text("${user!.emailAddress}"),
+            ],
+          ))
         ],
       ),
     );
