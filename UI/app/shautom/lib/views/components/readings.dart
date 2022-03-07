@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TemperatureWidget extends StatelessWidget {
-  final int temperature;
+  final double temperature;
 
   TemperatureWidget({
     Key? key,
@@ -15,7 +15,7 @@ class TemperatureWidget extends StatelessWidget {
 }
 
 class ReadingWidget extends StatelessWidget {
-  final int? reading;
+  final double? reading;
   final String? unit;
 
   ReadingWidget({this.reading, this.unit});
@@ -56,7 +56,7 @@ class ReadingWidget extends StatelessWidget {
 }
 
 class HumidityWidget extends StatelessWidget {
-  final int humidity;
+  final double humidity;
 
   HumidityWidget({
     Key? key,
