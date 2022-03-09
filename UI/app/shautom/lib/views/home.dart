@@ -123,42 +123,44 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
-    return Scaffold(
-        //resizeToAvoidBottomInset: false,
-        body: SafeArea(
-            child: CustomScrollView(slivers: [
-          CustomSliverAppBar(
-              childWidget: LogoWidget(
-                widthFactor: 0.8,
-              ),
-              pageTitle: Text(_pages[_selectedIndex]!['title']),
-              logOut: _signOut),
-          SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),
-        ])),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: _onItemTapped,
-          currentIndex: _selectedIndex,
-          backgroundColor: Colors.grey.withAlpha(50),
-          elevation: 0, //Color(0xFF3F51B5)
-          iconSize: 30,
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: ImageIcon(Svg('assets/images/icons/home.svg')),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.settings,
-                  size: 30,
-                ), //ImageIcon(Svg('assets/images/icons/person.svg',),ize: 30),
-                label: 'Settings'),
-            BottomNavigationBarItem(
-                icon: ImageIcon(Svg('assets/images/icons/control.svg')),
-                label: "Control"),
-            BottomNavigationBarItem(
-                icon: ImageIcon(Svg('assets/images/icons/monitor.svg')),
-                label: 'Monitor'),
-          ],
-        ));
+    return Container(
+      child: Scaffold(
+          //resizeToAvoidBottomInset: false,
+          body: SafeArea(
+              child: CustomScrollView(slivers: [
+            CustomSliverAppBar(
+                childWidget: LogoWidget(
+                  widthFactor: 0.8,
+                ),
+                pageTitle: Text(_pages[_selectedIndex]!['title']),
+                logOut: _signOut),
+            SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),
+          ])),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: _onItemTapped,
+            currentIndex: _selectedIndex,
+            backgroundColor: Colors.grey.withAlpha(50),
+            elevation: 0, //Color(0xFF3F51B5)
+            iconSize: 30,
+            type: BottomNavigationBarType.fixed,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: ImageIcon(Svg('assets/images/icons/home.svg')),
+                  label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 30,
+                  ), //ImageIcon(Svg('assets/images/icons/person.svg',),ize: 30),
+                  label: 'Settings'),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(Svg('assets/images/icons/control.svg')),
+                  label: "Control"),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(Svg('assets/images/icons/monitor.svg')),
+                  label: 'Monitor'),
+            ],
+          )),
+    );
   }
 }

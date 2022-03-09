@@ -26,7 +26,7 @@ class ReadingWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 45),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.transparent,
           border: Border.all(
             color: Colors.blue,
             width: 4,
