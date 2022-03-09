@@ -10,12 +10,7 @@ class _ControlPageState extends State<ControlPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-        child: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          title: Text("Control Dashboard"),
-        )
-      ],
-    ));
+      child: Container(),
+    );
   }
 }
