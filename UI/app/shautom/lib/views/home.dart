@@ -8,17 +8,16 @@ import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
 
 import 'package:shautom/views/welcome.dart';
+import 'package:shautom/views/top_sliver_widget.dart';
 
 class LandingPage extends StatelessWidget {
   UserModel? user;
   bool loaded;
-  VoidCallback logOut;
 
   LandingPage({
     Key? key,
     required this.user,
     required this.loaded,
-    required this.logOut,
   }) : super(key: key);
 
   @override
@@ -99,18 +98,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Media Device data config
 
-    List<Widget> _pages = [
-      LandingPage(
-        loaded: _isLoaded,
-        logOut: _signOut,
-        user: loggedInUser,
-      ),
-      ProfilePage(
-        user: loggedInUser,
-      ),
-      ControlPage(),
-      MonitorPage()
-    ];
+    Map<int, Map<String, dynamic>> _pages = {
+      0: {
+        'title': 'Home',
+        'widget': LandingPage(
+          loaded: _isLoaded,
+          user: loggedInUser,
+        )
+      },
+      1: {
+        'title': 'Profile',
+        'widget': ProfilePage(
+          user: loggedInUser,
+        )
+      },
+      2: {'title': 'Control Dashboard', 'widget': ControlPage()},
+      3: {'title': 'Monitoring Dashboard', 'widget': MonitorPage()}
+    };
 
     void _onItemTapped(int index) {
       setState(() {
@@ -121,21 +125,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         body: SafeArea(
-            child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-                title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              new IconButton(
-                icon: Icon(Icons
-                    .logout_rounded), //ImageIcon(Svg('assets/images/icons/logout (1).svg')),
-                onPressed: _signOut,
-                padding: EdgeInsets.only(top: 0, right: 0),
-              ),
-            ])),
-            SliverFillRemaining(
-                child: Center(child: _pages.elementAt(_selectedIndex))),
-          ],
-        )),
+            child: CustomScrollView(slivers: [
+          CustomSliverAppBar(
+              pageTitle: Text(_pages[_selectedIndex]!['title']),
+              logOut: _signOut),
+          SliverFillRemaining(
+              child: Center(child: _pages[_selectedIndex]!['widget'])),
+        ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: _onItemTapped,
           currentIndex: _selectedIndex,
