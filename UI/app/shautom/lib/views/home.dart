@@ -6,6 +6,7 @@ import 'package:shautom/control.dart';
 import 'package:shautom/models/user.dart';
 import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
+import 'package:shautom/views/components/logo.dart';
 
 import 'package:shautom/views/welcome.dart';
 import 'package:shautom/views/top_sliver_widget.dart';
@@ -127,9 +128,7 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
             child: CustomScrollView(slivers: [
           CustomSliverAppBar(
-              childWidget: CircleAvatar(
-                  minRadius: size.width * 0.15,
-                  child: Text("AZ", style: TextStyle(fontSize: 60))),
+              childWidget: LogoWidget(),
               pageTitle: Text(_pages[_selectedIndex]!['title']),
               logOut: _signOut),
           SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),
