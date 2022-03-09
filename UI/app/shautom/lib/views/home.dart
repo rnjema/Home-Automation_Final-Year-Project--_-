@@ -128,7 +128,9 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
             child: CustomScrollView(slivers: [
           CustomSliverAppBar(
-              childWidget: LogoWidget(),
+              childWidget: LogoWidget(
+                widthFactor: 0.8,
+              ),
               pageTitle: Text(_pages[_selectedIndex]!['title']),
               logOut: _signOut),
           SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),

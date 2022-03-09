@@ -20,7 +20,11 @@ class CustomSliverAppBar extends StatelessWidget {
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        background: childWidget,
+        background: Container(
+          child: childWidget,
+          padding: EdgeInsets.only(top: 30),
+          //margin: ,
+        ),
         centerTitle: true,
       ),
       expandedHeight: size.height * 0.2,
