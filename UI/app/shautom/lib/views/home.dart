@@ -127,10 +127,12 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
             child: CustomScrollView(slivers: [
           CustomSliverAppBar(
+              childWidget: CircleAvatar(
+                  minRadius: size.width * 0.15,
+                  child: Text("AZ", style: TextStyle(fontSize: 60))),
               pageTitle: Text(_pages[_selectedIndex]!['title']),
               logOut: _signOut),
-          SliverFillRemaining(
-              child: Center(child: _pages[_selectedIndex]!['widget'])),
+          SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: _onItemTapped,

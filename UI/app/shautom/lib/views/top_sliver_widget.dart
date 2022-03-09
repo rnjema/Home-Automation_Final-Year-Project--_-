@@ -3,18 +3,27 @@ import 'package:flutter/material.dart';
 class CustomSliverAppBar extends StatelessWidget {
   final VoidCallback logOut;
   Widget pageTitle;
-  Widget? child;
+  Widget? childWidget;
 
   CustomSliverAppBar({
     Key? key,
     required this.pageTitle,
-    this.child,
+    this.childWidget,
     required this.logOut,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SliverAppBar(
+      elevation: 2,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        background: childWidget,
+        centerTitle: true,
+      ),
+      expandedHeight: size.height * 0.2,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         pageTitle,
         new IconButton(
@@ -26,7 +35,7 @@ class CustomSliverAppBar extends StatelessWidget {
       ]),
       backgroundColor: Colors.blue.withOpacity(0.6),
       shape: ContinuousRectangleBorder(
-          side: BorderSide(color: Colors.white.withOpacity(0.7), width: 4),
+          side: BorderSide(color: Color(0xFFFEDB41).withOpacity(0.3), width: 3),
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(40),
               bottomRight: Radius.circular(40))),
