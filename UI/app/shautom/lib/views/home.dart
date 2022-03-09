@@ -121,17 +121,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         body: SafeArea(
-            child: Column(
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+                title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               new IconButton(
                 icon: Icon(Icons
                     .logout_rounded), //ImageIcon(Svg('assets/images/icons/logout (1).svg')),
                 onPressed: _signOut,
                 padding: EdgeInsets.only(top: 0, right: 0),
               ),
-            ]),
-            Center(child: _pages.elementAt(_selectedIndex)),
+            ])),
+            SliverFillRemaining(
+                child: Center(child: _pages.elementAt(_selectedIndex))),
           ],
         )),
         bottomNavigationBar: BottomNavigationBar(
