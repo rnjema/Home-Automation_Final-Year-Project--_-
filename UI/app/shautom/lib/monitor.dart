@@ -195,7 +195,7 @@ class _MonitorPageState extends State<MonitorPage> {
                       minRadius: size.width * 0.18,
                       maxRadius: size.width * 0.2,
                       backgroundColor: Colors.black.withOpacity(0.6),
-                      child: Text("${formatter.format(energy)} KWh"),
+                      child: Text("${formatter.format(energy)} Wh"),
                     ),
                   ),
                   Container(
