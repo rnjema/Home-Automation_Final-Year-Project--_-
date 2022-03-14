@@ -11,9 +11,12 @@ class _ControlPageState extends State<ControlPage> {
   late DatabaseReference _controlRef;
   late Stream<DatabaseEvent> _controlStream;
 
+  /// Initializes Firebase realtime database configuration & state
   Future<void> initialize() async {
     _controlRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/appliance_control");
+    _controlStream = _controlRef.onValue.asBroadcastStream();
+    _controlStream.listen((event) {});
   }
 
   @override
