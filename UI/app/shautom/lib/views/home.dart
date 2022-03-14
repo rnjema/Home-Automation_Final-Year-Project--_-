@@ -134,7 +134,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 pageTitle: Text(_pages[_selectedIndex]!['title']),
                 logOut: _signOut),
-            SliverFillRemaining(child: _pages[_selectedIndex]!['widget']),
+            SliverPadding(
+                padding: EdgeInsets.only(top: 10),
+                sliver: SliverFillRemaining(
+                    child: _pages[_selectedIndex]!['widget'])),
           ])),
           bottomNavigationBar: BottomNavigationBar(
             onTap: _onItemTapped,

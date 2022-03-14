@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 
 var formatter = NumberFormat.decimalPattern('en_us');
+//var decimalFormatter = NumberFormat.0
 
 class MonitorPage extends StatefulWidget {
   MonitorPage({
