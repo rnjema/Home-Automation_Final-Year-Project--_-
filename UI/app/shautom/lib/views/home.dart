@@ -137,7 +137,12 @@ class _HomePageState extends State<HomePage> {
             SliverPadding(
                 padding: EdgeInsets.only(top: 10),
                 sliver: SliverFillRemaining(
-                    child: _pages[_selectedIndex]!['widget'])),
+                    child: IndexedStack(
+                  index: _selectedIndex,
+                  children: _pages.entries
+                      .map((e) => e.value['widget'] as Widget)
+                      .toList(),
+                ))),
           ])),
           bottomNavigationBar: BottomNavigationBar(
             onTap: _onItemTapped,
