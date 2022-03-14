@@ -35,6 +35,7 @@ class _MonitorPageState extends State<MonitorPage> {
     print(event.snapshot.value);
   }
 
+  /// Initializes Firebase realtime database configuration & state
   Future<void> init() async {
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
