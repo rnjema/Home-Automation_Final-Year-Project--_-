@@ -1,10 +1,16 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ControlWidget extends StatefulWidget {
   final String applianceName;
   final String? appIconPath;
-  ControlWidget({Key? key, required this.applianceName, this.appIconPath})
+  final DatabaseReference? dbReference;
+  ControlWidget(
+      {Key? key,
+      required this.applianceName,
+      this.appIconPath,
+      this.dbReference})
       : super(key: key);
 
   @override
@@ -45,9 +51,13 @@ class _ControlWidgetState extends State<ControlWidget> {
               children: [
                 CupertinoSwitch(
                     value: _isOn,
-                    onChanged: (value) {
+                    onChanged: (value) async {
                       setState(() {
                         _isOn = value;
+                      });
+                      await widget.dbReference!.update({
+                        "${widget.applianceName.replaceAll(' ', '').toLowerCase()}/state":
+                            _isOn ? 1 : 0,
                       });
                     }),
               ],
