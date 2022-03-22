@@ -49,7 +49,7 @@ class LandingPage extends StatelessWidget {
                     : Text('Loading...'),
               ),
             ],
-          )
+          ),
         ]);
   }
 }
