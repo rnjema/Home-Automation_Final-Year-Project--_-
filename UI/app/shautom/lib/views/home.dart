@@ -75,8 +75,18 @@ class LandingPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Home",
+                          "Temperature",
                           style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        Center(
+                          child: Text(
+                            "27 \u2103",
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
@@ -97,7 +107,20 @@ class LandingPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Home"),
+                        Text(
+                          "Humidity",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        Center(
+                          child: Text(
+                            "80%",
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ],
                     ),
                     width: size.width * 0.4,
@@ -117,7 +140,7 @@ class LandingPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Home"),
+                        Text("Power Consumption"),
                       ],
                     ),
                     width: size.width * 0.4,
