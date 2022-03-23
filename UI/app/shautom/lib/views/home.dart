@@ -33,24 +33,24 @@ class LandingPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: loaded
-                    ? RichText(
-                        text: TextSpan(
-                            style: TextStyle(
-                                fontSize: 30, fontStyle: FontStyle.italic),
-                            children: <InlineSpan>[
-                            TextSpan(
-                                text: "Hello, \n",
-                                style: TextStyle(color: Colors.black)),
-                            TextSpan(
-                                text: "${user!.firstName}",
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  //fontStyle: FontStyle.italic
-                                ))
-                          ]))
-                    : Text('Loading...'),
-              ),
+                  child: loaded
+                      ? RichText(
+                          text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              children: <InlineSpan>[
+                              TextSpan(
+                                  text: "Welcome Home, \n",
+                                  style: TextStyle(color: Colors.black)),
+                              TextSpan(
+                                  text: "${user!.firstName}",
+                                  style: TextStyle(
+                                    color: Colors.blueGrey.withOpacity(0.7),
+                                    //fontStyle: FontStyle.italic
+                                  ))
+                            ]))
+                      : Text('')),
             ],
           ),
           SizedBox(
@@ -61,37 +61,40 @@ class LandingPage extends StatelessWidget {
             height: size.height * 0.25,
             child: ListView(
               children: [
-                Card(
-                  elevation: 2,
-                  shadowColor: Colors.blue.withOpacity(0.6),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                          color: Colors.black.withOpacity(0.1), width: 2)),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 6, top: 3),
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Temperature",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.015,
-                        ),
-                        Center(
-                          child: Text(
-                            "27 \u2103",
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () => {},
+                  child: Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 6, top: 3),
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Temperature",
+                            style: TextStyle(fontSize: 16),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: size.height * 0.015,
+                          ),
+                          Center(
+                            child: Text(
+                              "27 \u2103",
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      width: size.width * 0.4,
+                      height: size.height * 0.25,
                     ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.25,
                   ),
                 ),
                 Card(
