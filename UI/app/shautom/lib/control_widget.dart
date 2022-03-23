@@ -25,21 +25,22 @@ class _ControlWidgetState extends State<ControlWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Card(
-      elevation: 2,
+      elevation: 4,
+      shadowColor: Colors.blue.withOpacity(0.5),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.blue.withOpacity(0.5),
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          )),
       child: Container(
           padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 45),
-          decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                color: Colors.blue,
-                width: 4,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              )),
+          decoration: BoxDecoration(color: Colors.transparent),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
