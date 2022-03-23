@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -23,8 +24,9 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
@@ -38,18 +40,94 @@ class LandingPage extends StatelessWidget {
                                 fontSize: 30, fontStyle: FontStyle.italic),
                             children: <InlineSpan>[
                             TextSpan(
-                                text: "Welcome, ",
+                                text: "Hello, \n",
                                 style: TextStyle(color: Colors.black)),
                             TextSpan(
                                 text: "${user!.firstName}",
                                 style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontStyle: FontStyle.italic))
+                                  color: Colors.blueGrey,
+                                  //fontStyle: FontStyle.italic
+                                ))
                           ]))
                     : Text('Loading...'),
               ),
             ],
           ),
+          SizedBox(
+            height: size.height * 0.02,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 0),
+            height: size.height * 0.25,
+            child: ListView(
+              children: [
+                Card(
+                  elevation: 2,
+                  shadowColor: Colors.blue.withOpacity(0.6),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          color: Colors.black.withOpacity(0.1), width: 2)),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 6, top: 3),
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Home",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    width: size.width * 0.4,
+                    height: size.height * 0.25,
+                  ),
+                ),
+                Card(
+                  elevation: 2,
+                  shadowColor: Colors.blue.withOpacity(0.6),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          color: Colors.black.withOpacity(0.1), width: 2)),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 6, top: 3),
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Home"),
+                      ],
+                    ),
+                    width: size.width * 0.4,
+                    height: size.height * 0.25,
+                  ),
+                ),
+                Card(
+                  elevation: 2,
+                  shadowColor: Colors.blue.withOpacity(0.6),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          color: Colors.black.withOpacity(0.1), width: 2)),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 6, top: 3),
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Home"),
+                      ],
+                    ),
+                    width: size.width * 0.4,
+                    height: size.height * 0.25,
+                  ),
+                ),
+              ],
+              scrollDirection: Axis.horizontal,
+            ),
+          )
         ]);
   }
 }
