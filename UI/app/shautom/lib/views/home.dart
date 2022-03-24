@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
+
 import 'package:shautom/control.dart';
 import 'package:shautom/models/user.dart';
 import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
 import 'package:shautom/views/components/logo.dart';
-
 import 'package:shautom/views/welcome.dart';
 import 'package:shautom/views/top_sliver_widget.dart';
 
@@ -27,30 +28,33 @@ class LandingPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Column(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                  child: loaded
-                      ? RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                              children: <InlineSpan>[
-                              TextSpan(
-                                  text: "Welcome Home, \n",
-                                  style: TextStyle(color: Colors.black)),
-                              TextSpan(
-                                  text: "${user!.firstName}",
-                                  style: TextStyle(
-                                    color: Colors.blueGrey.withOpacity(0.7),
-                                    //fontStyle: FontStyle.italic
-                                  ))
-                            ]))
-                      : Text('')),
+                  child: GestureDetector(
+                onTap: () => {},
+                child: loaded
+                    ? RichText(
+                        text: TextSpan(
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                            children: <InlineSpan>[
+                            TextSpan(
+                                text: "Welcome Home, \n",
+                                style: TextStyle(color: Colors.black)),
+                            TextSpan(
+                                text: "${user!.firstName}",
+                                style: TextStyle(
+                                  color: Colors.blueGrey.withOpacity(0.7),
+                                  //fontStyle: FontStyle.italic
+                                ))
+                          ]))
+                    : Text(''),
+              )),
             ],
           ),
           SizedBox(
@@ -61,40 +65,48 @@ class LandingPage extends StatelessWidget {
             height: size.height * 0.25,
             child: ListView(
               children: [
-                GestureDetector(
-                  onTap: () => {},
-                  child: Card(
-                    elevation: 2,
-                    shadowColor: Colors.blue.withOpacity(0.6),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.1), width: 2)),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 6, top: 3),
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Temperature",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(
-                            height: size.height * 0.015,
-                          ),
-                          Center(
-                            child: Text(
-                              "27 \u2103",
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                Card(
+                  elevation: 2,
+                  shadowColor: Colors.blue.withOpacity(0.6),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          color: Colors.black.withOpacity(0.1), width: 2)),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 6, top: 3),
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.thermostat,
+                              color: Colors.red.withOpacity(0.4),
                             ),
+                            Text(
+                              "Temperature",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        Center(
+                          child: Text(
+                            "27 \u2103",
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black.withOpacity(0.6)),
                           ),
-                        ],
-                      ),
-                      width: size.width * 0.4,
-                      height: size.height * 0.25,
+                        ),
+                      ],
                     ),
+                    width: size.width * 0.4,
+                    height: size.height * 0.25,
                   ),
                 ),
                 Card(
@@ -108,12 +120,33 @@ class LandingPage extends StatelessWidget {
                     padding: EdgeInsets.only(left: 6, top: 3),
                     color: Colors.transparent,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          "Humidity",
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        Row(children: [
+                          Stack(
+                            alignment: AlignmentDirectional.topEnd,
+                            fit: StackFit.passthrough,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, bottom: 8),
+                                child: Icon(
+                                  Icons.opacity,
+                                  size: 14,
+                                  color: Colors.red.withOpacity(0.6),
+                                ),
+                              ),
+                              Icon(
+                                Icons.sunny,
+                                size: 24,
+                                color: Colors.yellow.withOpacity(0.6),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 5),
+                          Text("Humidity")
+                        ]),
                         SizedBox(
                           height: size.height * 0.015,
                         ),
@@ -121,7 +154,9 @@ class LandingPage extends StatelessWidget {
                           child: Text(
                             "80%",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black.withOpacity(0.6)),
                           ),
                         ),
                       ],
@@ -142,18 +177,31 @@ class LandingPage extends StatelessWidget {
                     color: Colors.transparent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Power Consumption"),
+                        Row(children: [
+                          Icon(
+                            Icons.bolt,
+                            color: Colors.red.withOpacity(0.4),
+                          ),
+                          Text("Power Consumption")
+                        ]),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        Center(child: Text('Current Consumption')),
                       ],
                     ),
-                    width: size.width * 0.4,
+                    width: size.width * 0.45,
                     height: size.height * 0.25,
                   ),
                 ),
               ],
               scrollDirection: Axis.horizontal,
             ),
-          )
+          ),
+          SizedBox(height: 15),
+          Text('Devices', style: TextStyle(fontSize: 25)),
         ]);
   }
 }
