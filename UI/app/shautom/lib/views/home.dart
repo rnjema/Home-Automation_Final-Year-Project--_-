@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 
 import 'package:shautom/control.dart';
 import 'package:shautom/models/user.dart';
@@ -35,7 +34,7 @@ class LandingPage extends StatelessWidget {
             children: [
               Flexible(
                   child: GestureDetector(
-                onTap: () => {},
+                onTap: () => null,
                 child: loaded
                     ? RichText(
                         text: TextSpan(
@@ -94,13 +93,27 @@ class LandingPage extends StatelessWidget {
                         SizedBox(
                           height: size.height * 0.015,
                         ),
-                        Center(
-                          child: Text(
-                            "27 \u2103",
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black.withOpacity(0.6)),
+                        Container(
+                          width: 85,
+                          height: 85,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: RadialGradient(
+                                  colors: <Color>[
+                                    Colors.black,
+                                    Color(0xFF0099FF),
+                                    Colors.red.withOpacity(0.6)
+                                  ],
+                                  radius: 0.5,
+                                  stops: [0.3, 0.7, 1.0])),
+                          child: Center(
+                            child: Text(
+                              "27 \u2103",
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white.withOpacity(0.8)),
+                            ),
                           ),
                         ),
                       ],
@@ -134,7 +147,7 @@ class LandingPage extends StatelessWidget {
                                 child: Icon(
                                   Icons.opacity,
                                   size: 14,
-                                  color: Colors.red.withOpacity(0.6),
+                                  color: Colors.blue.withOpacity(0.6),
                                 ),
                               ),
                               Icon(
@@ -150,15 +163,28 @@ class LandingPage extends StatelessWidget {
                         SizedBox(
                           height: size.height * 0.015,
                         ),
-                        Center(
-                          child: Text(
-                            "80%",
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
+                        Container(
+                            width: 85,
+                            height: 85,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                    colors: <Color>[
+                                      Colors.black,
+                                      Color(0xFF0099FF),
+                                      Colors.red.withOpacity(0.6)
+                                    ],
+                                    radius: 0.5,
+                                    stops: [0.3, 0.7, 1.0])),
+                            child: Center(
+                              child: Text(
+                                "80%",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                            )),
                       ],
                     ),
                     width: size.width * 0.4,
@@ -202,6 +228,49 @@ class LandingPage extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Text('Devices', style: TextStyle(fontSize: 25)),
+          SizedBox(
+            height: size.height * 0.2,
+            width: double.infinity,
+            child: Container(
+              child: ListView(scrollDirection: Axis.horizontal, children: [
+                Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            gradient: RadialGradient(
+                                colors: [Colors.blue, Colors.red])))),
+                Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                                colors: [Colors.blue, Colors.red])))),
+                Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                              colors: [Colors.blue, Colors.red])),
+                    ))
+              ]),
+            ),
+          )
         ]);
   }
 }
