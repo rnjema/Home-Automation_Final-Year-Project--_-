@@ -11,6 +11,7 @@ import 'package:shautom/profile.dart';
 import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/welcome.dart';
 import 'package:shautom/views/top_sliver_widget.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class LandingPage extends StatelessWidget {
   UserModel? user;
@@ -141,6 +142,7 @@ class LandingPage extends StatelessWidget {
                             alignment: AlignmentDirectional.topEnd,
                             fit: StackFit.passthrough,
                             children: [
+                              Icon(MaterialCommunityIcons.water_percent),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 8.0, bottom: 8),

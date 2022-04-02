@@ -38,7 +38,7 @@ dependencies:
   intl_phone_field: ^3.0.1
   cloud_firestore: ^3.1.9
   flutter_switch: ^0.3.2
-  flutter_icons: ^1.1.0
+  flutter_icons_null_safety: ^1.1.0
   
   #flutter_svg: ^1.0.0
 
