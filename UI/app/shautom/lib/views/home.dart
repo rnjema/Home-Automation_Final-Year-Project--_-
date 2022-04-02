@@ -9,6 +9,7 @@ import 'package:shautom/models/user.dart';
 import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
 import 'package:shautom/views/components/logo.dart';
+import 'package:shautom/views/components/readings.dart';
 import 'package:shautom/views/welcome.dart';
 import 'package:shautom/views/top_sliver_widget.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
@@ -77,7 +78,6 @@ class LandingPage extends StatelessWidget {
                     color: Colors.transparent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Row(
                           children: [
@@ -92,30 +92,13 @@ class LandingPage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: size.height * 0.015,
+                          height: size.height * 0.005,
                         ),
                         Container(
-                          width: 85,
-                          height: 85,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: RadialGradient(
-                                  colors: <Color>[
-                                    Colors.black,
-                                    Color(0xFF0099FF),
-                                    Colors.red.withOpacity(0.6)
-                                  ],
-                                  radius: 0.5,
-                                  stops: [0.3, 0.7, 1.0])),
-                          child: Center(
-                            child: Text(
-                              "27 \u2103",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white.withOpacity(0.8)),
-                            ),
-                          ),
+                          padding: EdgeInsets.all(0),
+                          width: 105,
+                          height: 105,
+                          child: Center(child: TemperatureGauge(value: 25)),
                         ),
                       ],
                     ),
@@ -135,7 +118,6 @@ class LandingPage extends StatelessWidget {
                     color: Colors.transparent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Row(children: [
                           Icon(
@@ -149,26 +131,11 @@ class LandingPage extends StatelessWidget {
                           height: size.height * 0.015,
                         ),
                         Container(
-                            width: 85,
-                            height: 85,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: RadialGradient(
-                                    colors: <Color>[
-                                      Colors.black,
-                                      Color(0xFF0099FF),
-                                      Colors.red.withOpacity(0.6)
-                                    ],
-                                    radius: 0.5,
-                                    stops: [0.3, 0.7, 1.0])),
+                            padding: EdgeInsets.all(0),
+                            width: 105,
+                            height: 105,
                             child: Center(
-                              child: Text(
-                                "80%",
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
+                              child: HumidityGauge(value: 80),
                             )),
                       ],
                     ),
