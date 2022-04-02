@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class TemperatureWidget extends StatelessWidget {
   final int temperature;
@@ -72,5 +73,55 @@ class HumidityWidget extends StatelessWidget {
       reading: humidity,
       unit: "%",
     );
+  }
+}
+
+class RadialGauge extends StatelessWidget {
+  final String? unit;
+  final int? reading;
+
+  RadialGauge({Key? key, this.reading, this.unit}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SfRadialGauge(axes: <RadialAxis>[
+      RadialAxis(
+        showLabels: false,
+        showTicks: false,
+        startAngle: 90,
+        endAngle: 270,
+        minimum: 0,
+        maximum: 80,
+        radiusFactor: 0.8,
+        axisLineStyle: AxisLineStyle(
+          thicknessUnit: GaugeSizeUnit.factor,
+          thickness: 0.2,
+        ),
+        annotations: <GaugeAnnotation>[
+          GaugeAnnotation(
+              widget: Center(
+                  child: Column(
+            children: [
+              Text("$reading"),
+              Text("$unit"),
+            ],
+          ))),
+        ],
+        pointers: <GaugePointer>[
+          RangePointer(
+              value: 50,
+              cornerStyle: CornerStyle.bothCurve,
+              enableAnimation: true,
+              animationDuration: 1200,
+              animationType: AnimationType.ease,
+              sizeUnit: GaugeSizeUnit.factor,
+              gradient: SweepGradient(
+                  colors: <Color>[Color(0xFF6A6EF6), Color(0xFFDB82F5)],
+                  stops: <double>[0.25, 0.75]),
+              color: Color(0xFF00A8B5),
+              width: 0.15),
+        ],
+      ),
+    ]);
   }
 }
