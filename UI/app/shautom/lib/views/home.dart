@@ -11,7 +11,7 @@ import 'package:shautom/profile.dart';
 import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/welcome.dart';
 import 'package:shautom/views/top_sliver_widget.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 
 class LandingPage extends StatelessWidget {
   UserModel? user;
@@ -138,26 +138,9 @@ class LandingPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Row(children: [
-                          Stack(
-                            alignment: AlignmentDirectional.topEnd,
-                            fit: StackFit.passthrough,
-                            children: [
-                              Icon(MaterialCommunityIcons.water_percent),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, bottom: 8),
-                                child: Icon(
-                                  Icons.opacity,
-                                  size: 14,
-                                  color: Colors.blue.withOpacity(0.6),
-                                ),
-                              ),
-                              Icon(
-                                Icons.sunny,
-                                size: 24,
-                                color: Colors.yellow.withOpacity(0.6),
-                              ),
-                            ],
+                          Icon(
+                            MaterialCommunityIcons.water_percent,
+                            color: Colors.blue.withOpacity(0.4),
                           ),
                           SizedBox(width: 5),
                           Text("Humidity")
