@@ -80,8 +80,15 @@ class RadialGauge extends StatelessWidget {
   final String? unit;
   final int? reading;
   final int? maximum;
+  final double? sAngle, eAngle;
 
-  RadialGauge({Key? key, this.reading, this.unit, this.maximum})
+  RadialGauge(
+      {Key? key,
+      this.reading,
+      this.unit,
+      this.maximum,
+      this.sAngle,
+      this.eAngle})
       : super(key: key);
 
   @override
@@ -90,14 +97,15 @@ class RadialGauge extends StatelessWidget {
       RadialAxis(
         showLabels: false,
         showTicks: false,
-        startAngle: 180,
-        endAngle: 90,
+        startAngle: sAngle as double,
+        endAngle: eAngle as double,
         minimum: 0,
         maximum: double.parse("$maximum"),
         radiusFactor: 0.9,
         axisLineStyle: AxisLineStyle(
           thicknessUnit: GaugeSizeUnit.factor,
           thickness: 0.2,
+          cornerStyle: CornerStyle.bothCurve,
         ),
         annotations: <GaugeAnnotation>[
           GaugeAnnotation(
@@ -118,9 +126,13 @@ class RadialGauge extends StatelessWidget {
               animationDuration: 1200,
               animationType: AnimationType.ease,
               sizeUnit: GaugeSizeUnit.factor,
-              gradient: SweepGradient(
-                  colors: <Color>[Color(0xFF6A6EF6), Color(0xFFDB82F5)],
-                  stops: <double>[0.25, 0.75]),
+              gradient: SweepGradient(colors: [
+                Colors.green.withOpacity(0.7),
+                Colors.red.withOpacity(0.5)
+              ], stops: <double>[
+                0.5,
+                0.85
+              ]),
               color: Color(0xFF00A8B5),
               width: 0.25),
         ],
@@ -136,7 +148,8 @@ class HumidityGauge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RadialGauge(unit: "%", reading: value, maximum: 100);
+    return RadialGauge(
+        unit: "%", reading: value, maximum: 100, sAngle: 100, eAngle: 80);
   }
 }
 
@@ -147,6 +160,7 @@ class TemperatureGauge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RadialGauge(unit: "\u2103", reading: value, maximum: 70);
+    return RadialGauge(
+        unit: "\u2103", reading: value, maximum: 70, sAngle: 180, eAngle: 90);
   }
 }
