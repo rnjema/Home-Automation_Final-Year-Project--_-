@@ -79,8 +79,10 @@ class HumidityWidget extends StatelessWidget {
 class RadialGauge extends StatelessWidget {
   final String? unit;
   final int? reading;
+  final int? maximum;
 
-  RadialGauge({Key? key, this.reading, this.unit}) : super(key: key);
+  RadialGauge({Key? key, this.reading, this.unit, this.maximum})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,28 +90,29 @@ class RadialGauge extends StatelessWidget {
       RadialAxis(
         showLabels: false,
         showTicks: false,
-        startAngle: 90,
-        endAngle: 270,
+        startAngle: 180,
+        endAngle: 90,
         minimum: 0,
-        maximum: 80,
-        radiusFactor: 0.8,
+        maximum: double.parse("$maximum"),
+        radiusFactor: 0.9,
         axisLineStyle: AxisLineStyle(
           thicknessUnit: GaugeSizeUnit.factor,
           thickness: 0.2,
         ),
         annotations: <GaugeAnnotation>[
           GaugeAnnotation(
-              widget: Center(
-                  child: Column(
-            children: [
-              Text("$reading"),
-              Text("$unit"),
-            ],
-          ))),
+              angle: 0,
+              widget: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("$reading"),
+                  Text("$unit"),
+                ],
+              )),
         ],
         pointers: <GaugePointer>[
           RangePointer(
-              value: 50,
+              value: double.parse("$reading"),
               cornerStyle: CornerStyle.bothCurve,
               enableAnimation: true,
               animationDuration: 1200,
@@ -119,9 +122,31 @@ class RadialGauge extends StatelessWidget {
                   colors: <Color>[Color(0xFF6A6EF6), Color(0xFFDB82F5)],
                   stops: <double>[0.25, 0.75]),
               color: Color(0xFF00A8B5),
-              width: 0.15),
+              width: 0.25),
         ],
       ),
     ]);
+  }
+}
+
+class HumidityGauge extends StatelessWidget {
+  final int? value;
+
+  HumidityGauge({Key? key, this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return RadialGauge(unit: "%", reading: value, maximum: 100);
+  }
+}
+
+class TemperatureGauge extends StatelessWidget {
+  final int? value;
+
+  TemperatureGauge({Key? key, this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return RadialGauge(unit: "\u2103", reading: value, maximum: 70);
   }
 }
