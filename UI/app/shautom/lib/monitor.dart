@@ -28,17 +28,12 @@ class _MonitorPageState extends State<MonitorPage> {
   late DatabaseReference _dhtRef;
   late Stream<DatabaseEvent> _dhtStream;
 
-  void getData() async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("readings");
-    DatabaseEvent event = await ref.once();
-
-    print(event.snapshot.value);
-  }
-
   /// Initializes Firebase realtime database configuration & state
   Future<void> init() async {
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
+
     _dhtStream = _dhtRef.onValue.asBroadcastStream();
     _dhtStream.listen(
       (DatabaseEvent evt) {
