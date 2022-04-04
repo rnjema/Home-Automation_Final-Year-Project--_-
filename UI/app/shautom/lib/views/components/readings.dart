@@ -49,7 +49,9 @@ class ReadingWidget extends StatelessWidget {
           child: Center(
             child: Text(
               "$reading $unit",
-              style: TextStyle(fontSize: size.height * 0.04),
+              style: TextStyle(
+                fontSize: size.height * 0.04,
+              ),
             ),
           ),
         ),
@@ -113,8 +115,14 @@ class RadialGauge extends StatelessWidget {
               widget: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("$reading"),
-                  Text("$unit"),
+                  Text(
+                    "$reading",
+                    style: TextStyle(fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    " $unit",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ],
               )),
         ],
