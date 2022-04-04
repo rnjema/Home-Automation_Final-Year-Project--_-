@@ -113,11 +113,12 @@ class RadialGauge extends StatelessWidget {
           GaugeAnnotation(
               angle: 0,
               widget: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "$reading",
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 30),
                   ),
                   Text(
                     " $unit",
@@ -138,8 +139,8 @@ class RadialGauge extends StatelessWidget {
                 Colors.green.withOpacity(0.7),
                 Colors.red.withOpacity(0.5)
               ], stops: <double>[
-                0.5,
-                0.85
+                0.7,
+                0.95
               ]),
               color: Color(0xFF00A8B5),
               width: 0.25),
@@ -169,6 +170,6 @@ class TemperatureGauge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RadialGauge(
-        unit: "\u2103", reading: value, maximum: 70, sAngle: 180, eAngle: 90);
+        unit: "\u2103", reading: value, maximum: 70, sAngle: 100, eAngle: 80);
   }
 }
