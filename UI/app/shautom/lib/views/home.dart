@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,11 +18,13 @@ import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 class LandingPage extends StatelessWidget {
   UserModel? user;
   bool loaded;
+  Stream dataStream;
 
   LandingPage({
     Key? key,
     required this.user,
     required this.loaded,
+    required this.dataStream,
   }) : super(key: key);
 
   @override
@@ -63,7 +66,7 @@ class LandingPage extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 0),
-            height: size.height * 0.25,
+            height: size.height * 0.4,
             child: ListView(
               children: [
                 Card(
@@ -85,25 +88,26 @@ class LandingPage extends StatelessWidget {
                               Icons.thermostat,
                               color: Colors.red.withOpacity(0.4),
                             ),
-                            Text(
-                              "Temperature",
-                              style: TextStyle(fontSize: 16),
+                            FittedBox(
+                              child: Text(
+                                "Temperature",
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: size.height * 0.005,
+                          height: size.height * 0.0015,
                         ),
                         Container(
-                          padding: EdgeInsets.all(0),
-                          width: 105,
-                          height: 105,
+                          padding: EdgeInsets.only(bottom: 5, top: 0),
+                          height: 230,
                           child: Center(child: TemperatureGauge(value: 25)),
-                        ),
+                        )
                       ],
                     ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.25,
+                    width: size.width * 0.55,
+                    height: size.height * 0.3,
                   ),
                 ),
                 Card(
@@ -125,22 +129,22 @@ class LandingPage extends StatelessWidget {
                             color: Colors.blue.withOpacity(0.4),
                           ),
                           SizedBox(width: 5),
-                          Text("Humidity")
+                          FittedBox(
+                              child: Text(
+                            "Humidity",
+                            style: TextStyle(fontSize: 16),
+                          ))
                         ]),
-                        SizedBox(
-                          height: size.height * 0.015,
-                        ),
                         Container(
-                            padding: EdgeInsets.all(0),
-                            width: 105,
-                            height: 105,
+                            padding: EdgeInsets.only(bottom: 5, top: 0),
+                            height: 230,
                             child: Center(
                               child: HumidityGauge(value: 80),
                             )),
                       ],
                     ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.25,
+                    width: size.width * 0.55,
+                    height: size.height * 0.3,
                   ),
                 ),
                 Card(
@@ -155,23 +159,26 @@ class LandingPage extends StatelessWidget {
                     color: Colors.transparent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Row(children: [
+                        Row(mainAxisSize: MainAxisSize.max, children: [
                           Icon(
                             Icons.bolt,
                             color: Colors.red.withOpacity(0.4),
                           ),
-                          Text("Power Consumption")
+                          FittedBox(
+                            child: Text(
+                              'Power',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          )
                         ]),
                         SizedBox(
                           height: size.height * 0.015,
                         ),
-                        Center(child: Text('Current Consumption')),
                       ],
                     ),
-                    width: size.width * 0.45,
-                    height: size.height * 0.25,
+                    width: size.width * 0.55,
+                    height: size.height * 0.3,
                   ),
                 ),
               ],
@@ -180,49 +187,6 @@ class LandingPage extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Text('Devices', style: TextStyle(fontSize: 25)),
-          SizedBox(
-            height: size.height * 0.2,
-            width: double.infinity,
-            child: Container(
-              child: ListView(scrollDirection: Axis.horizontal, children: [
-                Card(
-                    elevation: 2,
-                    shadowColor: Colors.blue.withOpacity(0.6),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.1), width: 2)),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            gradient: RadialGradient(
-                                colors: [Colors.blue, Colors.red])))),
-                Card(
-                    elevation: 2,
-                    shadowColor: Colors.blue.withOpacity(0.6),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.1), width: 2)),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            gradient: RadialGradient(
-                                colors: [Colors.blue, Colors.red])))),
-                Card(
-                    elevation: 2,
-                    shadowColor: Colors.blue.withOpacity(0.6),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.1), width: 2)),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                              colors: [Colors.blue, Colors.red])),
-                    ))
-              ]),
-            ),
-          )
         ]);
   }
 }
@@ -249,6 +213,25 @@ class _HomePageState extends State<HomePage> {
         context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 
+  late DatabaseReference _dhtRef;
+  late Stream<DatabaseEvent> _dhtStream;
+
+  /// Initializes Firebase realtime database configuration & state
+  Future<void> init() async {
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
+    _dhtRef = FirebaseDatabase.instance
+        .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
+
+    _dhtStream = _dhtRef.onValue.asBroadcastStream();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _dhtStream.drain();
+    //_dhtRef.onDisconnect();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -262,6 +245,7 @@ class _HomePageState extends State<HomePage> {
         _isLoaded = true;
       });
     });
+    init();
   }
 
   UserModel getUser() {
@@ -278,6 +262,7 @@ class _HomePageState extends State<HomePage> {
         'widget': LandingPage(
           loaded: _isLoaded,
           user: loggedInUser,
+          dataStream: _dhtStream,
         )
       },
       1: {
