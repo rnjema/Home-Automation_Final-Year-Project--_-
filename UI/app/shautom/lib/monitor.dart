@@ -44,7 +44,7 @@ class _MonitorPageState extends State<MonitorPage> {
 
         setState(() {
           temperature = double.parse(dhtData['temperature']).truncate();
-          tempOkay = temperature <= 25;
+          tempOkay = temperature <= 28;
           humidity = double.parse(dhtData['humidity']).truncate();
           humidityOkay = humidity >= 30 && humidity <= 50;
           energy = power['energy'];
