@@ -18,13 +18,13 @@ import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 class LandingPage extends StatelessWidget {
   UserModel? user;
   bool loaded;
-  Stream dataStream;
+  DatabaseReference dataRef;
 
   LandingPage({
     Key? key,
     required this.user,
     required this.loaded,
-    required this.dataStream,
+    required this.dataRef,
   }) : super(key: key);
 
   @override
@@ -102,7 +102,28 @@ class LandingPage extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.only(bottom: 5, top: 0),
                           height: 230,
-                          child: Center(child: TemperatureGauge(value: 25)),
+                          child: Center(
+                              child: StreamBuilder(
+                            stream: dataRef.onValue,
+                            builder: (context, snap) {
+                              if (snap.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              } else if (snap.hasData) {
+                                DatabaseEvent evt = snap.data as DatabaseEvent;
+                                dynamic data = evt.snapshot.value as Map;
+                                int val =
+                                    (double.parse(data['DHT22']['temperature']))
+                                        .toInt();
+                                return Center(
+                                    child: TemperatureGauge(value: val));
+                              } else if (snap.hasError) {
+                                print("Error");
+                              }
+
+                              return Container();
+                            },
+                          )),
                         )
                       ],
                     ),
@@ -138,8 +159,26 @@ class LandingPage extends StatelessWidget {
                         Container(
                             padding: EdgeInsets.only(bottom: 5, top: 0),
                             height: 230,
-                            child: Center(
-                              child: HumidityGauge(value: 80),
+                            child: StreamBuilder(
+                              stream: dataRef.onValue,
+                              builder: (context, snap) {
+                                if (snap.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snap.hasData) {
+                                  DatabaseEvent evt =
+                                      snap.data as DatabaseEvent;
+                                  dynamic data = evt.snapshot.value as Map;
+                                  int val =
+                                      int.parse(data['DHT22']['humidity']);
+                                  return Center(
+                                      child: HumidityGauge(value: val));
+                                } else if (snap.hasError) {
+                                  print("Error");
+                                }
+
+                                return Container();
+                              },
                             )),
                       ],
                     ),
@@ -262,7 +301,7 @@ class _HomePageState extends State<HomePage> {
         'widget': LandingPage(
           loaded: _isLoaded,
           user: loggedInUser,
-          dataStream: _dhtStream,
+          dataRef: _dhtRef,
         )
       },
       1: {
