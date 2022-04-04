@@ -1,5 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:shautom/views/components/logo.dart';
+import 'package:shautom/control_widget.dart';
 
 class ControlPage extends StatefulWidget {
   @override
@@ -7,42 +8,40 @@ class ControlPage extends StatefulWidget {
 }
 
 class _ControlPageState extends State<ControlPage> {
-  bool _isTvOn = false;
+  late DatabaseReference _controlRef;
+  late Stream<DatabaseEvent> _controlStream;
+
+  /// Initializes Firebase realtime database configuration & state
+  Future<void> initialize() async {
+    _controlRef = FirebaseDatabase.instance
+        .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/appliance_control");
+    _controlStream = _controlRef.onValue.asBroadcastStream();
+    _controlStream.listen((event) {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            //shape: ShapeBorder.lerp(a, b, t),
-            title: Text(
-              'Control Dashboard',
-              style: TextStyle(),
-            ),
-            backgroundColor: Colors.grey.withAlpha(50),
-            elevation: 0, //Color(0xFF3F51B5)
-          ),
-          body: Container(
-            child: Column(children: [
-              SwitchListTile(
-                value: _isTvOn,
-                onChanged: (bool value) {},
-                title: Text("TV Appliance"),
-                //subtitle: Switch,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(style: BorderStyle.solid),
-                ),
-                tileColor: Colors.blueAccent,
-              ),
-              ListTile(
-                title: Text("Security Lights"),
-              ),
-              ListTile(
-                title: Text("Room 1"),
-              )
-            ]),
-          )),
+      child: Container(
+        padding: EdgeInsets.only(top: 15),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 10),
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return ControlWidget(
+                applianceName: "Relay ${index + 1}", dbReference: _controlRef);
+          },
+          itemCount: 4,
+        ),
+      ),
     );
   }
 }
