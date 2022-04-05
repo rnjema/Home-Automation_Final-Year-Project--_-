@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shautom/constants.dart';
@@ -60,11 +61,22 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
   }
 
+  // Creates a user-sepcific node in firebase realtime database
+  createUserDatabaseNode() async {
+    DatabaseReference dbRef = FirebaseDatabase.instance.ref("Shautom/User");
+    User? user = _auth.currentUser;
+
+    await dbRef.update({
+      "${user!.uid}": {"appliance_control": "relay"}
+    });
+  }
+
   void _registerUser(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {postUserDetails()})
+          .then((value) => {createUserDatabaseNode()})
           .catchError((e) {
         print(e!.message);
       });
