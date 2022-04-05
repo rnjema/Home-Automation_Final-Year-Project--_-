@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "303164674602",
+    "firebase_url": "https://shautom-app-test-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "shautom-app-test",
+    "storage_bucket": "shautom-app-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303164674602:android:ced4054d34e206ab71e953",
+        "android_client_info": {
+          "package_name": "com.example.shautom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303164674602-2aaeimj8spo52oc5633i1qsaiv885i8k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5RugWllbkqiFe4ubNA8YG2FKZynHiEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303164674602-2aaeimj8spo52oc5633i1qsaiv885i8k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

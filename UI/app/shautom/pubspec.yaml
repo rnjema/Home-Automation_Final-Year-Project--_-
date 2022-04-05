@@ -28,11 +28,42 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_svg: ^1.0.0
+  flutter_svg_provider: ^0.1.11
+  flutter_svg: ^0.23.0+1
+  firebase_core: ^1.12.0
+  google_fonts: ^2.3.0
+  firebase_analytics: ^9.1.0
+  firebase_auth: ^3.3.7
+  firebase_database: ^9.0.6
+  intl_phone_field: ^3.0.1
+  cloud_firestore: ^3.1.9
+  flutter_switch: ^0.3.2
+  flutter_icons_null_safety: ^1.1.0
+  syncfusion_flutter_gauges: ^19.4.56
+  
+  #flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons : ^0.9.2
+  flutter_native_splash: ^2.0.5
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo.png
+  android: true
+  ios: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+
+
+
+dependency_overrides:
+  flutter_svg: 0.22.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -43,6 +74,34 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: fonts/Helvetica.ttf
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Regular.ttf
+        - asset: fonts/Inter-Bold.ttf
+          weight: 700
+    - family: Roboto
+      fonts: 
+        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Roboto-Italic.ttf
+          style: italic
+    - family: Raleway
+      fonts:
+        - asset: fonts/Raleway-Regular.ttf
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Regular.ttf
+        - asset: fonts/Nunito-Italic.ttf
+          style: italic
+    - family: Poppins
+      fonts:  
+        - asset: fonts/Poppins-Regular.ttf
+    - family: Montserrat
+      fonts:  
+        - asset: fonts/Montserrat-Regular.ttf
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -51,8 +110,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
       - assets/images/
+      - assets/images/icons/
 
-
+  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

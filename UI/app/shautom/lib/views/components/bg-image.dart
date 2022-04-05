@@ -15,18 +15,22 @@ class BackgroundImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
         .size; // Return a size object with device height and width
-    return Container(
-        height: size.height,
-        width: double.infinity,
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: image,
-                /*colorFilter: ColorFilter.mode(
-                  Colors.blue.withOpacity(0.2),
-                  BlendMode.darken,
-                ),*/
-                fit: BoxFit.cover)),
-        child: child);
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+            height: size.height,
+            width: double.infinity,
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: image,
+                    colorFilter: ColorFilter.mode(
+                      Colors.blue.withOpacity(0.2),
+                      BlendMode.darken,
+                    ),
+                    fit: BoxFit.cover)),
+            child: child),
+      ),
+    );
   }
 }
