@@ -18,7 +18,7 @@ class MonitorPage extends StatefulWidget {
 }
 
 class _MonitorPageState extends State<MonitorPage> {
-  int temperature = 25;
+  int temperature = 26;
   bool tempOkay = true;
   bool humidityOkay = false;
   int humidity = 30;
@@ -40,14 +40,14 @@ class _MonitorPageState extends State<MonitorPage> {
         final data = evt.snapshot.value as Map;
         Map dhtData = data['DHT22'];
         Map power = data['Power'];
-        print(data);
+        print("DHT : $dhtData \n Power : $power");
 
         setState(() {
-          temperature = double.parse(dhtData['temperature']).truncate();
+          temperature = dhtData['temperature'].truncate();
           tempOkay = temperature <= 28;
-          humidity = double.parse(dhtData['humidity']).truncate();
+          humidity = dhtData['humidity'].truncate();
           humidityOkay = humidity >= 30 && humidity <= 50;
-          energy = double.parse(power['energy']).toDouble();
+          energy = power['energy'].toDouble();
         });
       },
     );
