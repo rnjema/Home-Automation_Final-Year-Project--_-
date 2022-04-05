@@ -113,8 +113,7 @@ class LandingPage extends StatelessWidget {
                                 DatabaseEvent evt = snap.data as DatabaseEvent;
                                 dynamic data = evt.snapshot.value as Map;
                                 int val =
-                                    (double.parse(data['DHT22']['temperature']))
-                                        .toInt();
+                                    (data['DHT22']['temperature']).toInt();
                                 return Center(
                                     child: TemperatureGauge(value: val));
                               } else if (snap.hasError) {
@@ -170,7 +169,7 @@ class LandingPage extends StatelessWidget {
                                       snap.data as DatabaseEvent;
                                   dynamic data = evt.snapshot.value as Map;
                                   int val =
-                                      int.parse(data['DHT22']['humidity']);
+                                      data['DHT22']['humidity'].truncate();
                                   return Center(
                                       child: HumidityGauge(value: val));
                                 } else if (snap.hasError) {
