@@ -225,123 +225,85 @@ class LandingPage extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Text('Devices', style: TextStyle(fontSize: 25)),
-          Container(
-            margin: EdgeInsets.only(top: 0),
-            height: size.height * 0.25,
-            child: ListView(
-              children: [
-                Card(
-                  elevation: 2,
-                  shadowColor: Colors.blue.withOpacity(0.6),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                          color: Colors.black.withOpacity(0.1), width: 2)),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 6, top: 3),
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
+          Flexible(
+            child: Container(
+              margin: EdgeInsets.only(top: 0),
+              height: size.height * 0.25,
+              child: ListView(
+                children: [
+                  Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 6, top: 3),
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(children: [
                             Icon(
-                              Icons.fire_extinguisher,
+                              MaterialCommunityIcons.lighthouse,
+                              color: Colors.blue.withOpacity(0.4),
+                            ),
+                            SizedBox(width: 5),
+                            FittedBox(
+                                child: Text(
+                              "Outdoor Lights",
+                              style: TextStyle(fontSize: 14),
+                            ))
+                          ]),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 5, top: 0),
+                            height: size.height * 0.15,
+                          ),
+                        ],
+                      ),
+                      width: size.width * 0.4,
+                      height: size.height * 0.23,
+                    ),
+                  ),
+                  Card(
+                    elevation: 2,
+                    shadowColor: Colors.blue.withOpacity(0.6),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.1), width: 2)),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 6, top: 3),
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(mainAxisSize: MainAxisSize.max, children: [
+                            Icon(
+                              MaterialCommunityIcons.security,
                               color: Colors.red.withOpacity(0.4),
                             ),
+                            SizedBox(width: 5),
                             FittedBox(
                               child: Text(
-                                "Safety",
+                                'Security',
                                 style: TextStyle(fontSize: 16),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.height * 0.0015,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 5, top: 0),
-                          height: size.height * 0.15,
-                        )
-                      ],
-                    ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.3,
-                  ),
-                ),
-                Card(
-                  elevation: 2,
-                  shadowColor: Colors.blue.withOpacity(0.6),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                          color: Colors.black.withOpacity(0.1), width: 2)),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 6, top: 3),
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(children: [
-                          Icon(
-                            MaterialCommunityIcons.lighthouse,
-                            color: Colors.blue.withOpacity(0.4),
+                            )
+                          ]),
+                          SizedBox(
+                            height: size.height * 0.015,
                           ),
-                          SizedBox(width: 5),
-                          FittedBox(
-                              child: Text(
-                            "Outdoor Lights",
-                            style: TextStyle(fontSize: 14),
-                          ))
-                        ]),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 5, top: 0),
-                          height: size.height * 0.15,
-                        ),
-                      ],
+                        ],
+                      ),
+                      width: size.width * 0.4,
+                      height: size.height * 0.3,
                     ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.23,
                   ),
-                ),
-                Card(
-                  elevation: 2,
-                  shadowColor: Colors.blue.withOpacity(0.6),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                          color: Colors.black.withOpacity(0.1), width: 2)),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 6, top: 3),
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(mainAxisSize: MainAxisSize.max, children: [
-                          Icon(
-                            MaterialCommunityIcons.security,
-                            color: Colors.red.withOpacity(0.4),
-                          ),
-                          SizedBox(width: 5),
-                          FittedBox(
-                            child: Text(
-                              'Security',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          )
-                        ]),
-                        SizedBox(
-                          height: size.height * 0.015,
-                        ),
-                      ],
-                    ),
-                    width: size.width * 0.4,
-                    height: size.height * 0.3,
-                  ),
-                ),
-              ],
-              scrollDirection: Axis.horizontal,
+                ],
+                scrollDirection: Axis.horizontal,
+              ),
             ),
           ),
         ]);
