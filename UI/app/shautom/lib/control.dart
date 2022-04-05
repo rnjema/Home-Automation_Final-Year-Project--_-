@@ -16,7 +16,9 @@ class _ControlPageState extends State<ControlPage> {
     _controlRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/appliance_control");
     _controlStream = _controlRef.onValue.asBroadcastStream();
-    _controlStream.listen((event) {});
+    _controlStream.listen((event) {
+      print(event.snapshot.value);
+    });
   }
 
   @override

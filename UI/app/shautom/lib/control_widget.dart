@@ -6,12 +6,12 @@ import 'package:flutter_switch/flutter_switch.dart';
 class ControlWidget extends StatefulWidget {
   final String applianceName;
   final String? appIconPath;
-  final DatabaseReference? dbReference;
+  final DatabaseReference dbReference;
   ControlWidget(
       {Key? key,
       required this.applianceName,
       this.appIconPath,
-      this.dbReference})
+      required this.dbReference})
       : super(key: key);
 
   @override
@@ -20,6 +20,27 @@ class ControlWidget extends StatefulWidget {
 
 class _ControlWidgetState extends State<ControlWidget> {
   bool _isOn = true;
+
+  void initialize() {
+    widget.dbReference.onValue.listen((event) {
+      int relayNum = int.parse(widget.applianceName.split(' ')[1]);
+      Map data = event.snapshot.value as Map;
+      setState(() {
+        _isOn = data['relay$relayNum']['state'] == 1;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +81,7 @@ class _ControlWidgetState extends State<ControlWidget> {
                       setState(() {
                         _isOn = value;
                       });
-                      await widget.dbReference!.update({
+                      await widget.dbReference.update({
                         "${widget.applianceName.replaceAll(' ', '').toLowerCase()}/state":
                             _isOn ? 1 : 0,
                       });
