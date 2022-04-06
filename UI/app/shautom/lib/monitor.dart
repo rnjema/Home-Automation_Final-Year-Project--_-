@@ -73,7 +73,6 @@ class _MonitorPageState extends State<MonitorPage> {
 
   @override
   void initState() {
-    super.initState();
     _chartData = [
       LiveEnergyData(timestamp: 0, value: 23),
       LiveEnergyData(timestamp: 1, value: 78),
@@ -90,7 +89,6 @@ class _MonitorPageState extends State<MonitorPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _dhtStream.drain();
     //_dhtRef.onDisconnect();
     _chartData.clear();
@@ -219,12 +217,16 @@ class _MonitorPageState extends State<MonitorPage> {
               //   "No Data",
               //   style: TextStyle(color: Colors.white.withOpacity(0.8)),
               // )),
-              child: Flexible(
-                  child: LivePowerGraph(
-                tooltipBehaviour: _tooltipBehaviour,
-                chartData: _chartData,
-                chartSeriesController: _chartSeriesController,
-              )),
+              child: Row(
+                children: [
+                  Flexible(
+                      child: LivePowerGraph(
+                    tooltipBehaviour: _tooltipBehaviour,
+                    chartData: _chartData,
+                    chartSeriesController: _chartSeriesController,
+                  ))
+                ],
+              ),
             ),
           ),
         ],
