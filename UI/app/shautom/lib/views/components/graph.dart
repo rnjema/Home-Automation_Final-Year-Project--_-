@@ -1,9 +1,51 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+
+import 'package:odometer/odometer.dart';
+
+class Odometer extends StatefulWidget {
+  _OdometerState createState() => _OdometerState();
+}
+
+class _OdometerState extends State<Odometer> {
+  int _energy = 1900;
+
+  @override
+  void initState() {
+    Timer.periodic(const Duration(seconds: 5), updateEnergy);
+    super.initState();
+  }
+
+  updateEnergy(Timer timer) {
+    if (mounted) {
+      setState(() {
+        _energy += 1;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlideOdometerNumber(
+      odometerNumber: OdometerNumber(_energy),
+      duration: Duration(milliseconds: 500),
+      letterWidth: 35,
+      numberTextStyle: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.w300,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          color: Colors.white),
+    );
+  }
+}
 
 class PowerGraph extends StatefulWidget {
   @override
