@@ -118,7 +118,7 @@ class RadialGauge extends StatelessWidget {
                 children: [
                   Text(
                     "$reading",
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 30),
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 28),
                   ),
                   Text(
                     " $unit",
