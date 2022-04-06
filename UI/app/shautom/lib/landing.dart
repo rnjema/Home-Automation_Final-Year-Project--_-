@@ -256,12 +256,7 @@ class _LandingPageState extends State<LandingPage> {
                         SizedBox(
                           height: size.height * 0.015,
                         ),
-                        Flexible(
-                            child: LivePowerGraph(
-                          tooltipBehaviour: _tooltipBehaviour,
-                          chartData: _chartData,
-                          chartSeriesController: _chartSeriesController,
-                        )),
+                        Flexible(child: Center(child: Odometer())),
                       ],
                     ),
                     width: size.width * 0.6,
