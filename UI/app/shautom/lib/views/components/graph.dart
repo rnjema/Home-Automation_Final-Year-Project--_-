@@ -11,7 +11,7 @@ class Odometer extends StatefulWidget {
 }
 
 class _OdometerState extends State<Odometer> {
-  int _energy = 1900;
+  int _energy = 1972;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _OdometerState extends State<Odometer> {
       numberTextStyle: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.w300,
-          backgroundColor: Colors.black.withOpacity(0.5),
+          //backgroundColor: Colors.black.withOpacity(0.5),
           color: Colors.white),
     );
   }

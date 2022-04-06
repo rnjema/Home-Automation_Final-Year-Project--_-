@@ -256,7 +256,27 @@ class _LandingPageState extends State<LandingPage> {
                         SizedBox(
                           height: size.height * 0.015,
                         ),
-                        Flexible(child: Center(child: Odometer())),
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Kwh",
+                                  style: TextStyle(
+                                      color: Colors.red.withOpacity(0.6)),
+                                ),
+                                Odometer(),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.grey.withOpacity(0.7)),
+                          ),
+                        ),
                       ],
                     ),
                     width: size.width * 0.6,
