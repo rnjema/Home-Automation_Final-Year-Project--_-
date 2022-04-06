@@ -89,10 +89,8 @@ class _PowerGraphState extends State<PowerGraph> {
       primaryXAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           majorGridLines: MajorGridLines(width: 0),
-          title: AxisTitle(
-              text: "Timestamp",
-              textStyle: TextStyle(fontSize: 10),
-              alignment: ChartAlignment.center)),
+          title:
+              AxisTitle(text: "Timestamp", alignment: ChartAlignment.center)),
       primaryYAxis: NumericAxis(
           majorGridLines: MajorGridLines(width: 0),
           labelFormat: '{value}',
@@ -162,10 +160,8 @@ class LivePowerGraph extends StatelessWidget {
       ],
       primaryXAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
-          title: AxisTitle(
-              text: "Timestamp",
-              textStyle: TextStyle(fontSize: 10),
-              alignment: ChartAlignment.center)),
+          title:
+              AxisTitle(text: "Timestamp", alignment: ChartAlignment.center)),
       primaryYAxis: NumericAxis(
           labelFormat: '{value}',
           title: AxisTitle(text: "Energy"),
