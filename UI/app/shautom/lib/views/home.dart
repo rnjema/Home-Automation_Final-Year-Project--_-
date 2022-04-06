@@ -9,6 +9,7 @@ import 'package:shautom/control.dart';
 import 'package:shautom/models/user.dart';
 import 'package:shautom/monitor.dart';
 import 'package:shautom/profile.dart';
+import 'package:shautom/views/components/graph.dart';
 import 'package:shautom/views/components/logo.dart';
 import 'package:shautom/views/components/readings.dart';
 import 'package:shautom/views/welcome.dart';
@@ -213,6 +214,7 @@ class LandingPage extends StatelessWidget {
                         SizedBox(
                           height: size.height * 0.015,
                         ),
+                        Flexible(child: PowerGraph()),
                       ],
                     ),
                     width: size.width * 0.6,
