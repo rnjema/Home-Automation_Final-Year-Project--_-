@@ -26,8 +26,8 @@ class _PowerGraphState extends State<PowerGraph> {
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
-      //title: ChartTitle(text: "Energy Consumption Anlaysis"),
-      legend: Legend(isVisible: false),
+      title: ChartTitle(text: "Energy Consumption Analysis"),
+      legend: Legend(isVisible: false, position: LegendPosition.top),
       tooltipBehavior: _tooltipBehaviour,
       series: <SplineAreaSeries>[
         SplineAreaSeries<EnergyData, double>(
@@ -128,17 +128,6 @@ class LivePowerGraph extends StatelessWidget {
           labelFormat: '{value}',
           title: AxisTitle(text: "Energy"),
           numberFormat: NumberFormat.decimalPattern("en-us")),
-    );
-  }
-
-  double time = 5;
-  void updateDataSource(Timer timer) {
-    chartData.add(LiveEnergyData(
-        timestamp: time++, value: ((math.Random().nextDouble()) * 400)));
-    chartData.removeAt(0);
-    chartSeriesController?.updateDataSource(
-      addedDataIndex: chartData.length - 1,
-      removedDataIndex: 0,
     );
   }
 }

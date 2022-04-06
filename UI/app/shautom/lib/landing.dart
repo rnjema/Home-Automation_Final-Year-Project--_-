@@ -358,3 +358,16 @@ class _LandingPageState extends State<LandingPage> {
         ]);
   }
 }
+
+
+/*
+CircleAvatar(
+                    minRadius: size.width * 0.25,
+                    backgroundColor: Colors.blue.withOpacity(0.8),
+                    child: CircleAvatar(
+                      minRadius: size.width * 0.18,
+                      maxRadius: size.width * 0.2,
+                      backgroundColor: Colors.black.withOpacity(0.6),
+                      child: Text("${formatter.format(energy)} Wh"),
+                    ),
+                  ), */

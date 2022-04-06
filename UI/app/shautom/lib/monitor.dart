@@ -207,44 +207,25 @@ class _MonitorPageState extends State<MonitorPage> {
           ),
           Divider(color: Colors.black),
           SizedBox(
-            height: size.height * 0.3,
-            child: GridView(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 20),
-                physics: BouncingScrollPhysics(),
-                children: [
-                  CircleAvatar(
-                    minRadius: size.width * 0.25,
-                    backgroundColor: Colors.blue.withOpacity(0.8),
-                    child: CircleAvatar(
-                      minRadius: size.width * 0.18,
-                      maxRadius: size.width * 0.2,
-                      backgroundColor: Colors.black.withOpacity(0.6),
-                      child: Text("${formatter.format(energy)} Wh"),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.6),
-                        border: Border.all(
-                            color: Colors.blue.withOpacity(0.6), width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    // child: Center(
-                    //     child: Text(
-                    //   "No Data",
-                    //   style: TextStyle(color: Colors.white.withOpacity(0.8)),
-                    // )),
-                    child: Flexible(
-                        child: LivePowerGraph(
-                      tooltipBehaviour: _tooltipBehaviour,
-                      chartData: _chartData,
-                      chartSeriesController: _chartSeriesController,
-                    )),
-                  )
-                ]),
+            height: size.height * 0.4,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.6),
+                  border:
+                      Border.all(color: Colors.blue.withOpacity(0.6), width: 3),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              // child: Center(
+              //     child: Text(
+              //   "No Data",
+              //   style: TextStyle(color: Colors.white.withOpacity(0.8)),
+              // )),
+              child: Flexible(
+                  child: LivePowerGraph(
+                tooltipBehaviour: _tooltipBehaviour,
+                chartData: _chartData,
+                chartSeriesController: _chartSeriesController,
+              )),
+            ),
           ),
         ],
       ),
