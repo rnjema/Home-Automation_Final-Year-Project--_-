@@ -38,7 +38,7 @@ class _MonitorPageState extends State<MonitorPage> {
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
 
-    _dhtStream = _dhtRef.onValue.asBroadcastStream();
+    _dhtStream = _dhtRef.onValue;
     _dhtStream.listen(
       (DatabaseEvent evt) {
         final data = evt.snapshot.value as Map;
@@ -60,8 +60,8 @@ class _MonitorPageState extends State<MonitorPage> {
   /// Initializes widget state
   @override
   void initState() {
-    super.initState();
     init();
+    super.initState();
   }
 
   /// Memory garbage collection method
@@ -105,7 +105,23 @@ class _MonitorPageState extends State<MonitorPage> {
                   physics: BouncingScrollPhysics(),
                   children: [
                     GridTile(
-                      child: TemperatureWidget(temperature: temperature),
+                      child: StreamBuilder(
+                          stream: _dhtRef.onValue,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            } else if (snapshot.hasData) {
+                              DatabaseEvent evt =
+                                  snapshot.data as DatabaseEvent;
+                              dynamic data = evt.snapshot.value as Map;
+                              int val = (data['DHT22']['temperature']).toInt();
+                              return TemperatureWidget(temperature: val);
+                            } else if (snapshot.hasError) {
+                              print("Error");
+                            }
+                            return Container();
+                          }),
                       footer: Container(
                         padding: EdgeInsets.all(0),
                         child: GridTileBar(
@@ -135,7 +151,23 @@ class _MonitorPageState extends State<MonitorPage> {
                       ),
                     ),
                     GridTile(
-                        child: HumidityWidget(humidity: humidity),
+                        child: StreamBuilder(
+                            stream: _dhtRef.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              } else if (snapshot.hasData) {
+                                DatabaseEvent evt =
+                                    snapshot.data as DatabaseEvent;
+                                dynamic data = evt.snapshot.value as Map;
+                                int val = (data['DHT22']['humidity']).toInt();
+                                return HumidityWidget(humidity: val);
+                              } else if (snapshot.hasError) {
+                                print("Error");
+                              }
+                              return Container();
+                            }),
                         footer: Container(
                           padding: EdgeInsets.all(0),
                           child: GridTileBar(
