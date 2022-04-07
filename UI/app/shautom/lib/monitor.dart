@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 var formatter = NumberFormat.decimalPattern('en_us');
 //var decimalFormatter = NumberFormat.0
 
+/// Monitoring Dashboard Stateful Widget
 class MonitorPage extends StatefulWidget {
   MonitorPage({
     Key? key,
@@ -19,6 +20,7 @@ class MonitorPage extends StatefulWidget {
 }
 
 class _MonitorPageState extends State<MonitorPage> {
+  /// State variables
   int temperature = 26;
   bool tempOkay = true;
   bool humidityOkay = false;
@@ -26,6 +28,7 @@ class _MonitorPageState extends State<MonitorPage> {
 
   double energy = 0;
 
+  /// Firebase Realtime Database reference and event stream
   late DatabaseReference _dhtRef;
   late Stream<DatabaseEvent> _dhtStream;
 
@@ -54,12 +57,14 @@ class _MonitorPageState extends State<MonitorPage> {
     );
   }
 
+  /// Initializes widget state
   @override
   void initState() {
     super.initState();
     init();
   }
 
+  /// Memory garbage collection method
   @override
   void dispose() {
     _dhtStream.drain();
@@ -67,6 +72,7 @@ class _MonitorPageState extends State<MonitorPage> {
     super.dispose();
   }
 
+  /// Renders a SingleChildScrollView of components
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
