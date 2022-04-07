@@ -291,8 +291,20 @@ class _LandingPageState extends State<LandingPage> {
                                         snap.data as DatabaseEvent;
                                     dynamic data = evt.snapshot.value as Map;
                                     int lightState = data['roombulb-status'];
-                                    return Text(
-                                        "Lights are ${lightState == 1 ? "ON" : "OFF"}");
+                                    return CircleAvatar(
+                                      maxRadius: 25,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        maxRadius: 20,
+                                        child: lightState == 1
+                                            ? Text("ON")
+                                            : Text(
+                                                "OFF",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                      ),
+                                    );
                                   } else if (snap.hasError) {
                                     print("Error");
                                   }
@@ -334,10 +346,9 @@ class _LandingPageState extends State<LandingPage> {
                               ),
                             )
                           ]),
-                          SizedBox(
-                            height: size.height * 0.015,
-                          ),
                           Container(
+                            padding: EdgeInsets.only(bottom: 5, top: 0),
+                            height: size.height * 0.15,
                             child: Center(
                               child: StreamBuilder(
                                 stream: applianceStateRef.onValue,
@@ -350,8 +361,20 @@ class _LandingPageState extends State<LandingPage> {
                                         snap.data as DatabaseEvent;
                                     dynamic data = evt.snapshot.value as Map;
                                     int acState = data['fan-status'];
-                                    return Text(
-                                        "AirCon is ${acState == 1 ? "ON" : "OFF"}");
+                                    return CircleAvatar(
+                                      maxRadius: 25,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        maxRadius: 20,
+                                        child: acState == 1
+                                            ? Text("ON")
+                                            : Text(
+                                                "OFF",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                      ),
+                                    );
                                   } else if (snap.hasError) {
                                     print("Error");
                                   }
