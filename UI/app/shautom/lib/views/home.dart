@@ -87,14 +87,14 @@ class _HomePageState extends State<HomePage> {
           dataRef: _dhtRef,
         )
       },
-      1: {
+      1: {'title': 'Control Dashboard', 'widget': ControlPage()},
+      2: {'title': 'Monitoring Dashboard', 'widget': MonitorPage()},
+      3: {
         'title': 'Profile',
         'widget': ProfilePage(
           user: loggedInUser,
         )
       },
-      2: {'title': 'Control Dashboard', 'widget': ControlPage()},
-      3: {'title': 'Monitoring Dashboard', 'widget': MonitorPage()}
     };
 
     void _onItemTapped(int index) {
@@ -134,17 +134,17 @@ class _HomePageState extends State<HomePage> {
                   icon: ImageIcon(Svg('assets/images/icons/home.svg')),
                   label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.settings,
-                    size: 30,
-                  ), //ImageIcon(Svg('assets/images/icons/person.svg',),ize: 30),
-                  label: 'Settings'),
-              BottomNavigationBarItem(
                   icon: ImageIcon(Svg('assets/images/icons/control.svg')),
                   label: "Control"),
               BottomNavigationBarItem(
                   icon: ImageIcon(Svg('assets/images/icons/monitor.svg')),
                   label: 'Monitor'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 30,
+                  ), //ImageIcon(Svg('assets/images/icons/person.svg',),ize: 30),
+                  label: 'Settings'),
             ],
           )),
     );
