@@ -26,6 +26,9 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    DatabaseReference sensorRef = widget.dataRef.child('sensor_readings');
+    DatabaseReference applianceStateRef =
+        widget.dataRef.child('appliance_status');
     return Column(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +103,7 @@ class _LandingPageState extends State<LandingPage> {
                           height: size.height * 0.15,
                           child: Center(
                               child: StreamBuilder(
-                            stream: widget.dataRef.onValue,
+                            stream: sensorRef.onValue,
                             builder: (context, snap) {
                               if (snap.connectionState ==
                                   ConnectionState.waiting) {
@@ -155,7 +158,7 @@ class _LandingPageState extends State<LandingPage> {
                             padding: EdgeInsets.only(bottom: 5, top: 0),
                             height: size.height * 0.15,
                             child: StreamBuilder(
-                              stream: widget.dataRef.onValue,
+                              stream: sensorRef.onValue,
                               builder: (context, snap) {
                                 if (snap.connectionState ==
                                     ConnectionState.waiting) {
@@ -263,19 +266,41 @@ class _LandingPageState extends State<LandingPage> {
                         children: [
                           Row(children: [
                             Icon(
-                              MaterialCommunityIcons.lighthouse,
+                              MaterialCommunityIcons.weather_sunny,
                               color: Colors.blue.withOpacity(0.4),
                             ),
                             SizedBox(width: 5),
                             FittedBox(
                                 child: Text(
-                              "Outdoor Lights",
+                              "Indoor Lights",
                               style: TextStyle(fontSize: 14),
                             ))
                           ]),
                           Container(
                             padding: EdgeInsets.only(bottom: 5, top: 0),
                             height: size.height * 0.15,
+                            child: Center(
+                              child: StreamBuilder(
+                                stream: applianceStateRef.onValue,
+                                builder: (context, snap) {
+                                  if (snap.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snap.hasData) {
+                                    DatabaseEvent evt =
+                                        snap.data as DatabaseEvent;
+                                    dynamic data = evt.snapshot.value as Map;
+                                    int lightState = data['roombulb-status'];
+                                    return Text(
+                                        "Lights are ${lightState == 1 ? "ON" : "OFF"}");
+                                  } else if (snap.hasError) {
+                                    print("Error");
+                                  }
+
+                                  return Container();
+                                },
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -298,20 +323,44 @@ class _LandingPageState extends State<LandingPage> {
                         children: [
                           Row(mainAxisSize: MainAxisSize.max, children: [
                             Icon(
-                              MaterialCommunityIcons.security,
+                              MaterialCommunityIcons.air_conditioner,
                               color: Colors.red.withOpacity(0.4),
                             ),
                             SizedBox(width: 5),
                             FittedBox(
                               child: Text(
-                                'Security',
-                                style: TextStyle(fontSize: 16),
+                                'Air Conditioning',
+                                style: TextStyle(fontSize: 14),
                               ),
                             )
                           ]),
                           SizedBox(
                             height: size.height * 0.015,
                           ),
+                          Container(
+                            child: Center(
+                              child: StreamBuilder(
+                                stream: applianceStateRef.onValue,
+                                builder: (context, snap) {
+                                  if (snap.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snap.hasData) {
+                                    DatabaseEvent evt =
+                                        snap.data as DatabaseEvent;
+                                    dynamic data = evt.snapshot.value as Map;
+                                    int acState = data['fan-status'];
+                                    return Text(
+                                        "AirCon is ${acState == 1 ? "ON" : "OFF"}");
+                                  } else if (snap.hasError) {
+                                    print("Error");
+                                  }
+
+                                  return Container();
+                                },
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       width: size.width * 0.5,
