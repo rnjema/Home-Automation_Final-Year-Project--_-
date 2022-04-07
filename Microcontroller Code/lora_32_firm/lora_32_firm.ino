@@ -142,7 +142,11 @@ if (Firebase.ready() && (millis() - sendDataPrevMillis > delayMS || sendDataPrev
     delay(delayMS);
     smartLight();
     smartFan();
-    Serial.printf("Set json... %s\n", Firebase.RTDB.updateNode(&fbdo, parentPath.c_str(), &json) ? "ok" : fbdo.errorReason().c_str());
+
+    
+    if(!Firebase.RTDB.getJSON(&fbdo, (parentPath + switch3Path).c_str())){json.set(switch3Path.c_str(), 0);}
+    if(!Firebase.RTDB.getJSON(&fbdo, (parentPath + switch4Path).c_str())){json.set(switch4Path.c_str(), 0);}
+    Serial.printf("Set json... %s\n", Firebase.RTDB.setJSON (&fbdo, parentPath.c_str(), &json) ? "ok" : fbdo.errorReason().c_str());
   }
 }
 
@@ -329,7 +333,7 @@ Serial.println("Light Intersity: ");
 Serial.println(analogRead(LDR));
    if((digitalRead(pirPin) == HIGH)  && (analogRead(LDR)<= lightIntesityThreshhold)){
      digitalWrite(RELAY2, HIGH);
-     json.set(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
+     json.set(lightdepentresistorStatusPath.c_str(),int(analogRead(LDR)));
      json.set(pirStatusPath.c_str(), 1);
      json.set(switch2Path.c_str(), 1);
      json.set(roomBulbStatusPath.c_str(), 1);
@@ -349,7 +353,7 @@ Serial.println(analogRead(LDR));
      }
    else { 
      digitalWrite(RELAY2, LOW);
-     json.set(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
+     json.set(lightdepentresistorStatusPath.c_str(),int(analogRead(LDR)));
      json.set(pirStatusPath.c_str(), 0);
      json.set(switch2Path.c_str(), 0);
      json.set(roomBulbStatusPath.c_str(), 0);
@@ -378,7 +382,7 @@ void smartFan(){
   sensors_event_t event;
   temperature();
   humidity();
-  if(event.temperature > 27 && event.relative_humidity > 50){
+  if(event.temperature > 27 || event.relative_humidity > 50){
     digitalWrite(RELAY1, HIGH);
     json.set(switch1Path.c_str(), 1);
     json.set(fanStatusPath.c_str(), 1);
