@@ -290,7 +290,7 @@ class _LandingPageState extends State<LandingPage> {
                                     DatabaseEvent evt =
                                         snap.data as DatabaseEvent;
                                     dynamic data = evt.snapshot.value as Map;
-                                    int lightState = data['roombulb-status'];
+                                    int lightState = data['roombulb']['state'];
                                     return CircleAvatar(
                                       maxRadius: 25,
                                       child: CircleAvatar(
@@ -360,7 +360,7 @@ class _LandingPageState extends State<LandingPage> {
                                     DatabaseEvent evt =
                                         snap.data as DatabaseEvent;
                                     dynamic data = evt.snapshot.value as Map;
-                                    int acState = data['fan-status'];
+                                    int acState = data['fan']['state'];
                                     return CircleAvatar(
                                       maxRadius: 25,
                                       child: CircleAvatar(
