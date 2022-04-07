@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:shautom/views/components/graph.dart';
 import 'package:shautom/views/components/readings.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 var formatter = NumberFormat.decimalPattern('en_us');
 //var decimalFormatter = NumberFormat.0
@@ -30,21 +28,6 @@ class _MonitorPageState extends State<MonitorPage> {
 
   late DatabaseReference _dhtRef;
   late Stream<DatabaseEvent> _dhtStream;
-
-  late List<LiveEnergyData> _chartData;
-  late TooltipBehavior _tooltipBehaviour;
-  ChartSeriesController? _chartSeriesController;
-
-  double time = 5;
-  void updateDataSource(Timer timer) {
-    _chartData.add(LiveEnergyData(
-        timestamp: time++, value: ((math.Random().nextDouble()) * 400)));
-    _chartData.removeAt(0);
-    _chartSeriesController?.updateDataSource(
-      addedDataIndex: _chartData.length - 1,
-      removedDataIndex: 0,
-    );
-  }
 
   /// Initializes Firebase realtime database configuration & state
   Future<void> init() async {
@@ -73,16 +56,6 @@ class _MonitorPageState extends State<MonitorPage> {
 
   @override
   void initState() {
-    _chartData = [
-      LiveEnergyData(timestamp: 0, value: 23),
-      LiveEnergyData(timestamp: 1, value: 78),
-      LiveEnergyData(timestamp: 2, value: 23),
-      LiveEnergyData(timestamp: 3, value: 89),
-      LiveEnergyData(timestamp: 4, value: 320)
-    ];
-
-    _tooltipBehaviour = TooltipBehavior(enable: true);
-    Timer.periodic(const Duration(seconds: 2), updateDataSource);
     super.initState();
     init();
   }
@@ -91,8 +64,6 @@ class _MonitorPageState extends State<MonitorPage> {
   void dispose() {
     _dhtStream.drain();
     //_dhtRef.onDisconnect();
-    _chartData.clear();
-    _chartSeriesController = null;
     super.dispose();
   }
 
@@ -218,14 +189,7 @@ class _MonitorPageState extends State<MonitorPage> {
               //   style: TextStyle(color: Colors.white.withOpacity(0.8)),
               // )),
               child: Row(
-                children: [
-                  Flexible(
-                      child: LivePowerGraph(
-                    tooltipBehaviour: _tooltipBehaviour,
-                    chartData: _chartData,
-                    chartSeriesController: _chartSeriesController,
-                  ))
-                ],
+                children: [Flexible(child: LivePowerGraph())],
               ),
             ),
           ),

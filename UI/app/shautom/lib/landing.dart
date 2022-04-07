@@ -1,15 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-
-import 'dart:async';
-import 'dart:math' as math;
-
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
 
 import 'package:shautom/models/user.dart';
 import 'package:shautom/views/components/graph.dart';
@@ -17,9 +7,9 @@ import 'package:shautom/views/components/readings.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 
 class LandingPage extends StatefulWidget {
-  UserModel? user;
+  final UserModel? user;
   final bool loaded;
-  DatabaseReference dataRef;
+  final DatabaseReference dataRef;
 
   LandingPage({
     Key? key,
@@ -33,43 +23,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  late List<LiveEnergyData> _chartData;
-  late TooltipBehavior _tooltipBehaviour;
-  ChartSeriesController? _chartSeriesController;
-
-  @override
-  void initState() {
-    _chartData = [
-      LiveEnergyData(timestamp: 0, value: 23),
-      LiveEnergyData(timestamp: 1, value: 78),
-      LiveEnergyData(timestamp: 2, value: 23),
-      LiveEnergyData(timestamp: 3, value: 89),
-      LiveEnergyData(timestamp: 4, value: 320)
-    ];
-
-    _tooltipBehaviour = TooltipBehavior(enable: true);
-    Timer.periodic(const Duration(seconds: 2), updateDataSource);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _chartData.clear();
-    _chartSeriesController = null;
-    super.dispose();
-  }
-
-  double time = 5;
-  void updateDataSource(Timer timer) {
-    _chartData.add(LiveEnergyData(
-        timestamp: time++, value: ((math.Random().nextDouble()) * 400)));
-    _chartData.removeAt(0);
-    _chartSeriesController?.updateDataSource(
-      addedDataIndex: _chartData.length - 1,
-      removedDataIndex: 0,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

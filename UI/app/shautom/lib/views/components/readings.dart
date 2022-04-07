@@ -70,7 +70,6 @@ class HumidityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return ReadingWidget(
       reading: humidity,
       unit: "%",

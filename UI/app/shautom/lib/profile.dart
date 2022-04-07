@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:shautom/views/home.dart';
-
 import 'models/user.dart';
 
 class ProfilePage extends StatelessWidget {

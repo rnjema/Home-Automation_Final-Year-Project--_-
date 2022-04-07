@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -121,32 +122,66 @@ class EnergyData {
   final double value;
 }
 
-class LivePowerGraph extends StatelessWidget {
-  final TooltipBehavior? tooltipBehaviour;
-  ChartSeriesController? chartSeriesController;
-  List<LiveEnergyData> chartData;
+class LivePowerGraph extends StatefulWidget {
+  @override
+  State<LivePowerGraph> createState() => _LivePowerGraphState();
+}
 
-  LivePowerGraph({
-    Key? key,
-    this.tooltipBehaviour,
-    this.chartSeriesController,
-    required this.chartData,
-  }) : super(key: key);
+class _LivePowerGraphState extends State<LivePowerGraph> {
+  late List<LiveEnergyData> _chartData;
+
+  late TooltipBehavior _tooltipBehaviour;
+
+  ChartSeriesController? _chartSeriesController;
+
+  @override
+  void initState() {
+    _chartData = [
+      LiveEnergyData(timestamp: 0, value: 23),
+      LiveEnergyData(timestamp: 1, value: 78),
+      LiveEnergyData(timestamp: 2, value: 23),
+      LiveEnergyData(timestamp: 3, value: 89),
+      LiveEnergyData(timestamp: 4, value: 320)
+    ];
+
+    _tooltipBehaviour = TooltipBehavior(enable: true);
+    Timer.periodic(const Duration(seconds: 2), updateDataSource);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _chartData.clear();
+    _chartSeriesController = null;
+    super.dispose();
+  }
+
+  double time = 5;
+
+  void updateDataSource(Timer timer) {
+    _chartData.add(LiveEnergyData(
+        timestamp: time++, value: ((math.Random().nextDouble()) * 400)));
+    _chartData.removeAt(0);
+    _chartSeriesController?.updateDataSource(
+      addedDataIndex: _chartData.length - 1,
+      removedDataIndex: 0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
       //title: ChartTitle(text: "Energy Consumption Anlaysis"),
       legend: Legend(isVisible: false),
-      tooltipBehavior: tooltipBehaviour,
+      tooltipBehavior: _tooltipBehaviour,
       series: <SplineAreaSeries>[
         SplineAreaSeries<LiveEnergyData, double>(
             animationDuration: 2000,
             onRendererCreated: (ChartSeriesController controller) {
-              chartSeriesController = controller;
+              _chartSeriesController = controller;
             },
             name: 'Energy Consumption',
-            dataSource: chartData,
+            dataSource: _chartData,
             xValueMapper: (LiveEnergyData energy, _) => energy.timestamp,
             yValueMapper: (LiveEnergyData energy, _) => energy.value,
             dataLabelSettings: DataLabelSettings(isVisible: false),

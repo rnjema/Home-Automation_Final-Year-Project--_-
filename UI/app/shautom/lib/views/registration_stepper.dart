@@ -3,7 +3,6 @@ import 'package:shautom/constants.dart';
 import 'package:shautom/views/auth/form_fields.dart';
 import 'package:shautom/views/containers.dart';
 
-
 class RegistrationStepper extends StatefulWidget {
   RegistrationStepper(
       {Key? key,
@@ -23,7 +22,7 @@ class RegistrationStepper extends StatefulWidget {
 }
 
 class _RegistrationStepperState extends State<RegistrationStepper> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final email = TextEditingController();

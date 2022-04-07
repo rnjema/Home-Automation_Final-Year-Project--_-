@@ -78,8 +78,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size; //Media Device data config
-
     Map<int, Map<String, dynamic>> _pages = {
       0: {
         'title': 'Home',
