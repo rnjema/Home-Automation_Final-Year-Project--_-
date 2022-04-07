@@ -29,17 +29,17 @@ class _MonitorPageState extends State<MonitorPage> {
   double energy = 0;
 
   /// Firebase Realtime Database reference and event stream
-  late DatabaseReference _dhtRef;
-  late Stream<DatabaseEvent> _dhtStream;
+  DatabaseReference? _dhtRef;
+  Stream<DatabaseEvent>? _dhtStream;
 
   /// Initializes Firebase realtime database configuration & state
+  //FirebaseDatabase.instance.setPersistenceEnabled(true);
   Future<void> init() async {
-    FirebaseDatabase.instance.setPersistenceEnabled(true);
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
 
-    _dhtStream = _dhtRef.onValue;
-    _dhtStream.listen(
+    _dhtStream = _dhtRef!.onValue;
+    _dhtStream!.listen(
       (DatabaseEvent evt) {
         final data = evt.snapshot.value as Map;
         Map dhtData = data['DHT22'];
@@ -60,14 +60,13 @@ class _MonitorPageState extends State<MonitorPage> {
   /// Initializes widget state
   @override
   void initState() {
-    init();
     super.initState();
   }
 
   /// Memory garbage collection method
   @override
   void dispose() {
-    _dhtStream.drain();
+    _dhtStream!.drain();
     //_dhtRef.onDisconnect();
     super.dispose();
   }
@@ -106,7 +105,7 @@ class _MonitorPageState extends State<MonitorPage> {
                   children: [
                     GridTile(
                       child: StreamBuilder(
-                          stream: _dhtRef.onValue,
+                          stream: _dhtRef!.onValue,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -152,7 +151,7 @@ class _MonitorPageState extends State<MonitorPage> {
                     ),
                     GridTile(
                         child: StreamBuilder(
-                            stream: _dhtRef.onValue,
+                            stream: _dhtRef!.onValue,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
