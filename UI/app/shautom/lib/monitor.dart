@@ -60,6 +60,7 @@ class _MonitorPageState extends State<MonitorPage> {
   /// Initializes widget state
   @override
   void initState() {
+    init();
     super.initState();
   }
 
