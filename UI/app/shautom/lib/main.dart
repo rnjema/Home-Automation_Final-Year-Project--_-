@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shautom/views/home.dart';
 import 'package:shautom/views/welcome.dart';
 
-//Firebase initialization imports
+/// Firebase initialization imports
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,6 +14,7 @@ void main() async {
   runApp(MiHome());
 }
 
+/// MiHome Entry application class
 class MiHome extends StatelessWidget {
   static final String title = "MiHome - SHAUTOM";
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<
@@ -35,10 +36,13 @@ class MiHome extends StatelessWidget {
   }
 }
 
+/// MiHome Home Apllication Class
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+        /// Uses streambuilder to determine app initial redirection
         body: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
