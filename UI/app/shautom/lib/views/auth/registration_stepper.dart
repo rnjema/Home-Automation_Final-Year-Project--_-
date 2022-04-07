@@ -67,7 +67,18 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     User? user = _auth.currentUser;
 
     await dbRef.update({
-      "${user!.uid}": {"appliance_control": "relay"}
+      "${user!.uid}": {
+        "appliance_control": {
+          "relay1": {"state": 0},
+          "relay2": {"state": 0},
+          "relay3": {"state": 0},
+          "relay4": {"state": 0}
+        },
+        "sensor_readings": {
+          "DHT22": {"humidity": 93, "temperature": 27.12},
+          "Power": {"energy": 0}
+        }
+      }
     });
   }
 
