@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> init() async {
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     _dhtRef = FirebaseDatabase.instance
-        .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
+        .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/");
 
     _dhtStream = _dhtRef.onValue.asBroadcastStream();
   }
