@@ -14,7 +14,7 @@ void main() async {
   runApp(MiHome());
 }
 
-/// MiHome Entry application class
+/// MiHome Entry application
 class MiHome extends StatelessWidget {
   static final String title = "MiHome - SHAUTOM";
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<
@@ -36,7 +36,7 @@ class MiHome extends StatelessWidget {
   }
 }
 
-/// MiHome Home Apllication Class
+/// MiHome MainPage
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
