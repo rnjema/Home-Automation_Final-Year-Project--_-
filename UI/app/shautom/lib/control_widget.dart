@@ -25,7 +25,7 @@ class _ControlWidgetState extends State<ControlWidget> {
       int relayNum = int.parse(widget.applianceName.split(' ')[1]);
       Map data = event.snapshot.value as Map;
       setState(() {
-        _isOn = data['relay$relayNum']['state'] == 1;
+        _isOn = data['switch$relayNum']['state'] == 1;
       });
     });
   }
