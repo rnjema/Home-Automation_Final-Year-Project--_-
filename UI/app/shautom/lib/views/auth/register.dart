@@ -37,8 +37,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return RegistrationStepper(
         index: _index,
         stepCancelled: manageStepCancelled,

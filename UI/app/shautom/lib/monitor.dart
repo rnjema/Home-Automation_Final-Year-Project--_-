@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shautom/views/components/graph.dart';
 import 'package:shautom/views/components/readings.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 var formatter = NumberFormat.decimalPattern('en_us');
 //var decimalFormatter = NumberFormat.0
 
+/// Monitoring Dashboard Stateful Widget
 class MonitorPage extends StatefulWidget {
   MonitorPage({
     Key? key,
@@ -18,54 +20,59 @@ class MonitorPage extends StatefulWidget {
 }
 
 class _MonitorPageState extends State<MonitorPage> {
-  int temperature = 25;
+  /// State variables
+  int temperature = 26;
   bool tempOkay = true;
   bool humidityOkay = false;
   int humidity = 30;
 
   double energy = 0;
 
-  late DatabaseReference _dhtRef;
-  late Stream<DatabaseEvent> _dhtStream;
+  /// Firebase Realtime Database reference and event stream
+  DatabaseReference? _dhtRef;
+  Stream<DatabaseEvent>? _dhtStream;
 
   /// Initializes Firebase realtime database configuration & state
+  //FirebaseDatabase.instance.setPersistenceEnabled(true);
   Future<void> init() async {
-    FirebaseDatabase.instance.setPersistenceEnabled(true);
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
 
-    _dhtStream = _dhtRef.onValue.asBroadcastStream();
-    _dhtStream.listen(
+    _dhtStream = _dhtRef!.onValue;
+    _dhtStream!.listen(
       (DatabaseEvent evt) {
         final data = evt.snapshot.value as Map;
         Map dhtData = data['DHT22'];
         Map power = data['Power'];
-        print(data);
+        print("DHT : $dhtData \n Power : $power");
 
         setState(() {
-          temperature = double.parse(dhtData['temperature']).truncate();
+          temperature = dhtData['temperature'].truncate();
           tempOkay = temperature <= 28;
-          humidity = double.parse(dhtData['humidity']).truncate();
+          humidity = dhtData['humidity'].truncate();
           humidityOkay = humidity >= 30 && humidity <= 50;
-          energy = power['energy'];
+          energy = power['energy'].toDouble();
         });
       },
     );
   }
 
+  /// Initializes widget state
   @override
   void initState() {
-    super.initState();
     init();
+    super.initState();
   }
 
+  /// Memory garbage collection method
   @override
   void dispose() {
-    super.dispose();
-    _dhtStream.drain();
+    _dhtStream!.drain();
     //_dhtRef.onDisconnect();
+    super.dispose();
   }
 
+  /// Renders a SingleChildScrollView of components
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -98,7 +105,23 @@ class _MonitorPageState extends State<MonitorPage> {
                   physics: BouncingScrollPhysics(),
                   children: [
                     GridTile(
-                      child: TemperatureWidget(temperature: temperature),
+                      child: StreamBuilder(
+                          stream: _dhtRef!.onValue,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            } else if (snapshot.hasData) {
+                              DatabaseEvent evt =
+                                  snapshot.data as DatabaseEvent;
+                              dynamic data = evt.snapshot.value as Map;
+                              int val = (data['DHT22']['temperature']).toInt();
+                              return TemperatureWidget(temperature: val);
+                            } else if (snapshot.hasError) {
+                              print("Error");
+                            }
+                            return Container();
+                          }),
                       footer: Container(
                         padding: EdgeInsets.all(0),
                         child: GridTileBar(
@@ -128,7 +151,23 @@ class _MonitorPageState extends State<MonitorPage> {
                       ),
                     ),
                     GridTile(
-                        child: HumidityWidget(humidity: humidity),
+                        child: StreamBuilder(
+                            stream: _dhtRef!.onValue,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              } else if (snapshot.hasData) {
+                                DatabaseEvent evt =
+                                    snapshot.data as DatabaseEvent;
+                                dynamic data = evt.snapshot.value as Map;
+                                int val = (data['DHT22']['humidity']).toInt();
+                                return HumidityWidget(humidity: val);
+                              } else if (snapshot.hasError) {
+                                print("Error");
+                              }
+                              return Container();
+                            }),
                         footer: Container(
                           padding: EdgeInsets.all(0),
                           child: GridTileBar(
@@ -175,38 +214,22 @@ class _MonitorPageState extends State<MonitorPage> {
           ),
           Divider(color: Colors.black),
           SizedBox(
-            height: size.height * 0.3,
-            child: GridView(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 20),
-                physics: BouncingScrollPhysics(),
-                children: [
-                  CircleAvatar(
-                    minRadius: size.width * 0.25,
-                    backgroundColor: Colors.blue.withOpacity(0.8),
-                    child: CircleAvatar(
-                      minRadius: size.width * 0.18,
-                      maxRadius: size.width * 0.2,
-                      backgroundColor: Colors.black.withOpacity(0.6),
-                      child: Text("${formatter.format(energy)} Wh"),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
-                        border: Border.all(
-                            color: Colors.blue.withOpacity(0.6), width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Center(
-                        child: Text(
-                      "No Data",
-                      style: TextStyle(color: Colors.white.withOpacity(0.8)),
-                    )),
-                  )
-                ]),
+            height: size.height * 0.4,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.6),
+                  border:
+                      Border.all(color: Colors.blue.withOpacity(0.6), width: 3),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              // child: Center(
+              //     child: Text(
+              //   "No Data",
+              //   style: TextStyle(color: Colors.white.withOpacity(0.8)),
+              // )),
+              child: Row(
+                children: [Flexible(child: LivePowerGraph())],
+              ),
+            ),
           ),
         ],
       ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   final VoidCallback logOut;
-  Widget pageTitle;
-  Widget? childWidget;
+  final Widget pageTitle;
+  final Widget? childWidget;
 
   CustomSliverAppBar({
     Key? key,

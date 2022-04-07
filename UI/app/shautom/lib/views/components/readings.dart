@@ -70,7 +70,6 @@ class HumidityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return ReadingWidget(
       reading: humidity,
       unit: "%",
@@ -118,7 +117,7 @@ class RadialGauge extends StatelessWidget {
                 children: [
                   Text(
                     "$reading",
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 30),
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 28),
                   ),
                   Text(
                     " $unit",

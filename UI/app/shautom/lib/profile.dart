@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:shautom/views/home.dart';
-
 import 'models/user.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -15,8 +12,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return SafeArea(child: Settings(user: user));
   }
 }
@@ -37,41 +32,41 @@ class Settings extends StatelessWidget {
     return Container(
         child: ListView(
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10)),
-          height: size.height * 0.2,
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(children: [
-                CircleAvatar(
-                    backgroundColor: Colors.blue.withOpacity(0.6),
-                    radius: size.width * 0.15,
-                    child: Text(
-                      user == null
-                          ? "AZ"
-                          : "${user?.firstName![0].toUpperCase()}${user?.lastName![0].toUpperCase()}",
-                      style: TextStyle(fontSize: size.width * 0.12),
-                    )),
-              ]),
-              Padding(
-                padding: const EdgeInsets.only(top: 40, left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        user == null
+            ? CircularProgressIndicator()
+            : Container(
+                margin: EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10)),
+                height: size.height * 0.2,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("${user!.firstName} ${user!.lastName}"),
-                    SizedBox(height: 10),
-                    Text("${user!.emailAddress}"),
+                    Column(children: [
+                      CircleAvatar(
+                          backgroundColor: Colors.blue.withOpacity(0.6),
+                          radius: size.width * 0.15,
+                          child: Text(
+                            "${user?.firstName![0].toUpperCase()}${user?.lastName![0].toUpperCase()}",
+                            style: TextStyle(fontSize: size.width * 0.12),
+                          )),
+                    ]),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40, left: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${user!.firstName} ${user!.lastName}"),
+                          SizedBox(height: 10),
+                          Text("${user!.emailAddress}"),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
         ListTile(
           leading: Icon(
             Icons.person,

@@ -16,7 +16,9 @@ class _ControlPageState extends State<ControlPage> {
     _controlRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/appliance_control");
     _controlStream = _controlRef.onValue.asBroadcastStream();
-    _controlStream.listen((event) {});
+    _controlStream.listen((event) {
+      print(event.snapshot.value);
+    });
   }
 
   @override
@@ -27,7 +29,6 @@ class _ControlPageState extends State<ControlPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Container(
         padding: EdgeInsets.only(top: 15),
@@ -37,7 +38,7 @@ class _ControlPageState extends State<ControlPage> {
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return ControlWidget(
-                applianceName: "Relay ${index + 1}", dbReference: _controlRef);
+                applianceName: "Switch ${index + 1}", dbReference: _controlRef);
           },
           itemCount: 4,
         ),
