@@ -133,19 +133,57 @@ class _MonitorPageState extends State<MonitorPage> {
                                   TextStyle(color: Colors.black, fontSize: 16),
                             ),
                           ),
-                          leading: CircleAvatar(
-                              backgroundColor:
-                                  tempOkay ? Colors.green : Colors.red,
-                              maxRadius: size.width * 0.02),
+                          leading: StreamBuilder(
+                              stream: _dhtRef!.onValue,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasData) {
+                                  DatabaseEvent evt =
+                                      snapshot.data as DatabaseEvent;
+                                  dynamic data = evt.snapshot.value as Map;
+                                  int val =
+                                      (data['DHT22']['temperature']).toInt();
+                                  bool ok = 15 <= val || val > 27;
+                                  return CircleAvatar(
+                                      backgroundColor:
+                                          ok ? Colors.green : Colors.red,
+                                      maxRadius: size.width * 0.02);
+                                } else if (snapshot.hasError) {
+                                  print("Error");
+                                }
+                                return Container();
+                              }),
                           subtitle: Container(
                             margin: EdgeInsets.only(left: 10),
-                            child: tempOkay
-                                ? Text(
-                                    "Okay",
-                                    style: TextStyle(color: Colors.black),
-                                  )
-                                : Text("Critical",
-                                    style: TextStyle(color: Colors.black)),
+                            child: StreamBuilder(
+                                stream: _dhtRef!.onValue,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snapshot.hasData) {
+                                    DatabaseEvent evt =
+                                        snapshot.data as DatabaseEvent;
+                                    dynamic data = evt.snapshot.value as Map;
+                                    int val =
+                                        (data['DHT22']['temperature']).toInt();
+                                    bool ok = 15 <= val || val > 27;
+                                    ok
+                                        ? Text(
+                                            "Okay",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          )
+                                        : Text("Critical",
+                                            style:
+                                                TextStyle(color: Colors.black));
+                                  } else if (snapshot.hasError) {
+                                    print("Error");
+                                  }
+                                  return Container();
+                                }),
                           ),
                         ),
                       ),
