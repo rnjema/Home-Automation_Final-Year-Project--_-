@@ -148,7 +148,7 @@ class _MonitorPageState extends State<MonitorPage> {
                                   bool ok = 15 <= val || val > 27;
                                   return CircleAvatar(
                                       backgroundColor:
-                                          ok ? Colors.green : Colors.red,
+                                          !ok ? Colors.green : Colors.red,
                                       maxRadius: size.width * 0.02);
                                 } else if (snapshot.hasError) {
                                   print("Error");
@@ -170,13 +170,13 @@ class _MonitorPageState extends State<MonitorPage> {
                                     int val =
                                         (data['DHT22']['temperature']).toInt();
                                     bool ok = 15 <= val || val > 27;
-                                    ok
+                                    return !ok
                                         ? Text(
                                             "Okay",
                                             style:
                                                 TextStyle(color: Colors.black),
                                           )
-                                        : Text("Critical",
+                                        : Text("Needs attention",
                                             style:
                                                 TextStyle(color: Colors.black));
                                   } else if (snapshot.hasError) {
@@ -189,50 +189,89 @@ class _MonitorPageState extends State<MonitorPage> {
                       ),
                     ),
                     GridTile(
-                        child: StreamBuilder(
-                            stream: _dhtRef!.onValue,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container();
-                              } else if (snapshot.hasData) {
-                                DatabaseEvent evt =
-                                    snapshot.data as DatabaseEvent;
-                                dynamic data = evt.snapshot.value as Map;
-                                int val = (data['DHT22']['humidity']).toInt();
-                                return HumidityWidget(humidity: val);
-                              } else if (snapshot.hasError) {
-                                print("Error");
-                              }
+                      child: StreamBuilder(
+                          stream: _dhtRef!.onValue,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
                               return Container();
-                            }),
-                        footer: Container(
-                          padding: EdgeInsets.all(0),
-                          child: GridTileBar(
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 12),
-                              child: Text(
-                                "Humidity",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                              ),
-                            ),
-                            leading: CircleAvatar(
-                                backgroundColor:
-                                    !humidityOkay ? Colors.red : Colors.green,
-                                maxRadius: size.width * 0.02),
-                            subtitle: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: humidityOkay
-                                  ? Text(
-                                      "Okay",
-                                      style: TextStyle(color: Colors.black),
-                                    )
-                                  : Text("Critical",
-                                      style: TextStyle(color: Colors.black)),
+                            } else if (snapshot.hasData) {
+                              DatabaseEvent evt =
+                                  snapshot.data as DatabaseEvent;
+                              dynamic data = evt.snapshot.value as Map;
+                              int val = (data['DHT22']['humidity']).toInt();
+                              return HumidityWidget(humidity: val);
+                            } else if (snapshot.hasError) {
+                              print("Error");
+                            }
+                            return Container();
+                          }),
+                      footer: Container(
+                        padding: EdgeInsets.all(0),
+                        child: GridTileBar(
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Text(
+                              "Humidity",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
                             ),
                           ),
-                        )),
+                          leading: StreamBuilder(
+                              stream: _dhtRef!.onValue,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasData) {
+                                  DatabaseEvent evt =
+                                      snapshot.data as DatabaseEvent;
+                                  dynamic data = evt.snapshot.value as Map;
+                                  int val =
+                                      (data['DHT22']['temperature']).toInt();
+                                  bool ok = val > 30 && val <= 50;
+                                  return CircleAvatar(
+                                      backgroundColor:
+                                          ok ? Colors.green : Colors.red,
+                                      maxRadius: size.width * 0.02);
+                                } else if (snapshot.hasError) {
+                                  print("Error");
+                                }
+                                return Container();
+                              }),
+                          subtitle: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: StreamBuilder(
+                                stream: _dhtRef!.onValue,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snapshot.hasData) {
+                                    DatabaseEvent evt =
+                                        snapshot.data as DatabaseEvent;
+                                    dynamic data = evt.snapshot.value as Map;
+                                    int val =
+                                        (data['DHT22']['humidity']).toInt();
+                                    bool ok = val > 30 && val <= 50;
+                                    return ok
+                                        ? Text(
+                                            "Okay",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          )
+                                        : Text("Needs attention",
+                                            style:
+                                                TextStyle(color: Colors.black));
+                                  } else if (snapshot.hasError) {
+                                    print("Error");
+                                  }
+                                  return Container();
+                                }),
+                          ),
+                        ),
+                      ),
+                    ),
                   ])),
           Row(children: [
             Text(
