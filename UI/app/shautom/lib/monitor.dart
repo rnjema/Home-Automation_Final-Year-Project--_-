@@ -38,7 +38,7 @@ class _MonitorPageState extends State<MonitorPage> {
     _dhtRef = FirebaseDatabase.instance
         .ref("Shautom/User/2vtcqvRNBVUPi0XtnxbUJRAy9GE2/sensor_readings/");
 
-    _dhtStream = _dhtRef!.onValue;
+    _dhtStream = _dhtRef!.onValue.asBroadcastStream();
     _dhtStream!.listen(
       (DatabaseEvent evt) {
         final data = evt.snapshot.value as Map;
