@@ -66,6 +66,9 @@ FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
 
+FirebaseData lightData;
+FirebaseData fanData;
+
 // Root Path and child nodes
 String parentPath;
 String databasePath;
@@ -202,6 +205,10 @@ if (Firebase.ready() && (millis() - sendDataPrevMillis > delayMS || sendDataPrev
     smartLight();
     smartFan();
     Serial.printf("Set json... %s\n", Firebase.RTDB.updateNode(&fbdo, parentPath.c_str(), &json) ? "ok" : fbdo.errorReason().c_str());
+    delay(3000);
+    manualLight();
+    manualFan();
+    
   }
 }
 
@@ -330,54 +337,88 @@ void smartLight_setup(){
     Serial.println("SENSOR ACTIVE");
     delay(50);
  }
+
+void manualLight(){
+if (Firebase.getInt(lightData, (parentPath + "/" + roomBulbStatusPath))) {
+
+      if (lightData.dataTypeEnum() == fb_esp_rtdb_data_type_integer) {
+        Serial.print("Light state: ");
+      Serial.println(lightData.to<int>());
+      if(lightData.to<int>() == 1){
+          digitalWrite(RELAY1, HIGH);
+          delay(5000);
+        }}  
+      else {
+        Serial.println(lightData.errorReason());
+      }
+    }  
+}
+
 void smartLight(){
 long unsigned int pause = 5000;
-Serial.println("Light Intersity: ");
-Serial.println(analogRead(LDR));
-   if((digitalRead(pirPin) == HIGH) && (analogRead(LDR)<= lightIntesityThreshhold)){
+Serial.println("Light Intensity: ");
+Serial.println(analogRead(LDR));       
+    if((digitalRead(pirPin) == HIGH) && (analogRead(LDR)<= lightIntesityThreshhold)){
      digitalWrite(RELAY2, HIGH);
      json.add(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
      json.add(pirStatusPath.c_str(), 1);
      json.add(switch2Path.c_str(), 1);
      json.add(roomBulbStatusPath.c_str(), 1);
         
-     delay(pause);
-     
-     if(lockLow){  
-       //makes sure we wait for a transition to LOW before any further output is made:
-       lockLow = false;            
-       Serial.println("---");
-       Serial.print("motion detected at ");
-       Serial.print(millis()/1000);
-       Serial.println(" sec"); 
-       delay(50);
-       }         
-       takeLowTime = true;
+//     delay(pause);
+//     
+//     if(lockLow){  
+//       //makes sure we wait for a transition to LOW before any further output is made:
+//       lockLow = false;            
+//       Serial.println("---");
+//       Serial.print("motion detected at ");
+//       Serial.print(millis()/1000);
+//       Serial.println(" sec"); 
+//       delay(50);
+//       }         
+//       takeLowTime = true;
      }
    else { 
+    manualLight();
      digitalWrite(RELAY2, LOW);
      json.add(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
      json.add(pirStatusPath.c_str(), 0);
      json.add(switch2Path.c_str(), 0);
      json.add(roomBulbStatusPath.c_str(), 0);
      
-     if(takeLowTime){
-      lowIn = millis();          //save the time of the transition from high to LOW
-      takeLowTime = false;       //make sure this is only done at the start of a LOW phase
-      }
-     //if the sensor is low for more than the given pause, 
-     //we assume that no more motion is going to happen
-     if(!lockLow && millis() - lowIn > pause){  
-         //makes sure this block of code is only executed again after 
-         //a new motion sequence has been detected
-         lockLow = true;                        
-         Serial.print("motion ended at ");      //output
-         Serial.print((millis() - pause)/1000);
-         Serial.println(" sec");
+//     if(takeLowTime){
+//      lowIn = millis();          //save the time of the transition from high to LOW
+//      takeLowTime = false;       //make sure this is only done at the start of a LOW phase
+//      }
+//     //if the sensor is low for more than the given pause, 
+//     //we assume that no more motion is going to happen
+//     if(!lockLow && millis() - lowIn > pause){  
+//         //makes sure this block of code is only executed again after 
+//         //a new motion sequence has been detected
+//         lockLow = true;                        
+//         Serial.print("motion ended at ");      //output
+//         Serial.print((millis() - pause)/1000);
+//         Serial.println(" sec");
          delay(50);
          }
-     }
 }
+
+void manualFan(){
+if (Firebase.getInt(fanData, (parentPath + "/" + fanStatusPath))) {
+
+      if (fanData.dataTypeEnum() == fb_esp_rtdb_data_type_integer) {
+        Serial.print("Fan state: ");
+      Serial.println(fanData.to<int>());
+      if(fanData.to<int>() == 1){
+          digitalWrite(RELAY2, HIGH);
+          delay(5000);
+        }}  
+      else {
+        Serial.println(fanData.errorReason());
+      }
+    }  
+}
+ 
 void smartFan(){
   sensors_event_t event;
   dht.temperature().getEvent(&event);
@@ -404,6 +445,9 @@ void smartFan(){
     json.add(humidityPath.c_str(), float(event.relative_humidity));
     updateHumidity(event.relative_humidity);
   }
+
+  
+  
   if(event.temperature > 27 || event.relative_humidity > 50){
     digitalWrite(RELAY1, HIGH);
     json.add(switch1Path.c_str(), 1);
@@ -411,6 +455,7 @@ void smartFan(){
     
   }
   else{
+    manualFan();
     digitalWrite(RELAY1, LOW);
     json.add(switch1Path.c_str(), 0);
     json.add(fanStatusPath.c_str(), 0);
