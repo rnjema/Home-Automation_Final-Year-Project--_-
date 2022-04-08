@@ -11,8 +11,8 @@
  */
 
 // Wifi
-char WIFI_SSID[50];
-char WIFI_PASSWORD[50];
+char *WIFI_SSID;
+char *WIFI_PASSWORD; 
 #if defined(ESP32)
 #include <WiFi.h>
 #include <FirebaseESP32.h>
@@ -21,14 +21,16 @@ char WIFI_PASSWORD[50];
 #include <FirebaseESP8266.h>
 #endif
 
+//Bluetooth Serial
+
 // DHT
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
 #define RELAY1 22 //switch for fan
 #define RELAY2 13 //switch for light
-#define RELAY3 37
-#define RELAY4 38
+//#define RELAY3 38
+//#define RELAY4 38
 #define DHTPIN 17 
 #define pirPin 21  
 #define LDR 36
@@ -51,17 +53,21 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 /* 3. Define the RTDB URL */
 #define DATABASE_URL "https://shautom-app-test-default-rtdb.asia-southeast1.firebasedatabase.app" //<databaseName>.firebaseio.com or <databaseName>.<region>.firebasedatabase.app
 /* 4. Define the user Email and password that alreadey registerd or added in your project */
-char USER_EMAIL[50];
-char USER_PASSWORD[50];
+char *USER_EMAIL;
+char *USER_PASSWORD;
 
 /*=========================================================================================================================================================================================
  * Variable Declration and intiation
  */
 //Define Firebase objects
 FirebaseJson json;
+FirebaseJson result_appliance;
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
+
+FirebaseData lightData;
+FirebaseData fanData;
 
 // Root Path and child nodes
 String parentPath;
@@ -84,7 +90,7 @@ unsigned long sendDataPrevMillis = 0;
 uint32_t delayMS;
 float prev_temp;
 float prev_humidity;
-String uid;
+String uid = "2vtcqvRNBVUPi0XtnxbUJRAy9GE2";
 
 
 //variables
@@ -108,17 +114,68 @@ int lightIntesityThreshhold = 700;
  *  main methods
  *  
  */
+
+  
+    //Global function that handles stream data
+  void streamCallbackFn(StreamData data){
+  
+    //Print out all information
+  
+    Serial.println("Stream Data...");
+    Serial.println(data.streamPath());
+    Serial.println(data.dataPath());
+    Serial.println(data.dataType());
+  
+    //Print out the value
+    //Stream data can be many types which can be determined from function dataType
+  
+    if (data.dataTypeEnum() == fb_esp_rtdb_data_type_integer)
+        {Serial.println(data.to<int>());}
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_float)
+        {Serial.println(data.to<float>(), 5);}
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_double)
+        {printf("%.9lf\n", data.to<double>());}
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_boolean)
+        {Serial.println(data.to<bool>()? "true" : "false");}
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_string)
+        {Serial.println(data.to<String>());}
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_json)
+    {
+        FirebaseJson *json1 = data.to<FirebaseJson *>();
+        Serial.println(json1->raw());
+    }
+    else if (data.dataTypeEnum() == fb_esp_rtdb_data_type_array)
+    {
+        FirebaseJsonArray *arr = data.to<FirebaseJsonArray *>();
+        Serial.println(arr->raw());
+    }
+  }
+  
+  //Global function that notifies when stream connection lost
+  //The library will resume the stream connection automatically
+  void streamTimeoutCallback(bool timeout){
+    if(timeout){
+      //Stream timeout occurred
+      Serial.println("Stream timeout, resume streaming...");
+    }  
+  }
+ 
  
 //main setup
 void setup() {
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  //pinMode(RELAY3, OUTPUT);
+  //pinMode(RELAY4, OUTPUT);
   // put your setup code here, to run once:
-  
+  digitalWrite(RELAY1, LOW);
+  digitalWrite(RELAY2, LOW);
+  //digitalWrite(RELAY3, LOW);
+  //digitalWrite(RELAY4, LOW);
   Serial.begin(115200);
-  smartFan_setup();
+  initWifi();
   smartLight_setup();
   dht22setup();
-  initWifi();
-  getUserid();
   // Update database path
   databasePath = "/Shautom/User/";
   pirStatusPath = sensorPath + "/MotionSensor/pir-status";
@@ -126,27 +183,32 @@ void setup() {
   temperaturePath = sensorPath + "/DHT22/temperature";
   humidityPath = sensorPath + "/DHT22/humidity";
   parentPath = databasePath + uid;
-  }
+
+  Firebase.RTDB.setStreamCallback(&fbdo, &streamCallbackFn, &streamTimeoutCallback);
+
+//In setup(), set the streaming path to "/test/data" and begin stream connection
+
+  if (!Firebase.RTDB.beginStream(&fbdo, parentPath + "/appliance_control/switch1/state")){
+    //Could not begin stream connection, then print out the error detail
+    Serial.println(fbdo.errorReason());}
+  
+   
+}
+
 //main loop method
 void loop(){
 if (Firebase.ready() && (millis() - sendDataPrevMillis > delayMS || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
-
-    //database paths for sensors and appliance status
-    
-//    parentPath = databasePath + "/MotionSensor";
-//    parentPath = databasePath + "/LightSensor";
-//    parentPath = databasePath1;
  
     
     delay(delayMS);
     smartLight();
     smartFan();
-
+    Serial.printf("Set json... %s\n", Firebase.RTDB.updateNode(&fbdo, parentPath.c_str(), &json) ? "ok" : fbdo.errorReason().c_str());
+    delay(3000);
+    manualLight();
+    manualFan();
     
-    if(!Firebase.RTDB.getJSON(&fbdo, (parentPath + switch3Path).c_str())){json.set(switch3Path.c_str(), 0);}
-    if(!Firebase.RTDB.getJSON(&fbdo, (parentPath + switch4Path).c_str())){json.set(switch4Path.c_str(), 0);}
-    Serial.printf("Set json... %s\n", Firebase.RTDB.setJSON (&fbdo, parentPath.c_str(), &json) ? "ok" : fbdo.errorReason().c_str());
   }
 }
 
@@ -155,20 +217,12 @@ if (Firebase.ready() && (millis() - sendDataPrevMillis > delayMS || sendDataPrev
 --Functions that will run one time
 --Probably intializing the sensors
 */
+void getSwitchState(){
+  
+  }
+  
 
 //Get the user id of the person signing in
-void getUserid(){
-      // Getting the user UID might take a few seconds
-  Serial.println("Getting User UID");
-  while ((auth.token.uid) == "") {
-    Serial.print(".");
-    delay(1000);
-  }
-  // Print user UID
-  uid = auth.token.uid.c_str();
-  Serial.print("User UID: ");
-  Serial.println(uid);  
-}
 
 //Update Temperature and Humidity Values
 void updateTemp(float temp){
@@ -209,21 +263,20 @@ void initWifi(){
  
   Serial.println();
   delay(calibrationTime);
-  Serial.print("Enter your WiFi credentials.\n");
-  Serial.print("SSID: ");
-  while (Serial.available() == 0) {
-    // wait
-  }
-  Serial.readBytesUntil(10, WIFI_SSID, 50);
-  Serial.print(WIFI_SSID);
-  Serial.print("SSID RECEIVED");
 
-  Serial.print("PASSWORD: ");
-  while (Serial.available() == 0) {
-    // wait
-  }
-  Serial.readBytesUntil(10, WIFI_PASSWORD, 50);
-  Serial.print(WIFI_PASSWORD);
+  
+  WIFI_SSID = "Ramsey's MiFi";
+  WIFI_PASSWORD = "Chimphepo";
+
+
+  USER_EMAIL = "bsc-com-ne-10-17@unima.ac.mw";
+  USER_PASSWORD = "12345678";
+
+  
+
+  
+  //Serial.readBytesUntil(10, WIFI_PASSWORD, 50);
+  //Serial.print(WIFI_PASSWORD);
   Serial.println("PASSWORD RECEIVED");
   Serial.println();
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -238,27 +291,7 @@ void initWifi(){
   Serial.print("Connected with IP: ");
   Serial.println(WiFi.localIP());
   Serial.println();
-
-  //get email credentials
-  Serial.print("Enter you MAIL credentials: \n");
-  Serial.print("EMAIL: ");
-  while (Serial.available() == 0) {
-    // wait
-  }
-  Serial.readBytesUntil(10, USER_EMAIL, 50);
-  Serial.print(USER_EMAIL);
-  Serial.println("EMAIL RECEIVED");
-
-  Serial.print("PASSWORD: ");
-  while (Serial.available() == 0) {
-    // wait
-  }
-  Serial.readBytesUntil(10, USER_PASSWORD, 50);
-  Serial.print(USER_PASSWORD);
-  Serial.print("USER-PASSWORD RECEIVED");
   
-  Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
-
   /* Assign the api key (required) */
   config.api_key = API_KEY;
 
@@ -282,38 +315,15 @@ void initWifi(){
 }
 
 void temperature(){
-    sensors_event_t event;
-    dht.temperature().getEvent(&event);
-    if (isnan(event.temperature)) {
-      Serial.println(F("Error reading temperature!"));
-    }
-    else {
-      Serial.print(F("Temperature: "));
-      Serial.print(event.temperature);
-      Serial.println(F("°C"));
-      
-      json.set(temperaturePath.c_str(), float(event.temperature));
-      updateTemp(event.temperature);
-    }
+    
 }
 void humidity(){
     sensors_event_t event;
-  // Get humidity event and print its value.
-    dht.humidity().getEvent(&event);
-    if (isnan(event.relative_humidity)) {
-      Serial.println(F("Error reading humidity!"));
-    }
-    else {
-      Serial.print(F("Humidity: "));
-      Serial.print(event.relative_humidity);
-      Serial.println(F("%"));
-      json.set(humidityPath.c_str(), float(event.relative_humidity));
-      updateHumidity(event.relative_humidity);
-    }
+
 }
 //SMARTLIGHT SETUP
 void smartLight_setup(){
-  pinMode(RELAY2, OUTPUT);
+  //pinMode(RELAY3, OUTPUT);
   pinMode(pirPin, INPUT);
   pinMode(LDR, INPUT);
   
@@ -327,70 +337,127 @@ void smartLight_setup(){
     Serial.println("SENSOR ACTIVE");
     delay(50);
  }
+
+void manualLight(){
+if (Firebase.getInt(lightData, (parentPath + "/" + roomBulbStatusPath))) {
+
+      if (lightData.dataTypeEnum() == fb_esp_rtdb_data_type_integer) {
+        Serial.print("Light state: ");
+      Serial.println(lightData.to<int>());
+      if(lightData.to<int>() == 1){
+          digitalWrite(RELAY1, HIGH);
+          delay(5000);
+        }}  
+      else {
+        Serial.println(lightData.errorReason());
+      }
+    }  
+}
+
 void smartLight(){
 long unsigned int pause = 5000;
-Serial.println("Light Intersity: ");
-Serial.println(analogRead(LDR));
-   if((digitalRead(pirPin) == HIGH)  && (analogRead(LDR)<= lightIntesityThreshhold)){
+Serial.println("Light Intensity: ");
+Serial.println(analogRead(LDR));       
+    if((digitalRead(pirPin) == HIGH) && (analogRead(LDR)<= lightIntesityThreshhold)){
      digitalWrite(RELAY2, HIGH);
-     json.set(lightdepentresistorStatusPath.c_str(),int(analogRead(LDR)));
-     json.set(pirStatusPath.c_str(), 1);
-     json.set(switch2Path.c_str(), 1);
-     json.set(roomBulbStatusPath.c_str(), 1);
+     json.add(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
+     json.add(pirStatusPath.c_str(), 1);
+     json.add(switch2Path.c_str(), 1);
+     json.add(roomBulbStatusPath.c_str(), 1);
         
-     delay(pause);
-     
-     if(lockLow){  
-       //makes sure we wait for a transition to LOW before any further output is made:
-       lockLow = false;            
-       Serial.println("---");
-       Serial.print("motion detected at ");
-       Serial.print(millis()/1000);
-       Serial.println(" sec"); 
-       delay(50);
-       }         
-       takeLowTime = true;
+//     delay(pause);
+//     
+//     if(lockLow){  
+//       //makes sure we wait for a transition to LOW before any further output is made:
+//       lockLow = false;            
+//       Serial.println("---");
+//       Serial.print("motion detected at ");
+//       Serial.print(millis()/1000);
+//       Serial.println(" sec"); 
+//       delay(50);
+//       }         
+//       takeLowTime = true;
      }
    else { 
+    manualLight();
      digitalWrite(RELAY2, LOW);
-     json.set(lightdepentresistorStatusPath.c_str(),int(analogRead(LDR)));
-     json.set(pirStatusPath.c_str(), 0);
-     json.set(switch2Path.c_str(), 0);
-     json.set(roomBulbStatusPath.c_str(), 0);
+     json.add(lightdepentresistorStatusPath.c_str(),String(analogRead(LDR)));
+     json.add(pirStatusPath.c_str(), 0);
+     json.add(switch2Path.c_str(), 0);
+     json.add(roomBulbStatusPath.c_str(), 0);
      
-     if(takeLowTime){
-      lowIn = millis();          //save the time of the transition from high to LOW
-      takeLowTime = false;       //make sure this is only done at the start of a LOW phase
-      }
-     //if the sensor is low for more than the given pause, 
-     //we assume that no more motion is going to happen
-     if(!lockLow && millis() - lowIn > pause){  
-         //makes sure this block of code is only executed again after 
-         //a new motion sequence has been detected
-         lockLow = true;                        
-         Serial.print("motion ended at ");      //output
-         Serial.print((millis() - pause)/1000);
-         Serial.println(" sec");
+//     if(takeLowTime){
+//      lowIn = millis();          //save the time of the transition from high to LOW
+//      takeLowTime = false;       //make sure this is only done at the start of a LOW phase
+//      }
+//     //if the sensor is low for more than the given pause, 
+//     //we assume that no more motion is going to happen
+//     if(!lockLow && millis() - lowIn > pause){  
+//         //makes sure this block of code is only executed again after 
+//         //a new motion sequence has been detected
+//         lockLow = true;                        
+//         Serial.print("motion ended at ");      //output
+//         Serial.print((millis() - pause)/1000);
+//         Serial.println(" sec");
          delay(50);
          }
-     }
 }
-void smartFan_setup(){
-  pinMode(RELAY1, OUTPUT);
+
+void manualFan(){
+if (Firebase.getInt(fanData, (parentPath + "/" + fanStatusPath))) {
+
+      if (fanData.dataTypeEnum() == fb_esp_rtdb_data_type_integer) {
+        Serial.print("Fan state: ");
+      Serial.println(fanData.to<int>());
+      if(fanData.to<int>() == 1){
+          digitalWrite(RELAY2, HIGH);
+          delay(5000);
+        }}  
+      else {
+        Serial.println(fanData.errorReason());
+      }
+    }  
 }
+ 
 void smartFan(){
   sensors_event_t event;
-  temperature();
-  humidity();
+  dht.temperature().getEvent(&event);
+  if (isnan(event.temperature)) {
+    Serial.println(F("Error reading temperature!"));
+  }
+  else {
+    Serial.print(F("Temperature: "));
+    Serial.print(event.temperature);
+    Serial.println(F("°C"));
+    
+    json.add(temperaturePath.c_str(), float(event.temperature));
+    updateTemp(event.temperature);
+  }
+  // Get humidity event and print its value.
+  dht.humidity().getEvent(&event);
+  if (isnan(event.relative_humidity)) {
+    Serial.println(F("Error reading humidity!"));
+  }
+  else {
+    Serial.print(F("Humidity: "));
+    Serial.print(event.relative_humidity);
+    Serial.println(F("%"));
+    json.add(humidityPath.c_str(), float(event.relative_humidity));
+    updateHumidity(event.relative_humidity);
+  }
+
+  
+  
   if(event.temperature > 27 || event.relative_humidity > 50){
     digitalWrite(RELAY1, HIGH);
-    json.set(switch1Path.c_str(), 1);
-    json.set(fanStatusPath.c_str(), 1);
+    json.add(switch1Path.c_str(), 1);
+    json.add(fanStatusPath.c_str(), 1);
     
   }
   else{
+    manualFan();
     digitalWrite(RELAY1, LOW);
-    json.set(switch1Path.c_str(), 0);
-    json.set(fanStatusPath.c_str(), 0);
+    json.add(switch1Path.c_str(), 0);
+    json.add(fanStatusPath.c_str(), 0);
     }
   }
